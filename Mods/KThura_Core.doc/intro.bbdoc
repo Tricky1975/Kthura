@@ -1,0 +1,5 @@
+<p align='center' style='background-color:#000000; color:#aa00ff'><img src='Kthura_Logo_Full.png'></p>
+
+<p align='center' style='background-color:#ff0000; color:#ffff00'>NOTICE!!!<br>This module is still in development so many features will not work properly. Or most likely not at all.<br>I recommend not to use this module until this notice has been removed</p>
+
+<p>This module is written in order to load Kthura maps into BlitzMax. The Kthura system was named after the main protagonist of the adventure game M&ouml;rker as that was the first game to use this system.
