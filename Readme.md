@@ -1,0 +1,1 @@
+# Kthura map editor (blitzMax)
