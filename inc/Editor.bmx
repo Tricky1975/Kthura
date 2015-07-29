@@ -1,7 +1,7 @@
 Rem
 /*
-	
-	
+	Kthura
+	Editor Part
 	
 	
 	
@@ -24,10 +24,10 @@ Rem
 */
 
 
-Version: 15.07.12
+Version: 15.07.29
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/Editor.bmx","15.07.12"
+MKL_Version "Kthura Map Editor - inc/Editor.bmx","15.07.29"
 MKL_Lic     "Kthura Map Editor - inc/Editor.bmx","GNU - General Public License ver3"
 
 
