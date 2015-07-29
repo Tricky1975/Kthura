@@ -33,8 +33,12 @@ Rem
 This is the main file of the Kthura Map Editor.
 Contrary to regular 2d mapeditors Kthura is not tile based as in building up a map tile by tile (in other words the tradition way of working) but by setting up objects.
 
-The first game in which this engine was used was "Moerker" and was named after its protagonist "Kthura" in this honor.
+The first game in which this engine was used was "Moerker" and was named after its protagonist "Kthura" in this honor. (Though this game was suspended due to some issues I could not yet deal with. It might still be created later).
 End Rem
+
+' Revisions
+' 15.07.29 - GitHub Script set up
+'          - Fixed modify alpha ignore bug
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
