@@ -35,6 +35,7 @@ Global Ex_Pix(Pix:TPixmap,u:Object,Quality)[] = [SavePixmapJPeg,SavePixmapPNG]
 
 
 Function Export(EX,PJSizes=False)
+If SelectedGadgetItem(Tabber)<>1 Return Notify("The export feature may only be used when you are in a tab showing the editor's working canvas!")
 SetGraphics CanvasGraphics(canvas)
 Cls; DrawKthura kthmap,screenx,screeny; Flip
 Cls; DrawKthura kthmap,screenx,screeny; Flip
@@ -50,6 +51,7 @@ Select PJSizes
 		f = RequestFile("Export to:",ex_filter[ex],True,GetUserHomeDir()+"/"+StripDir(Mapfile))
 	End Select
 Local Pix:TPixmap = GrabPixmap(0,0,w,h)
+csay "Saving ("+w+"x"+h+") as image into: "+f
 ex_pix[ex] pix,f,ex_quality[ex]
 End Function
 

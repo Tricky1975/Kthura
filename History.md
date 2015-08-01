@@ -8,3 +8,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.01: Export to png and jpg now supported
 - 15.08.01: Git scripted updated with the possibility to keep this changelog up to date :)
 - 15.08.01: Tiny bug in that updater fixed (doh!)
+- 15.08.01: (FIX) Export now only works if the canvas is visible. Otherwise the editor will produce undesirable behavior!
