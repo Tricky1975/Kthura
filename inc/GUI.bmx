@@ -1,7 +1,7 @@
 Rem
 /*
-	
-	
+	Kthura
+	GUI Setup
 	
 	
 	
@@ -24,10 +24,10 @@ Rem
 */
 
 
-Version: 15.04.29
+Version: 15.08.01
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/GUI.bmx","15.04.29"
+MKL_Version "Kthura Map Editor - inc/GUI.bmx","15.08.01"
 MKL_Lic     "Kthura Map Editor - inc/GUI.bmx","GNU - General Public License ver3"
 
 
@@ -114,6 +114,14 @@ addcallback callaction,tabber,tabupdate
 Global FileMenu:TGadget = CreateMenu("General",0,WindowMenu(Window))
 CreateMenu "Save",1000,FileMenu,KEY_S,Modifier_command
 CreateMenu "Reload",1001,FileMenu
+Global ExportMenu:TGadget = CreateMenu("Export",0,FileMenu)
+	Global BExport:TGadget = CreateMenu("Project set export",1500,exportmenu,key_p,modifier_command)
+	CreateMenu "",0,exportmenu
+	CreateMenu "Export screen to PNG",1501,exportmenu
+	CreateMenu "Export screen to JPG",1502,exportmenu
+	'CreateMenu "Export screen to BMP",1503,exportmenu
+	'CreateMenu "Export screen to TGA",1504,exportmenu
+	'Blitz only supports BMP and TGA for input. If you got a driver for either of those, feel free to unrem these, and attach the proper code to it :)
 ?Not MacOS
 CreateMenu "",0,filemenu
 CreateMenu "Exit",1999,fileMenu,KEY_X,Modifier_command

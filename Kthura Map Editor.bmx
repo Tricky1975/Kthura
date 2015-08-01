@@ -24,7 +24,7 @@ Rem
 */
 
 
-Version: 15.04.29
+Version: 15.08.01
 
 End Rem
 Strict
@@ -39,6 +39,7 @@ End Rem
 ' Revisions
 ' 15.07.29 - GitHub Script set up
 '          - Fixed modify alpha ignore bug
+' 15.08.01 - Export features now present
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -101,13 +102,14 @@ Include   "inc/Globals.bmx"
 Include   "inc/CamSaveLoad.bmx"
 Include   "inc/GetProject.bmx"
 Include   "inc/GUI.bmx"
-Include   "inc/placeother.bmx" ' This most always be placed AFTER the inc/GUI.bmx call!
+Include   "inc/placeother.bmx" ' This must always be placed AFTER the inc/GUI.bmx call!
+Include   "inc/Export.bmx"
 Include   "inc/Editor.bmx"
 Include   "inc/go.bmx"
 
 
 ' Version information
-MKL_Version "Kthura Map Editor - Kthura Map Editor.bmx","15.04.29"
+MKL_Version "Kthura Map Editor - Kthura Map Editor.bmx","15.08.01"
 MKL_Lic     "Kthura Map Editor - Kthura Map Editor.bmx","GNU - General Public License ver3"
 
 

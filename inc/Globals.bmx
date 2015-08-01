@@ -1,7 +1,7 @@
 Rem
 /*
-	
-	
+	Kthura Map System
+	Global definitions
 	
 	
 	
@@ -24,15 +24,16 @@ Rem
 */
 
 
-Version: 15.04.16
+Version: 15.08.01
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/Globals.bmx","15.04.16"
+MKL_Version "Kthura Map Editor - inc/Globals.bmx","15.08.01"
 MKL_Lic     "Kthura Map Editor - inc/Globals.bmx","GNU - General Public License ver3"
 
 ' Project
 Global Project$
 Global MapFile$
+Global ShotFile$
 Global PrID:TIni
 Global KthMap:TKthura
 
@@ -60,7 +61,7 @@ Global AutoTextSize = False
 
 ' Lines
 Global LinesShow = True
-Global WorkLines:TList = New tlist
+Global WorkLines:TList = New TList
 
 Type TLine
 	Field SX,SY,EX,EY

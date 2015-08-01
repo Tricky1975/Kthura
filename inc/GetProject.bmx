@@ -1,7 +1,7 @@
 Rem
 /*
-	
-	
+	Kthura
+	Get project data
 	
 	
 	
@@ -24,10 +24,10 @@ Rem
 */
 
 
-Version: 15.04.16
+Version: 15.08.01
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/GetProject.bmx","15.04.16"
+MKL_Version "Kthura Map Editor - inc/GetProject.bmx","15.08.01"
 MKL_Lic     "Kthura Map Editor - inc/GetProject.bmx","GNU - General Public License ver3"
 
 Function GetProject()
@@ -102,5 +102,11 @@ If FileType(mapfile) 'And False ' And False was used in the early draft of the e
 	kthmap = New TKthura
 	kthmap.texturejcr = texturedir
 	End If
-	
+' Disable standard export if things are not set right
+Local bea = True
+bea = bea And prid.c("ShotDir")
+bea = bea And prid.c("ShotWidth").toint()
+bea = bea And prid.c("ShotHeight").toint()
+BExport.setenabled bea	
+ShotFile = Prid.c("ShotDir")+"/"+File+".png"
 End Function
