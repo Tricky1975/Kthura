@@ -11,3 +11,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.01: (FIX) Export now only works if the canvas is visible. Otherwise the editor will produce undesirable behavior!
 - 15.08.04: Drawing routines now allows CSpots (which is all object of which the "kind" is prefixed with an $)
 - 15.08.04: Scripting engine there. Does it work?
+- 15.08.04: Fixed up issue non-detection of custom spots

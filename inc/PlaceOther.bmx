@@ -100,16 +100,16 @@ Type TCustomExit Extends totherbase
 		o.y = ey + screeny
 		EndIf
 	o.kind = GadgetItemText ( OtherObjects , SelectedGadgetItem ( OtherObjects ) )
-	LuaSpot.Me = O	
+	spotMe = O	
 	projectscript.run Replace(o.kind,"$","CSpot_")+"_Place",Null
 	kthmap.remaptagmap
-	LuaSpot.Me = Null	
+	spotMe = Null	
 	End Method
 	
 	Method Show(KO:TKthuraObject)
-	luaspot.me = KO
+	spotme = KO
 	projectscript.run Replace(ko.kind,"$","CSpot_")+"_Show",Null
-	luaspot.me = Null
+	spotme = Null
 	End Method
 	
 	

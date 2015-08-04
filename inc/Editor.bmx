@@ -302,6 +302,22 @@ Type TCanvasModify Extends tcanvasactionbase
 					If ex+screenx>KO.X-(w/2) And ex+screenx<KO.X+(w/2) And ey+screeny>KO.Y-h And ey+screeny<KO.Y And KO.dominance>=cdom SELECTEDOBJECT = KO
 					'Print "Obstacle check: ~n- Mouse: ("+Int(ex+screenx)+","+Int(ey+screeny)+")~n- Area: ("+Int(KO.X-(w/2))+","+Int(KO.Y-h)+") - ("+Int(KO.X+(w/2))+","+KO.Y+")~n- Dominance:"+KO.Dominance+" ___ Old: "+cdom+"~n- Boolcheck: "+Int(ex+screenx>KO.X-(w/2) And ex+screenx<KO.X+(w/2) And ey-screeny>KO.Y-h And ey-screeny<KO.Y And KO.dominance>=cdom)+"~n- Selected: "+Int(SelectedObject=KO)
 					EndIf	
+			Default
+				Select Chr(KO.Kind[0])
+					Case "$"
+						LuaClicked.truex=ex
+						LuaClicked.truey=ey
+						luaclicked.x=ex+screenx
+						luaclicked.y=ey+screeny
+						LuaClicked.ret=-1
+						SpotMe = KO
+						projectscript.run Replace(ko.kind,"$","CSpot_")+"_Click",Null
+						If LuaClicked.Ret<0
+							CSay("? ERROR! No proper value seemed to be returned from Click Script in object #"+KO.idnum+">"+KO.Kind)
+						Else
+							If LuaClicked.Ret SelectedObject = KO
+							EndIf
+					End Select		
 			End Select		
 		Next
 	allowmodifypanel selectedobject<>Null
