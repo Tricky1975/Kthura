@@ -8,7 +8,7 @@ Rem
 	http://mozilla.org/MPL/2.0/.
 
 
-Version: 15.07.12
+Version: 15.08.04
 
 End Rem
 
@@ -21,7 +21,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map Editor - Mods/Kthura_Draw.bmx","15.07.12"
+MKL_Version "Kthura Map Editor - Mods/Kthura_Draw.bmx","15.08.04"
 MKL_Lic     "Kthura Map Editor - Mods/Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -39,7 +39,7 @@ For k=EachIn MapKeys(KMap.DrawMap)
 	If o ' -- The actor engine can sometimes cause an empty object to be created. This should fix that.
 		If o.visible Or ForceVisible
 		 	If Left(o.kind,1)="$" 
-				okind = "CSpot
+				okind = "CSpot"
 				Else
 				okind=o.kind
 				EndIf

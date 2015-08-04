@@ -195,6 +195,15 @@ Flip
 End Function
 addcallback callmenu,Hex(2),debugDshowblockmap
 
+CreateMenu "List Scriptfiles",3,kthuradebugmenu
+Function JCRScriptDirOverview()
+Local O$
+For Local E:TJCREntry = EachIn MapValues(ScriptJCR.entries)
+	O = E.filename+"~t~t("+E.Mainfile+")"
+	CSay O
+	Next
+End Function
+addcallback callmenu,Hex(3),jcrscriptdiroverview
 ?
 
 UpdateWindowMenu Window

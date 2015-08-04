@@ -44,6 +44,7 @@ End Rem
 ' Drivers JCR6
 Framework jcr6.zlibdriver
 Import    jcr6.realdir
+Import    jcr6.fileasjcr
 
 ' Drivers for images
 Import    brl.pngloader
@@ -51,6 +52,8 @@ Import    brl.bmploader
 Import    brl.jpgloader
 Import    brl.tgaloader
 
+' General Tricky modules
+Import    tricky_units.prefixsuffix
 
 
 ' Windows icon

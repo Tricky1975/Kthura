@@ -80,6 +80,17 @@ Type TOtherExit Extends totherbase
 	End Method
 	
 	End Type
+	
+Type TCustomExit Extends totherexit
+	Field R = Rand(0,255)
+	Field G = Rand(0,255)
+	Field B = Rand(0,255)
+	
+	Method Show(KO:tkthuraobject)
+	drawspot KO,r,g,b
+	End Method
+	
+	End Type	
 
 MapInsert om,"Exit",New totherexit
 MapInsert om,"Entrance",om.get("Exit")
