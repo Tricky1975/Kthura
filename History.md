@@ -12,3 +12,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.04: Drawing routines now allows CSpots (which is all object of which the "kind" is prefixed with an $)
 - 15.08.04: Scripting engine there. Does it work?
 - 15.08.04: Fixed up issue non-detection of custom spots
+- 15.08.04: Fixed bug not saving the object's colors.

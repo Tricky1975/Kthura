@@ -840,6 +840,15 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 							EndIf
 					Case "LABELS","LABEL"
 						O.Labels = SL[1]
+					Case "COLOR"
+						DL = SL[1].split(",")
+						If Len DL<3
+							KthuraWarning " Invalid color definition in line #"+cl+" >> "+L
+						Else
+							o.r = DL[0].toint()
+							o.g = dl[1].toint()
+							o.b = DL[2].toint()	
+							EndIf
 					Case "DOMINANCE"
 						O.Dominance = SL[1].toInt()
 					Case "TEXTURE","TEXTUREFILE"

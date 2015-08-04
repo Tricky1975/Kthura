@@ -64,6 +64,7 @@ For O=EachIn kmap.fullobjectlist
 	WriteLine bte.stream,"~tFRAMESIZE = "+o.framewidth+"x"+o.frameheight
 	WriteLine bte.stream,"~tALPHA = "+o.alpha
 	WriteLine bte.stream,"~tVISIBLE = "+o.visible
+	WriteLine bte.stream,"~tCOLOR = "+o.r+","+o.g+","+O.b
 	WriteLine bte.stream,"~tIMPASSIBLE = "+o.Impassible
 	For Local dk$=EachIn MapKeys(o.data)
 		WriteLine bte.stream,"~tDATA."+dk+" = "+Replace(o.data.value(dk),"=","<is>")
