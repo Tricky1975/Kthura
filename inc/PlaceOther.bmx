@@ -81,14 +81,37 @@ Type TOtherExit Extends totherbase
 	
 	End Type
 	
-Type TCustomExit Extends totherexit
+Type TCustomExit Extends totherbase
 	Field R = Rand(0,255)
 	Field G = Rand(0,255)
 	Field B = Rand(0,255)
 	
-	Method Show(KO:tkthuraobject)
-	drawspot KO,r,g,b
+	Method Place(x,y)
+	Local O:TKthuraObject = kthmap.createobject()
+	o.tag = ""
+	o.impassible = ButtonState(otherdata.impassible)
+	o.alpha = SliderValue(ObstacleData.Alpha) / Double(1000)
+	o.dominance = TextFieldText(ObstacleData.Dominance).toint()
+	If gridmode
+		o.x = (Floor(x/currentgridw)*currentgridw)+(currentgridw/2) + screenx
+		o.y = (Floor(y/currentgridh)*currentgridh)+currentgridh     + screeny
+	Else
+		o.x = ex + screenx
+		o.y = ey + screeny
+		EndIf
+	o.kind = GadgetItemText ( OtherObjects , SelectedGadgetItem ( OtherObjects ) )
+	LuaSpot.Me = O	
+	projectscript.run Replace(o.kind,"$","CSpot_")+"_Place",Null
+	kthmap.remaptagmap
+	LuaSpot.Me = Null	
 	End Method
+	
+	Method Show(KO:TKthuraObject)
+	luaspot.me = KO
+	projectscript.run Replace(ko.kind,"$","CSpot_")+"_Show",Null
+	luaspot.me = Null
+	End Method
+	
 	
 	End Type	
 

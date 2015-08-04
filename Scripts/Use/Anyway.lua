@@ -1,3 +1,6 @@
+Console.Write("Use/Anyway has been used!")
 
-
--- [[ script comes later ]]
+-- I am lazy :-P
+function TagExists(tag)
+return TAGS.Exists(tag)==1
+end 

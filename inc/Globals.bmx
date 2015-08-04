@@ -72,7 +72,10 @@ Global screenx,screeny
 
 ' JCR
 Global TextureDir:TJCRDir = New TJCRDir
-Global ScriptJCR:TJCRDir = JCR_Dir("Scripts/Libraries.gll"); JCR_AddPatch(ScriptJCR,"Scripts/Use/","","Use")
+Global ScriptJCR:TJCRDir = JCR_Dir("Scripts/Libraries.gll"); JCR_AddPatch(ScriptJCR,JCR_Dir("Scripts/Use"),"","Use")
+
+' Script
+Global ProjectScript:TLua
 
 ' Edit
 Global SelectedObject:TKthuraObject

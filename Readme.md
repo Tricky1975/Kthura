@@ -1,4 +1,4 @@
-# Kthura map editor (blitzMax)
+# Kthura map editor (BlitzMax)
 
 This is the source code of the Kthura map editor. This is a simple object based map system written in BlitzMax.
 It should work on OS X, Windows and Linux are untested, though I don't expect trouble in Windows, and for Linux... Well BlitzMax officially supports Linux, but the BlitzMax and Linux have never been good friends (for good reasons).

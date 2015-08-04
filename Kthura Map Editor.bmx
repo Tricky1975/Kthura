@@ -71,6 +71,9 @@ Import    brl.glmax2d ' Nope I'm not gonna support DirectX, no way!
 ' GALE GUI Driver
 Import    GALE.MGUI
 
+' A few required GALE APIs
+Import    GALE.Time
+
 
 ' Routines
 Import    tricky_units.FilePicker
@@ -107,6 +110,7 @@ Include   "inc/GetProject.bmx"
 Include   "inc/GUI.bmx"
 Include   "inc/placeother.bmx" ' This must always be placed AFTER the inc/GUI.bmx call!
 Include   "inc/Export.bmx"
+Include   "inc/script.bmx"
 Include   "inc/Editor.bmx"
 Include   "inc/go.bmx"
 

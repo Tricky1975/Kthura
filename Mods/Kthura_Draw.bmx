@@ -43,8 +43,8 @@ For k=EachIn MapKeys(KMap.DrawMap)
 				Else
 				okind=o.kind
 				EndIf
-			d = ktdrawdriver(MapValueForKey(drawdrivers,o.kind))
-			Assert d Else "Unknown object kind: "+o.kind
+			d = ktdrawdriver(MapValueForKey(drawdrivers,okind))
+			Assert d Else "Unknown object kind: "+okind
 			If Not d Return KthuraError("Unknown object kind: "+o.kind)
 			d.ocol o
 			d.oalpha o

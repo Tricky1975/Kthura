@@ -110,8 +110,11 @@ bea = bea And prid.c("ShotHeight").toint()
 BExport.setenabled bea	
 ShotFile = Prid.c("ShotDir")+"/"+File+".png"
 Local skipped$
+Local HaveSpots=prid.list("CSpots")<>Null
+If havespots havespots = CountList(prid.list("CSpots"))>0
 ' Add custom spots
 For Local CS$=EachIn prid.list("CSpots")
+
 	If Left(CS$,1)<>"$" 
 		CSay "WARNING! Custom spots MUST be prefixed with a '$'"
 		CSay "The spot "+CS+" has been ignored for security reasons as a result!"
@@ -121,14 +124,17 @@ For Local CS$=EachIn prid.list("CSpots")
 			skipped:+"- Custom Spot: "+CS+"~n"
 			CSay "? ERROR: Can't add due to missing script: Scripts/Projects/"+Project+".lua"
 		Else
-			MapInsert om,CS,New totherexit
+			MapInsert om,CS,New tcustomexit
 			AddGadgetItem OtherObjects,CS
 			EndIf
 		EndIf
 	Next
-If skipped 	
+If skipped And havespots
 	Notify "The following items require a script file dedicated to this project which doesn't exist:~n~n"+skipped+"~n~nPlease create a file named "+CurrentDir()+"/Scripts/Projects/"+Project+".lua in order to get them to work!"
 Else
 	JCR_AddPatch scriptjcr,Raw2JCR("Scripts/Projects/"+Project+".lua","0_MyProject.lua")	
 	EndIf
+Print "Listing Script JCR:"	
+For E$=EachIn EntryList(scriptjcr) Print "JCR contains: "+E Next
+If havespots projectscript = GALE_LoadScript(scriptjcr,"0_MyProject.lua")	
 End Function
