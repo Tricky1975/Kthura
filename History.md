@@ -13,3 +13,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.04: Scripting engine there. Does it work?
 - 15.08.04: Fixed up issue non-detection of custom spots
 - 15.08.04: Fixed bug not saving the object's colors.
+- 15.08.05: Fixed the unreadable error messages bug

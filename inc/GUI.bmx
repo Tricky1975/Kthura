@@ -100,6 +100,7 @@ GALE_ExitGadget    = tabpanels[2]
 SetGadgetText tabpanels[2],"Kthura Map system~nVersion: "+MKL_NewestVersion()+"~n(c) Jeroen P. Broks~n~n"
 SetGadgetFont tabpanels[2],fixedfont
 TabUpdate
+For Local G:TGadget=EachIn TabPanels ListAddLast GALEGUI_HideOnError,G next
 
 Function TabUpdate()
 For Local k=0 Until 3
