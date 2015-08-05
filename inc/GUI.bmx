@@ -40,6 +40,7 @@ Global CallAction:TMap = New TMap
 Global CallMenu:TMap = New TMap
 Global CallSelect:TMap = New TMap
 
+
 Function AddCallBack(CallMap:TMap,tag:Object,f())
 Local r:TCallBackfunction = New tcallbackfunction
 r.func = f
@@ -83,27 +84,40 @@ Global Tabber:TGadget = CreateTabber(0,0,ww,wh,window)
 Global TW = ClientWidth(tabber)
 Global TH = ClientHeight(tabber)
 AddGadgetItem tabber,"About Kthura"
+AddGadgetItem tabber,"General Map Data"
 AddGadgetItem tabber,"Map Editor"
 AddGadgetItem tabber,"Console Output"
 
 ' The tabber panels
-Global TabPanels:TGadget[3]
+Global TabPanels:TGadget[4]
 TabPanels[0] = CreateLabel("Kthura map editor "+MKL_NewestVersion()+"~n~nCoded by Tricky~n~n(c) Jeroen P Broks 2015-"+Year()+"~n~nThe Kthura modules have been licensed under the Mozilla Public License 2.0~nThis editor has been licensed under the GNU General Public License v3~n~n"+MKL_GetAllversions(),0,0,tw,th,tabber)
 SetGadgetFont tabpanels[0],fixedfont
-TabPanels[1] = CreatePanel(0,0,tw,th,tabber)
-Global Editor:TGadget = TabPanels[1]
-tabpanels[2] = CreateTextArea(0,0,tw,th,tabber)
-SetGadgetColor tabpanels[2],0,0,0
-SetGadgetColor tabpanels[2],255,180,0,False
-GALE_ConsoleGadget = tabpanels[2]
-GALE_ExitGadget    = tabpanels[2]
-SetGadgetText tabpanels[2],"Kthura Map system~nVersion: "+MKL_NewestVersion()+"~n(c) Jeroen P. Broks~n~n"
-SetGadgetFont tabpanels[2],fixedfont
+TabPanels[1] = CreateTabber(0,0,tw,th,tabber)
+Global GeneralTabber:TGadget = TabPanels[1]
+Global GTW = ClientWidth (GeneralTabber)
+Global GTH = ClientHeight(GeneralTabber) ; Print "Client format General Data Tab: "+GTW+"x"+GTH
+TabPanels[2] = CreatePanel(0,0,tw,th,tabber)
+Global Editor:TGadget = TabPanels[2]
+tabpanels[3] = CreateTextArea(0,0,tw,th,tabber)
+SetGadgetColor tabpanels[3],0,0,0
+SetGadgetColor tabpanels[3],255,180,0,False
+GALE_ConsoleGadget = tabpanels[3]
+GALE_ExitGadget    = tabpanels[3]
+SetGadgetText tabpanels[3],"Kthura Map system~nVersion: "+MKL_NewestVersion()+"~n(c) Jeroen P. Broks~n~n"
+SetGadgetFont tabpanels[3],fixedfont
 TabUpdate
-For Local G:TGadget=EachIn TabPanels ListAddLast GALEGUI_HideOnError,G next
+For Local G:TGadget=EachIn TabPanels ListAddLast GALEGUI_HideOnError,G Next
+
+Function GeneralDataUpdate()
+Local g:TGadget
+For Local K$ = EachIn MapKeys(GDfields)
+	g = TGadget(MapValueForKey(gdfields,k))
+	If Not g csay "Illegal gadget on key "+k Else MapInsert kthmap.data,k,TextFieldText(g)
+	Next
+End Function
 
 Function TabUpdate()
-For Local k=0 Until 3
+For Local k=0 Until 4
 	tabpanels[k].setshow k=SelectedGadgetItem(tabber)
 	Next
 'Print "Show tab: "+SelectedGadgetItem(tabber)	

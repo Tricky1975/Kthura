@@ -132,9 +132,52 @@ For Local CS$=EachIn prid.list("CSpots")
 If skipped And havespots
 	Notify "The following items require a script file dedicated to this project which doesn't exist:~n~n"+skipped+"~n~nPlease create a file named "+CurrentDir()+"/Scripts/Projects/"+Project+".lua in order to get them to work!"
 Else
-	JCR_AddPatch scriptjcr,Raw2JCR("Scripts/Projects/"+Project+".lua","0_MyProject.lua")	
+	JCR_AddPatch scriptjcr,Raw2JCR("Scripts/Projects/"+Project+".lua",project+".lua")	
 	EndIf
 Print "Listing Script JCR:"	
 For E$=EachIn EntryList(scriptjcr) Print "JCR contains: "+E Next
-If havespots projectscript = GALE_LoadScript(scriptjcr,"0_MyProject.lua")	
+If havespots projectscript = GALE_LoadScript(scriptjcr,Project+".lua")
+Local HaveGenData = Prid.list("GeneralData")<>Null
+Local gdx=gtw
+Local gdy=gth
+Local gdp=0
+Local gdg:TGadget
+Local cpanel:TGadget
+
+If HaveGenData HaveGenData = CountList(Prid.list("GeneralData"))>0
+If HaveGenData
+	Print CountList(Prid.list("GeneralData"))+" General Data fields found, so let's put them in"
+	If prid.c("GeneralPageMax").toint() GDPanels = New TGadget[prid.c("GeneralPageMax").toint()]
+	For Local fld$=EachIn prid.list("GeneralData")
+		gdy:+25
+		If gdy+25>gth 
+			gdx = gdx+300
+			gdy = 0
+			If gdx+300>gtw
+				gdx=0
+				gdp:+1
+				AddGadgetItem GeneralTabber,"Page #"+gdp
+				If gdp>=Len(GDPanels) KED_ERROR "General panel overflow!"
+				cpanel = CreatePanel(0,0,GTW,GTH,GeneralTabber)
+				gdpanels[gdp-1]=cpanel
+				EndIf
+			EndIf
+		If Trim(fld)="*strike*"	
+			CreateLabel "",gdx,gdy,300,25,cpanel,label_separator
+		Else
+			CreateLabel fld,gdx,gdy,150,25,cpanel
+			gdg = CreateTextField(gdx+150,gdy,145,25,cpanel)
+			SetGadgetText gdg,kthmap.data.value(fld)
+			MapInsert gdfields,fld,gdg			
+			addcallback callaction,gdg,GeneralDataUpdate
+			EndIf
+		Next
+Else
+	Print "Client format General Data Tab: "+GTW+"x"+GTH
+	Print "No General Data fields found, so let's put the warning in this tab"
+	CSay("No general data fields were set up for this project")
+	'CSay("CreateLabel ~qNo general data fields were set up gor this project~q,0,"+Int(GTH/2)+","+GTW+",25,GeneralTabber,Label_Center") ' Debug line
+	AddGadgetItem GeneralTabber,"NO GENERAL DATA IN THIS PROJECT"
+	CreateLabel "No general data fields were set up for this project",0,GTH/2,GTW,25,GeneralTabber,Label_Center	
+	EndIf	
 End Function

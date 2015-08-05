@@ -77,5 +77,9 @@ Global ScriptJCR:TJCRDir = JCR_Dir("Scripts/Libraries.gll"); JCR_AddPatch(Script
 ' Script
 Global ProjectScript:TLua
 
+' General Data pages
+Global GDPanels:TGadget[] = New TGadget[5]
+Global GDFields:TMap = New tmap
+
 ' Edit
 Global SelectedObject:TKthuraObject

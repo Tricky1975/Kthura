@@ -96,6 +96,10 @@ Import    "Mods/Kthura_Core.bmx"
 Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
+' Version information
+MKL_Version "Kthura Map Editor - Kthura Map Editor.bmx","15.08.01"
+MKL_Lic     "Kthura Map Editor - Kthura Map Editor.bmx","GNU - General Public License ver3"
+
 
 ' Use OpenGL (nope, I'm not even thinking about supporting DirectX, sorry!)
 SetGraphicsDriver (GLMax2DDriver(),GRAPHICS_ALPHABUFFER|GRAPHICS_BACKBUFFER|GRAPHICS_ACCUMBUFFER)
@@ -115,9 +119,6 @@ Include   "inc/Editor.bmx"
 Include   "inc/go.bmx"
 
 
-' Version information
-MKL_Version "Kthura Map Editor - Kthura Map Editor.bmx","15.08.01"
-MKL_Lic     "Kthura Map Editor - Kthura Map Editor.bmx","GNU - General Public License ver3"
 
 
 ' We have everything? well let's rock and roll then.

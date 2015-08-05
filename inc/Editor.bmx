@@ -33,7 +33,7 @@ MKL_Lic     "Kthura Map Editor - inc/Editor.bmx","GNU - General Public License v
 
 ' Draw the canvas
 Function DrawCanvas()
-If SelectedGadgetItem(Tabber)<>1 Return
+If SelectedGadgetItem(Tabber)<>2 Return
 'If Not  CanvasGraphics(Canvas) Print "No canvas?"
 SetGraphics CanvasGraphics(Canvas)
 SetBlend alphablend

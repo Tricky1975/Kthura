@@ -14,3 +14,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.04: Fixed up issue non-detection of custom spots
 - 15.08.04: Fixed bug not saving the object's colors.
 - 15.08.05: Fixed the unreadable error messages bug
+- 15.08.05: General Data can now be edited in a Kthura map (if you were wondering about that empty data file inside a Kthura JCR6 file, now you got it) :)
