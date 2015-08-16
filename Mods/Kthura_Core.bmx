@@ -12,6 +12,12 @@ Version: 15.08.04
 
 End Rem
 
+' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
+'          - Documentation has been adapted to this new status in all three modules. (I will only make this notice in the core, but this one and the previous one goes for all mods in Kthura).
+'          - Quick data access within a Kthura map done
+'          - BUGFIX: The actor pic synchronizer returned null if a picture was already loaded. This has been fixed as it had to return the memory reference of the loaded picture already. (Trying to save memory, don't you sometimes just hate it) :)
+'          - BUGFIX: Auto hotspot bottom center for single pic actors. I forgot to set this right ;)
+
 
 Strict
 Import tricky_units.MKL_Version
@@ -228,14 +234,14 @@ Type tkthuraListmap Extends TMap
 	
 	End Type
 	
-Type TKthuraImagemap Extends TMap
+Type TKthuraImageMap Extends TMap
 	
 	Method Img:TImage(Tag$)	
 	Return TImage(MapValueForKey(Self,Upper(tag)))
 	End Method
 	
 	Method Load:TImage(JCR:TJCRDir,File$,Prefix$,StandardHot$="")
-	If MapContains(Self,Upper(Prefix+":"+File)) Return
+	If MapContains(Self,Upper(Prefix+":"+File)) Return TImage(MapValueForKey(Self,Upper(Prefix+":"+File)))
 	Local hotf$ = StripExt(file)+".hot"
 	Local anim$ = StripExt(file)+".frames"
 	Local w,h,s,f,RL$,RS$[],I:TImage
@@ -250,6 +256,8 @@ Type TKthuraImagemap Extends TMap
 			I = LoadAnimImage(JCR_B(JCR,File),w,h,s,f)
 			EndIf			
 	Else
+		DebugLog "Loading image for Kthura Image map: "+File
+		If Not file KthuraError "Request done to load an image into a Kthura Image map, but no filename was defined"
 		I = LoadImage(JCR_B(JCR,File))
 		EndIf
 	If Not I 
@@ -336,6 +344,21 @@ Type TKthura
 	End Method
 	
 	Rem
+	bbdoc: Look up the general data inside a Kthura map
+	returns: A string containing the data. If the data does not exist, an empty string is returned
+	End Rem
+	Method GetData$(key$)
+	Return data.value(key)
+	End Method
+	
+	Rem
+	bbdoc: Define data inside a Kthura map.
+	End Rem
+	Method SetData(key$,Value$)
+	MapInsert data,key,value
+	End Method
+	
+	Rem
 	bbdoc: Is a coordinate within an object or not.
 	about: This function will check based on the object type if a coordinate is within an object or not. <p>Currently supported objects: Zone, TiledArea, Obstacle.
 	returns: True if this is the case, and False if not. (duh)<p>Unsupported object types will always return False
@@ -407,7 +430,7 @@ Type TKthura
 				Next
 		Default
 			If SorB<>0 Print "WARNING! Unknown SorB code found ("+SorB+") using the single picture setting in stead"
-			ret.SinglePic = Textures.Load(TextureJCR,Pics,"Actor.Single")
+			ret.SinglePic = Textures.Load(TextureJCR,Pics,"Actor.Single","BOTTOMCENTER")
 			ret.SinglePicFile = Pics
 		End Select	
 	End Method
@@ -435,6 +458,17 @@ Type TKthura
 	Method SpawnActor:TKthuraActor(Spot$,Pics$,Tag$,SorB=1,Update=True)
 	Local SpawnExit:TKthuraObject = TagMap.Get(Spot)
 	If Not SpawnExit KthuraError "Cannot spawn an actor on a spot that does not exist! ("+Spot+")"; Return	
+	?debug
+	?debug
+	Local sorbn$[] = ["Single","Bundle"]
+	DebugLog "I have to spawn an actor on spot: "+spot
+	DebugLog "= Coordinates:  "+SpawnExit.X+","+SpawnExit.Y
+	DebugLog "= Tag:          "+Tag
+	DebugLog "= Picture file: "+Pics
+	DebugLog "= SorB:         "+SorB+" ("+sorbn[sorb]+")"
+	DebugLog "= Update:       "+Update
+	DebugLog "= Let's go!"
+	?
 	Local ret:TKthuraActor = createactor(SpawnExit.X,SpawnExit.Y,Pics,Tag,Sorb,update)
 	ret.dominance = spawnexit.dominance
 	ret.R = spawnexit.R

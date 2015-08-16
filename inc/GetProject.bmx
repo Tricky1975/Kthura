@@ -113,7 +113,8 @@ Local skipped$
 Local HaveSpots=prid.list("CSpots")<>Null
 If havespots havespots = CountList(prid.list("CSpots"))>0
 ' Add custom spots
-For Local CS$=EachIn prid.list("CSpots")
+If prid.list("CSpots")
+ For Local CS$=EachIn prid.list("CSpots")
 
 	If Left(CS$,1)<>"$" 
 		CSay "WARNING! Custom spots MUST be prefixed with a '$'"
@@ -129,6 +130,7 @@ For Local CS$=EachIn prid.list("CSpots")
 			EndIf
 		EndIf
 	Next
+ endif	
 If skipped And havespots
 	Notify "The following items require a script file dedicated to this project which doesn't exist:~n~n"+skipped+"~n~nPlease create a file named "+CurrentDir()+"/Scripts/Projects/"+Project+".lua in order to get them to work!"
 Else

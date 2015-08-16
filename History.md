@@ -15,3 +15,8 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.04: Fixed bug not saving the object's colors.
 - 15.08.05: Fixed the unreadable error messages bug
 - 15.08.05: General Data can now be edited in a Kthura map (if you were wondering about that empty data file inside a Kthura JCR6 file, now you got it) :)
+- 15.08.16: First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
+- 15.08.16: Documentation has been adapted to this new status in all three modules. (I will only make this notice in the core, but this one and the previous one goes for all mods in Kthura).
+- 15.08.16: Quick data access within a Kthura map done
+- 15.08.16: BUGFIX: The actor pic synchronizer returned null if a picture was already loaded. This has been fixed as it had to return the memory reference of the loaded picture already. (Trying to save memory, don't you sometimes just hate it) :)
+- 15.08.16: BUGFIX: Auto hotspot bottom center for single pic actors. I forgot to set this right ;)

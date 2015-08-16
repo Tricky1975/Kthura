@@ -170,8 +170,10 @@ Type KTDrawActor Extends ktdrawdriver
 	Local AcX,AcY
 	Local ak,GoX,GoY,GoW$,WtX,WtY,timeout
 	Local ABX,ABY,TBX,TBY
+	SetColor A.R,A.G,A.B
 	If A.SinglePicfile
 		I = A.SinglePic
+		If Not I ErrorText="<SinglePic not properly defined>"
 	Else
 		If Not A.ChosenPic 
 			ErrorText = "<No Chosen Picture>"
