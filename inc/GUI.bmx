@@ -1,4 +1,4 @@
-Rem
+  Rem
 /*
 	Kthura
 	GUI Setup
@@ -99,12 +99,14 @@ Global GTH = ClientHeight(GeneralTabber) ; Print "Client format General Data Tab
 TabPanels[2] = CreatePanel(0,0,tw,th,tabber)
 Global Editor:TGadget = TabPanels[2]
 tabpanels[3] = CreateTextArea(0,0,tw,th,tabber)
+PConsole = tabpanels[3]
 SetGadgetColor tabpanels[3],0,0,0
 SetGadgetColor tabpanels[3],255,180,0,False
 GALE_ConsoleGadget = tabpanels[3]
 GALE_ExitGadget    = tabpanels[3]
 SetGadgetText tabpanels[3],"Kthura Map system~nVersion: "+MKL_NewestVersion()+"~n(c) Jeroen P. Broks~n~n"
 SetGadgetFont tabpanels[3],fixedfont
+FormatTextAreaText( Tabpanels[3],255,180,0 ,0 )
 TabUpdate
 For Local G:TGadget=EachIn TabPanels ListAddLast GALEGUI_HideOnError,G Next
 

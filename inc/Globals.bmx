@@ -83,3 +83,7 @@ Global GDFields:TMap = New tmap
 
 ' Edit
 Global SelectedObject:TKthuraObject
+
+' Console will remain amber. In Windows too!!!!
+Global PCOnsole:TGadget
+Global OldConsoleText$

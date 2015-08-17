@@ -34,6 +34,10 @@ MKL_Lic     "Kthura Map Editor - inc/Go.bmx","GNU - General Public License ver3"
 Function Run()
 ShowGadget window
 Repeat
+If oldconsoletext<>TextFieldText(PConsole)
+	FormatTextAreaText( Pconsole ,255,180,0 ,0 ) ' If I don't do this, Windows will always put on unreadable text in the textfield. Oh well. Crappy systems require crappy results I suppose.
+	oldconsoletext = TextFieldText(PConsole)
+	EndIf
 GetEvent
 If paintedbefore Drawcanvas
 Select eid
@@ -49,6 +53,11 @@ Select eid
 		callback callselect,esource
 	Case event_menuaction
 		callback callmenu,Hex(edata)
+		?Not MacOS
+		If edata = 1999 
+			If wanttosave() Exit
+			EndIf
+		?	
 	Case Event_GadgetPaint
 		DrawCanvas
 		paintedbefore = True

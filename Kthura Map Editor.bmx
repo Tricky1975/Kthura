@@ -40,6 +40,8 @@ End Rem
 ' 15.07.29 - GitHub Script set up
 '          - Fixed modify alpha ignore bug
 ' 15.08.01 - Export features now present
+' 15.08.17 - FIXED: Console text unreadble in Windows. That is fixed. If Linux had the same issue then it should be fixed as well, though I don't plan a Linux build.
+'          - FIXED: Exit menu item didn't work outside Mac. Just forgot to implement that. It's fixed now.
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver

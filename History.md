@@ -20,3 +20,7 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.16: Quick data access within a Kthura map done
 - 15.08.16: BUGFIX: The actor pic synchronizer returned null if a picture was already loaded. This has been fixed as it had to return the memory reference of the loaded picture already. (Trying to save memory, don't you sometimes just hate it) :)
 - 15.08.16: BUGFIX: Auto hotspot bottom center for single pic actors. I forgot to set this right ;)
+- 15.08.17: Fixed quit error not working in Windows 
+- 15.08.17: Fixed unreadble console in windows
+- 15.08.17: Small cosmetic change in the text editor
+- 15.08.17: Windows exes released as well
