@@ -1,7 +1,7 @@
 Rem
 /*
-	
-	
+	Kthura
+	Let's go
 	
 	
 	
@@ -24,10 +24,10 @@ Rem
 */
 
 
-Version: 15.04.29
+Version: 15.08.23
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/Go.bmx","15.04.29"
+MKL_Version "Kthura Map Editor - inc/Go.bmx","15.08.23"
 MKL_Lic     "Kthura Map Editor - inc/Go.bmx","GNU - General Public License ver3"
 
 

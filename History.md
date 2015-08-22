@@ -24,3 +24,6 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.17: Fixed unreadble console in windows
 - 15.08.17: Small cosmetic change in the text editor
 - 15.08.17: Windows exes released as well
+- 15.08.23: Area effect support
+- 15.08.23: Relabel
+- 15.08.23: Two bugs did pop up which have low priority, but they are noted in my GitHub repository as issues #12 and #13

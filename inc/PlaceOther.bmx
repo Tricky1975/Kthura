@@ -1,7 +1,7 @@
 Rem
 /*
-	
-	
+	Kthura
+	Place "Other"
 	
 	
 	
@@ -24,7 +24,7 @@ Rem
 */
 
 
-Version: 15.04.29
+Version: 15.08.23
 
 End Rem
 Type TOtherMap Extends TMap

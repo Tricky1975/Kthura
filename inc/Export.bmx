@@ -24,7 +24,7 @@ Rem
 */
 
 
-Version: 15.08.04
+Version: 15.08.23
 
 End Rem
 Const EX_JPG=0

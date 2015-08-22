@@ -24,10 +24,10 @@ Rem
 */
 
 
-Version: 15.08.01
+Version: 15.08.23
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/GetProject.bmx","15.08.01"
+MKL_Version "Kthura Map Editor - inc/GetProject.bmx","15.08.23"
 MKL_Lic     "Kthura Map Editor - inc/GetProject.bmx","GNU - General Public License ver3"
 
 Function GetProject()

@@ -24,10 +24,10 @@ Rem
 */
 
 
-Version: 15.07.29
+Version: 15.08.23
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/Editor.bmx","15.07.29"
+MKL_Version "Kthura Map Editor - inc/Editor.bmx","15.08.23"
 MKL_Lic     "Kthura Map Editor - inc/Editor.bmx","GNU - General Public License ver3"
 
 
@@ -116,7 +116,7 @@ End Function
 AddCallBack CallMenu,Hex(2003),toggleShowgrid
 
 
-Global CanvasAction:TCanvasActionBase[5]
+Global CanvasAction:TCanvasActionBase[6]
 
 
 ' What to do with the canvases?
@@ -352,6 +352,57 @@ Type TCanvasModify Extends tcanvasactionbase
 
 	End Type
 	
+Type TCanvasAreaEffect Extends TCanvasActionBase
+
+     	Field down,x,y,w,h,endx,endy
+	Field AEI$
+
+	Method MouseEnter() End Method
+	Method MouseLeave() down=False End Method
+	Method MouseMove() 
+	endx = ex
+	endy = ey
+	End Method
+
+	Method MouseDown() 
+	Local i = SelectedGadgetItem(areaeffectlist)
+	If i<0 Return Notify("Please select something from the effect list first!")
+	AEI = GadgetItemText(areaeffectlist,i)
+	down=True
+	x = ex
+	y = ey
+	endx = ex
+	endy = ey
+	End Method
+	
+	Method MouseUp() 
+	If Not down Return
+	down=False
+	w = endx - x
+	h = endy - y
+	Local AEA:Tbaseareaeffect = tbaseareaeffect(MapValueForKey(MapAreaEffect,AEI))
+	If Not AEA Return Notify("SOMETHING'S WRONG!!!~n~nNo instruction object was assigned to Area Effect type "+AEI+". This is very likely the result of an internal error.~n~nPlease visit https://github.com/Tricky1975/Kthura/issues and report it!")
+	AEA.Action(x+screenx,y+screeny,w,h)
+	End Method
+	
+	Method XDrawCanvas()
+	If Not down Return
+	Local r = 100 + (Sin(MilliSecs()/100)*100)
+	Local g = 100 + (Cos(MilliSecs()/100)*100)
+	Local b = 100 + (Sin(MilliSecs()/500)*100)
+	SetColor r,g,b	
+	SetAlpha .25
+	Local mx,my,mw,mh
+	mx = x
+	my = y
+	mw = endx - x 
+	mh = endy - y
+	DrawRect mx,my,mw,mh
+	End Method
+
+	End Type
+	
+	
 Function ModifyMove()
 Local P:Tworkpanel = modifydata
 Local KO:TKthuraObject = SelectedObject
@@ -430,4 +481,5 @@ CanvasAction[0] = New TCanvasTiledArea
 canvasaction[1] = New TcanvasObstacle
 canvasaction[2] = New TCanvasZones
 canvasaction[3] = New TCanvasOther
-canvasaction[4] = New TCanvasModify
+canvasaction[4] = New TCanvasAreaEffect
+canvasaction[5] = New TCanvasModify

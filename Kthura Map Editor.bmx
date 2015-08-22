@@ -24,7 +24,7 @@ Rem
 */
 
 
-Version: 15.08.01
+Version: 15.08.23
 
 End Rem
 Strict
@@ -42,6 +42,9 @@ End Rem
 ' 15.08.01 - Export features now present
 ' 15.08.17 - FIXED: Console text unreadble in Windows. That is fixed. If Linux had the same issue then it should be fixed as well, though I don't plan a Linux build.
 '          - FIXED: Exit menu item didn't work outside Mac. Just forgot to implement that. It's fixed now.
+' 15.08.23 - Area effect support
+'          - Relabel
+'          - Two bugs did pop up which have low priority, but they are noted in my GitHub repository as issues #12 and #13
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -99,7 +102,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map Editor - Kthura Map Editor.bmx","15.08.01"
+MKL_Version "Kthura Map Editor - Kthura Map Editor.bmx","15.08.23"
 MKL_Lic     "Kthura Map Editor - Kthura Map Editor.bmx","GNU - General Public License ver3"
 
 
@@ -117,6 +120,7 @@ Include   "inc/GUI.bmx"
 Include   "inc/placeother.bmx" ' This must always be placed AFTER the inc/GUI.bmx call!
 Include   "inc/Export.bmx"
 Include   "inc/script.bmx"
+Include   "inc/areaeffect.bmx"
 Include   "inc/Editor.bmx"
 Include   "inc/go.bmx"
 

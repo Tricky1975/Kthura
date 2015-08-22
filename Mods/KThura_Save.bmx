@@ -8,7 +8,7 @@ Rem
 	http://mozilla.org/MPL/2.0/.
 
 
-Version: 15.07.12
+Version: 15.08.23
 
 End Rem
 Strict
@@ -17,7 +17,7 @@ Import "kthura_core.bmx"
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map Editor - Mods/KThura_Save.bmx","15.07.12"
+MKL_Version "Kthura Map Editor - Mods/KThura_Save.bmx","15.08.23"
 MKL_Lic     "Kthura Map Editor - Mods/KThura_Save.bmx","Mozilla Public License 2.0"
 
 Private

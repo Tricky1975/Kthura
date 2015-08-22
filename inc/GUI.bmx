@@ -1,4 +1,4 @@
-  Rem
+Rem
 /*
 	Kthura
 	GUI Setup
@@ -24,10 +24,10 @@
 */
 
 
-Version: 15.08.01
+Version: 15.08.23
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/GUI.bmx","15.08.01"
+MKL_Version "Kthura Map Editor - inc/GUI.bmx","15.08.23"
 MKL_Lic     "Kthura Map Editor - inc/GUI.bmx","GNU - General Public License ver3"
 
 
@@ -242,9 +242,10 @@ AddGadgetItem tooltabber,"Tiled Areas"	' 0
 AddGadgetItem tooltabber,"Obstacles"	' 1
 AddGadgetItem tooltabber,"Zones"		' 2
 AddGadgetItem tooltabber,"Other"		' 3
-AddGadgetItem tooltabber,"Modify"		' 4
+AddGadgetItem tooltabber,"Area Effects"   ' 4
+AddGadgetItem tooltabber,"Modify"		' 5
 If Not CanvasGraphics(Canvas) AddTextAreaText GALE_ConsoleGadget,"WARNING! Something went wrong in the canvas definitions!~n"
-Global ToolGadgets:TList[] = [New TList,New TList,New TList,New TList,New TList]
+Global ToolGadgets:TList[] = [New TList,New TList,New TList,New TList,New TList,New TList]
 
 Global TextureBox:TGadget = CreateListBox(0,0,ttw,300,tooltabber)
 ListAddLast toolgadgets[0],texturebox 
@@ -344,11 +345,16 @@ SetGadgetText OtherData.kind,""
 SetGadgetText OtherData.dominance,"20"
 SetButtonState OtherData.impassible,0	
 
+'Global AreaEffectPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
+Global AreaEffectList:TGadget= CreateListBox(0,00,ttw,tth,tooltabber)
+ListAddLast toolgadgets[4],AreaEffectList
+
+
 
 Global ModifyPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global ModifyData:TWorkPanel = Newworkpanel(Modifypanel)
 Global ModifyRemove:TGadget = CreateButton("Delete",0,ClientHeight(ModifyPanel)-25,ClientWidth(ModifyPanel),25,ModifyPanel)
-ListAddLast toolgadgets[4],ModifyPanel
+ListAddLast toolgadgets[5],ModifyPanel
 
 AllowModifyPanel False
 
@@ -359,7 +365,7 @@ End Function
 
 Function UpdateTooltabber()
 DebugLog "Tool tab: "+SelectedGadgetItem(tooltabber)
-For Local K=0 Until 5
+For Local K=0 Until 6
 	For Local G:TGadget = EachIn toolgadgets[k]
 		G.setshow False
 		Next
