@@ -269,10 +269,13 @@ Type TRelabel Extends Tbaseareaeffect
 			Else 
 				ok=True
 				EndIf
+			For Local lab$=EachIn o.labels.split(",")
+				ok = ok And  lab<>s.value("Label") 
+				Next
 			If ok
 				If s.value("Replace")="true" orilabel="" Else orilabel = O.labels
-				If O.labels O.labels:+","
-				o.labels:+s.value("Label")
+				If orilabel Orilabel:+","
+				o.labels=orilabel+s.value("Label")
 				EndIf
 			EndIf
 		Next

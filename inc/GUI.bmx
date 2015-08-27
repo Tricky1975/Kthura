@@ -183,6 +183,10 @@ CreateMenu "Scan and Remove ~qrotten~q objects",4002,debugmenu
 Include "RemoveRotten.bmx"
 addcallback callmenu,Hex(4002),removerotten
 
+CreateMenu "Count Objects",4003,debugmenu
+Include "CountObjects.bmx"
+addcallback callmenu,Hex(4003),CountObjects
+
 
 ' Debug build menu. This one should ONLY be used in the debug build and should therefore not appear in the release build. Oh yeah, and let's always make this menu go last (for obvious reasons). :-P
 ?Debug
