@@ -367,7 +367,7 @@ Type TKthura
 	Local s
 	Select KObject.Kind
 		Case "Zone","TiledArea"
-			Return x>=KObject.x And x<=KObject.x+KObject.w And y>=KObject.y And y<=KObject.y
+			Return x>=KObject.x And x<=KObject.x+KObject.w And y>=KObject.y And y<=KObject.y+KObject.h
 		Case "Obstacle"
 			If Not kobject.textureimage Return
 			s = ImageWidth(kobject.textureimage)
