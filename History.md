@@ -29,3 +29,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.08.23: Two bugs did pop up which have low priority, but they are noted in my GitHub repository as issues #12 and #13
 - 15.08.27: Fixed the issues with the "Relabel" feature.
 - 15.08.27: Fixed a bug regarding coordinate checking inside a tiledarea or zone
+- 15.09.02: Just synced with the new license utility

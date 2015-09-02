@@ -1,4 +1,28 @@
 Rem
+	Kthura
+	Setup GUI
+	
+	
+	
+	(c) Jeroen P. Broks, 2015, All rights reserved
+	
+		This program is free software: you can redistribute it and/or modify
+		it under the terms of the GNU General Public License as published by
+		the Free Software Foundation, either version 3 of the License, or
+		(at your option) any later version.
+		
+		This program is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU General Public License for more details.
+		You should have received a copy of the GNU General Public License
+		along with this program.  If not, see <http://www.gnu.org/licenses/>.
+		
+	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
+	to the project the exceptions are needed for.
+Version: 15.09.02
+End Rem
+Rem
 /*
 	Kthura
 	GUI Setup
@@ -27,8 +51,8 @@ Rem
 Version: 15.08.23
 
 End Rem
-MKL_Version "Kthura Map Editor - inc/GUI.bmx","15.08.23"
-MKL_Lic     "Kthura Map Editor - inc/GUI.bmx","GNU - General Public License ver3"
+MKL_Version "Kthura Map System - GUI.bmx","15.09.02"
+MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
 ' Call back functions
@@ -186,6 +210,16 @@ addcallback callmenu,Hex(4002),removerotten
 CreateMenu "Count Objects",4003,debugmenu
 Include "CountObjects.bmx"
 addcallback callmenu,Hex(4003),CountObjects
+
+CreateMenu "Go To Screen Position",4004,debugmenu
+Function GoToScreenPosition()
+Local pos$ = MaxGUI_Input("Please enter the X and Y separated by a comma")
+Local Pss$[] = pos.split(",")
+If Len(pss)<>2 Then Return Notify("Invalid input")
+screenx = pss[0].toint()
+screeny = pss[1].toint()
+End Function
+addcallback callmenu,Hex(4004),GoToScreenPosition
 
 
 ' Debug build menu. This one should ONLY be used in the debug build and should therefore not appear in the release build. Oh yeah, and let's always make this menu go last (for obvious reasons). :-P
