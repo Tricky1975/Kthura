@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.02
+Version: 15.09.08
 End Rem
 Rem
 /*
@@ -51,7 +51,7 @@ Rem
 Version: 15.08.23
 
 End Rem
-MKL_Version "Kthura Map System - Editor.bmx","15.09.02"
+MKL_Version "Kthura Map System - Editor.bmx","15.09.08"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -269,18 +269,60 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	kthmap.totalremap
 	End Method
 
+
 	End Type
 
 
-Type TCanvasZones Extends tcanvasactionbase
-	
-	Field startx,starty
-	Field work
-	
+Type TCanvasZones Extends TCanvasTiledArea
+
 	Method MouseDown()
+	Local tex$
+	If True 'ButtonState(NewObject)
+		work=True
+		' standard setting
+		startx=ex
+		starty=ey
+		' mod by grid if set that way
+		If gridmode
+			startx = Floor(startx/currentgridw)*currentgridw
+			starty = Floor(starty/currentgridh)*currentgridh
+			EndIf
+		' end is by default the same as the start. The user will move the mouse later.
+		endx=startx
+		endy=starty
+		EndIf
 	End Method
+	
 
 	Method MouseUp()
+	If Not work Return
+	If endx=startx Return
+	If endx=starty Return
+	If endx<startx SwapInt endx,startx
+	If endy<starty SwapInt endy,starty
+	Local O:TKthuraObject = kthmap.createobject(False)
+	Local w = endx - startx
+	Local h = endy - starty
+	'Local s = SelectedGadgetItem(Texturebox)
+	'Local tex$ = GadgetItemText(texturebox,s)
+	O.X = startx + Screenx
+	o.y = starty + screeny
+	o.w = w
+	o.h = h
+	'o.texturefile = tex
+	o.kind = "Zone"
+	o.dominance = "$ffffff".toInt()
+	o.impassible = ButtonState(zonedata.impassible)
+	o.labels = TextFieldText(zoneData.Labels)
+	o.r = Rand(0,255)
+	o.g = Rand(0,255)
+	o.b = Rand(0,255)
+	Repeat
+	o.tag = "Zone "+Hex(Rand(0,Abs(MilliSecs())))
+	Until Not MapContains(kthmap.tagmap,o.tag)
+	'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
+	kthmap.totalremap
+	work=False	
 	End Method
 
 	End Type
@@ -315,7 +357,7 @@ Type TCanvasModify Extends tcanvasactionbase
 	For KO=EachIn kthmap.fullobjectlist
 		If selectedobject cdom=selectedobject.dominance
 		Select KO.Kind
-			Case "TiledArea"	
+			Case "TiledArea","Zone"	
 				If KO.x<ex+screenx And KO.x+ko.w>ex+screenx And KO.y<ey+screeny And KO.y+ko.h>ey+screeny And KO.dominance>=cdom SelectedObject = KO
 			Case "Exit","Entrance"
 				If ex+screenX>KO.x-3 And ex+screenX<KO.X+3 And ey+screeny>KO.y-3 And ey+screeny<KO.y+3 And KO.dominance>=cdom SelectedObject = KO
@@ -468,7 +510,7 @@ End Function
 Function ModifyAlpha()
 Local KO:TKthuraObject = SelectedObject
 If Not KO CSay("No modification.... Could not get an object"); Return
-KO.alpha = SliderValue(modifydata.alpha)
+KO.alpha = SliderValue(modifydata.alpha)/Double(1000)
 End Function
 
 Function DeleteObject()

@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.02
+        Version: 15.09.08
 End Rem
 Rem
 
@@ -31,8 +31,15 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.09.02"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.09.08"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
+
+
+Rem
+bbdoc: When set to true, the zones will be drawn. 
+about: When you use Kthura in games, you can best leave this variable be, however when you decide to use this module to build your own editor, this setting can come in handy.
+End Rem
+Global Kthura_DrawZones = False
 
 Rem
 bbdoc: Draws a Kthura level
@@ -97,6 +104,24 @@ Type KTDrawDriver
 	
 		
 	End Type
+	
+Type KTDrawZones Extends ktdrawdriver
+
+	Method Draw(O:TKthuraObject,x,y)
+	If Not Kthura_DrawZones Return
+	SetColor O.R,O.G,O.B
+	SetAlpha .5
+	DrawRect O.X-x,O.Y-y,O.W,O.H	
+	SetAlpha 1
+	SetColor 0,0,0
+	DrawText O.Tag,(O.X-x)-1,(O.Y-y)-1
+	DrawText O.Tag,(O.X-x)+1,(O.Y-y)+1
+	SetColor O.R,O.G,O.B
+	DrawText O.Tag,(O.X-x)  ,(O.Y-y) 	
+	End Method
+	
+	End Type
+	
 
 Type KTDrawTiledArea Extends ktdrawdriver
 
@@ -200,8 +225,13 @@ Type KTDrawActor Extends ktdrawdriver
 				A.IncFrame()
 				A.FrameSpeedCount=0
 				EndIf
+			A.UnMoveTimer=4	
 		ElseIf A.NotInMotionThen0 And (Not A.Moving)
-			A.Frame=0		
+			If A.UnMoveTimer>0
+				A.UnMovetimer:-1
+			Else
+				A.Frame=0		
+				EndIf
 			EndIf
 		' Actor Walk	
 		Rem ROTTEN WE DON'T NEED THIS!
@@ -314,6 +344,7 @@ Global OtherNames$[] = ["Exit","Entrance","CSpot"] ' All objects marked with $ w
 
 Global DrawDrivers:TMap = New TMap
 MapInsert drawdrivers,"TiledArea",New ktdrawtiledarea
+MapInsert drawdrivers,"Zone",New ktdrawzones
 MapInsert drawdrivers,"Actor",New ktdrawactor
 MapInsert DrawDrivers,"Obstacle",New ktdrawobstacle
 For Local K$=EachIn OtherNames MapInsert drawdrivers,K,DKOther Next

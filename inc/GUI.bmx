@@ -20,38 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.02
+Version: 15.09.08
 End Rem
-Rem
-/*
-	Kthura
-	GUI Setup
-	
-	
-	
-	(c) Jeroen P. Broks, 2015, All rights reserved
-	
-		This program is free software: you can redistribute it and/or modify
-		it under the terms of the GNU General Public License as published by
-		the Free Software Foundation, either version 3 of the License, or
-		(at your option) any later version.
-		
-		This program is distributed in the hope that it will be useful,
-		but WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-		GNU General Public License for more details.
-		You should have received a copy of the GNU General Public License
-		along with this program.  If not, see <http://www.gnu.org/licenses/>.
-		
-	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
-	to the project the exceptions are needed for.
-*/
-
-
-Version: 15.08.23
-
-End Rem
-MKL_Version "Kthura Map System - GUI.bmx","15.09.02"
+MKL_Version "Kthura Map System - GUI.bmx","15.09.08"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
@@ -352,6 +323,7 @@ SetGadgetText tiledareadata.dominance,"20"
 SetButtonState tiledAreaData.impassible,1	
 ListAddLast toolgadgets[0],tiledareapanel
 
+
 Global ObstaclePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global ObstacleData:TWorkPanel = newworkpanel(ObstaclePanel)
 ListAddLast toolgadgets[1],ObstaclePanel
@@ -364,6 +336,21 @@ ObstacleData.edittag.setenabled False
 SetGadgetText ObstacleData.kind,"Obstacle"
 SetGadgetText ObstacleData.dominance,"20"
 SetButtonState ObstacleData.impassible,1	
+
+Global ZonePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
+Global ZoneData:TWorkPanel = newworkpanel(Zonepanel)
+Zonedata.x.setenabled False
+Zonedata.y.setenabled False
+Zonedata.w.setenabled False
+Zonedata.h.setenabled False
+zonedata.kind.setenabled False
+zonedata.edittag.setenabled False
+zonedata.alpha.setenabled False
+zonedata.dominance.setenabled False
+SetGadgetText ZoneData.kind,"Zone"
+SetGadgetText Zonedata.dominance,"$ffffff"
+SetButtonState ZoneData.impassible,0	
+ListAddLast toolgadgets[2],ZonePanel
 
 
 
