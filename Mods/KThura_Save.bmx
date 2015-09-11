@@ -64,6 +64,8 @@ For O=EachIn kmap.fullobjectlist
 	WriteLine bte.stream,"~n~nNEW"
 	WriteLine bte.stream,"~tKIND = "+o.kind
 	WriteLine bte.stream,"~tCOORD = "+o.X+","+o.y
+	WriteLine bte.stream,"~tINSERT = "+o.InsertX+","+O.InsertY
+	WriteLine bte.stream,"~tROTATION = "+o.rotation
 	WriteLine bte.stream,"~tSIZE = "+o.w+"x"+o.h
 	WriteLine bte.stream,"~tTAG = "+o.tag
 	WriteLine bte.stream,"~tLABELS = "+o.labels

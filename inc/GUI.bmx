@@ -274,16 +274,18 @@ Global ParentGadget:TGadget
 Type TWorkPanel
 	Method New()
 	CreateLabel "Coordinates:" ,0,  0,250,25,ParentGadget
-	CreateLabel "Size:"        ,0, 25,250,25,parentgadget
-	CreateLabel "Kind:"        ,0, 50,250,25,ParentGadget
-	CreateLabel "Labels:"      ,0,100,250,25,parentgadget
-	CreateLabel "Dominance:"   ,0,125,250,25,Parentgadget
-	CreateLabel "Alpha:"       ,0,150,250,25,parentgadget
-	CreateLabel "Impassible:"  ,0,175,250,25,parentgadget
-	CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
-	CreateLabel "Frames:"      ,0,225,250,25,parentgadget
-	CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
-	CreateLabel "Frame Height:",0,275,250,25,parentgadget
+	CreateLabel "Insert Point:",0, 25,250,25,parentgadget
+	CreateLabel "Size:"        ,0, 50,250,25,parentgadget
+	CreateLabel "Kind:"        ,0, 75,250,25,ParentGadget
+	CreateLabel "Labels:"      ,0,125,250,25,parentgadget
+	CreateLabel "Dominance:"   ,0,150,250,25,Parentgadget
+	CreateLabel "Alpha:"       ,0,175,250,25,parentgadget
+	CreateLabel "Impassible:"  ,0,200,250,25,parentgadget
+	CreateLabel "Rotation:"    ,0,225,250,25,parentgadget; CreateLabel "degrees",310,225, 150,25,parentgadget
+	'CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
+	'CreateLabel "Frames:"      ,0,225,250,25,parentgadget
+	'CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
+	'CreateLabel "Frame Height:",0,275,250,25,parentgadget
 
 	SetSliderRange alpha,0,1000; SetSliderValue alpha,1000
 	End Method
@@ -291,18 +293,21 @@ Type TWorkPanel
 	Field ph = ClientHeight(parentgadget)
 	Field X:TGadget          = CreateTextField  (250,  0, 50,25,parentgadget)
 	Field Y:TGadget          = CreateTextField  (300,  0, 50,25,parentgadget)
-	Field W:TGadget          = CreateTextField  (250, 25, 50,25,parentgadget)
-	Field H:TGadget          = CreateTextField  (300, 25, 50,25,parentgadget)
-	Field Kind:TGadget       = CreateTextField  (250, 50,200,25,parentgadget)
-	Field EditTag:TGadget    = CreateButton("Tag:",0, 75,200,25,parentgadget)
-	Field Tag:TGadget        = CreateLabel ("--",250, 75,200,25,parentgadget)
-	Field Labels:TGadget     = CreateTextField  (250,100,200,25,parentgadget)
-	Field Dominance:TGadget  = CreateTextField  (250,125,200,25,parentgadget)
-	Field alpha:TGadget      = CreateSlider     (250,150,200,25,parentGadget,Slider_horizontal | SLIDER_TRACKBAR)		
-	Field Impassible:TGadget = CreateButton(""  ,250,175,200,25,parentgadget,button_checkbox)
-	Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
-	Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
-	Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
+	Field InsX:TGadget       = CreateTextField  (250, 25, 40,25,parentgadget)
+	Field InsY:TGadget       = CreateTextField  (300, 25, 40,25,parentgadget)
+	Field W:TGadget          = CreateTextField  (250, 50, 50,25,parentgadget)
+	Field H:TGadget          = CreateTextField  (300, 50, 50,25,parentgadget)
+	Field Kind:TGadget       = CreateTextField  (250, 75,200,25,parentgadget)
+	Field EditTag:TGadget    = CreateButton("Tag:",0,100,200,25,parentgadget)
+	Field Tag:TGadget        = CreateLabel ("--",250,100,200,25,parentgadget)
+	Field Labels:TGadget     = CreateTextField  (250,125,200,25,parentgadget)
+	Field Dominance:TGadget  = CreateTextField  (250,150,200,25,parentgadget)
+	Field alpha:TGadget      = CreateSlider     (250,175,200,25,parentGadget,Slider_horizontal | SLIDER_TRACKBAR)		
+	Field Impassible:TGadget = CreateButton(""  ,250,200,200,25,parentgadget,button_checkbox)
+	Field Rotation:TGadget   = CreateTextField   (250,225, 50,25,parentgadget)
+	'Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
+	'Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
+	'Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
 	End Type
 
 Function NewWorkPanel:TWorkPanel(Parent:TGadget)
@@ -329,6 +334,8 @@ Global ObstacleData:TWorkPanel = newworkpanel(ObstaclePanel)
 ListAddLast toolgadgets[1],ObstaclePanel
 ObstacleData.x.setenabled False
 ObstacleData.y.setenabled False
+obstacledata.insx.setenabled False
+obstacledata.insy.setenabled False
 ObstacleData.w.setenabled False
 ObstacleData.h.setenabled False
 ObstacleData.kind.setenabled False
@@ -343,6 +350,8 @@ Zonedata.x.setenabled False
 Zonedata.y.setenabled False
 Zonedata.w.setenabled False
 Zonedata.h.setenabled False
+zonedata.insx.setenabled False
+zonedata.insy.setenabled False
 zonedata.kind.setenabled False
 zonedata.edittag.setenabled False
 zonedata.alpha.setenabled False

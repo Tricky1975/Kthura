@@ -204,6 +204,9 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 	o.alpha = SliderValue(TiledAreaData.Alpha) / Double(1000)
 	o.impassible = ButtonState(tiledareadata.impassible)
 	o.labels = TextFieldText(TiledAreaData.Labels)
+	o.rotation = TextFieldText(TiledAreaData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
+	o.insertx = TextFieldText(TiledAreaData.InsX).toInt()
+	o.inserty = TextFieldText(TiledAreaData.InsY).toInt()
 	'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
 	kthmap.totalremap
 	work=False
@@ -266,6 +269,7 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	o.alpha = SliderValue(ObstacleData.Alpha) / Double(1000)
 	o.impassible = ButtonState(ObstacleData.impassible)
 	o.labels = TextFieldText(ObstacleData.Labels)
+	o.rotation = TextFieldText(ObstacleData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
 	kthmap.totalremap
 	End Method
 
@@ -399,6 +403,9 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText P.Dominance,KO.Dominance
 		SetSliderValue P.alpha,KO.Alpha*1000
 		SetButtonState P.Impassible,KO.Impassible
+		SetGadgetText P.Rotation,KO.Rotation
+		SetGadgetText P.insx,KO.insertx
+		SetGadgetText p.insy,KO.inserty
 		EndIf		
 	?debug
 	If selectedobject csay "Selected object #"+SelectedObject.idnum Else csay "No object selected"
@@ -477,6 +484,9 @@ KO.X = TextFieldText(P.X).toint()
 KO.Y = TextFieldText(P.Y).toint()
 KO.W = TextFieldText(P.W).toint()
 KO.H = TextFieldText(P.H).toint()
+KO.InsertX = TextFieldText(P.InsX).toint()
+KO.InsertY = TextFieldText(P.InsY).toint()
+KO.Rotation = TextFieldText(P.Rotation).toint(); While kO.rotation>=360 ko.rotation:-360 Wend; While kO.rotation<=-360 ko.rotation:+360 Wend	
 KO.dominance = TextFieldText(P.dominance).Toint()
 Kthmap.totalremap
 End Function	
@@ -535,6 +545,9 @@ addcallback callaction,modifydata.x,modifymove
 addcallback callaction,modifydata.y,modifymove
 addcallback callaction,modifydata.w,modifymove
 addcallback callaction,modifydata.h,modifymove
+addcallback callaction,modifydata.insx,modifymove
+addcallback callaction,modifydata.insy,modifymove
+addcallback callaction,modifydata.rotation,modifymove
 addcallback callaction,modifydata.dominance,modifymove
 addcallback callaction,modifydata.impassible,modifyimpassible
 addcallback callaction,modifydata.Labels,modifylabels
