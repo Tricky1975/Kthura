@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.08
+Version: 15.09.11
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","15.09.08"
+MKL_Version "Kthura Map System - GUI.bmx","15.09.11"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
