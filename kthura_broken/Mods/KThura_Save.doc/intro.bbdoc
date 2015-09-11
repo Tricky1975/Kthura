@@ -1,0 +1,7 @@
+<p align='center' style='background-color:#000000; color:#aa00ff'><img src='../../kthura_core.mod/doc/Kthura_Logo_Full.png'></p>
+
+<p align='center' style='background-color:#ff0000; color:#ffff00'>NOTICE!!!<br>The base of this module is currently done, however, this module is still in development.<br>Most features should work now, but keep in mind it my still be buggy and some features may be added, changed or removed.<br>Use at your own risk.</p>
+
+<p>This module is written in order to save Kthura maps from BlitzMax.<br>
+This module was solely written in order to make creating an editor possibe ;)<br> 
+The Kthura system was named after the main protagonist of the adventure game M&ouml;rker as that was the first game to use this system.

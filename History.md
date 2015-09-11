@@ -33,3 +33,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 18.09.08: Fixed alpha bug in modifier
 - 15.09.11: Added support for rotation on obstacles
 - 15.09.11: Added support for insertion points for tiled areas
+- 18.09.11: There was an issue in the repository. Is it fixed now?
