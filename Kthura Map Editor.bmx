@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.11
+Version: 15.09.14
 End Rem
 Strict
 
@@ -43,6 +43,7 @@ End Rem
 ' 15.09.08 - Fixed alpha bug in modifier
 ' 15.09.11 - Added support for rotation
 '          - Added support for insertion points
+' 15.09.14 - Rotten objects remover now also works on zones.
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -100,7 +101,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.09.11"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.09.14"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

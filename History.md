@@ -35,3 +35,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.11: Added support for insertion points for tiled areas
 - 15.09.11: There was an issue in the repository. Is it fixed now?
 - 15.09.12: Added KT_Copy tool. An command line tool that can create new maps out of portions of existing maps.
+- 15.09.14: "Rotten Objects" scanner now also scans the zones.
