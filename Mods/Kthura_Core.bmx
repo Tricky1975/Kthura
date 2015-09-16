@@ -16,6 +16,7 @@ End Rem
 '          - BUGFIX: Auto hotspot bottom center for single pic actors. I forgot to set this right ;)
 ' 15.09.10 - DEBUG: Added a feature to list out all picture tags tied to an actor
 ' 15.09.12 - Cam Setting will now only be reported in the debug build
+' 15.09.16 - IgnoreBlocks ignored by MoveTo. Not any more.
 
 
 Strict
@@ -227,6 +228,7 @@ Type TKthuraActor Extends TKthuraObject
 	Moving = True
 	MoveX = TX
 	MoveY = TY
+	MoveIgnoreBlock = TIgnoreBlocks
 	End Method
 	
 	End Type
