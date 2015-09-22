@@ -20,36 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.02
-End Rem
-Rem
-/*
-	Kthura
-	Place "Other"
-	
-	
-	
-	(c) Jeroen P. Broks, 2015, All rights reserved
-	
-		This program is free software: you can redistribute it and/or modify
-		it under the terms of the GNU General Public License as published by
-		the Free Software Foundation, either version 3 of the License, or
-		(at your option) any later version.
-		
-		This program is distributed in the hope that it will be useful,
-		but WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-		GNU General Public License for more details.
-		You should have received a copy of the GNU General Public License
-		along with this program.  If not, see <http://www.gnu.org/licenses/>.
-		
-	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
-	to the project the exceptions are needed for.
-*/
-
-
-Version: 15.08.23
-
+Version: 15.09.22
 End Rem
 Type TOtherMap Extends TMap
 	
@@ -83,6 +54,7 @@ Type TOtherExit Extends totherbase
 	Local tag$ = GUI_Input("Please enter a tag for this exit/entrance spot:")
 	If Not tag Return
 	If kthmap.GetObjectByTag(tag) Return Notify("There already is an object with that tag")
+	Print "Placing exit: "+tag
 	Local o:TKthuraObject = kthmap.createobject()
 	o.kind = "Exit"
 	o.tag = tag
@@ -96,11 +68,15 @@ Type TOtherExit Extends totherbase
 		o.x = ex + screenx
 		o.y = ey + screeny
 		EndIf
+	Print "Remapping"	
 	kthmap.remaptagmap
+	Print "Done"
 	End Method
 	
 	Method Show(KO:TKthuraObject)
+	'Print "Showing exit"
 	drawspot KO,0,255,0
+	'Print "Exit shown"
 	End Method
 	
 	End Type

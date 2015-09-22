@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.12
+        Version: 15.09.22
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -17,6 +17,7 @@ End Rem
 ' 15.09.10 - DEBUG: Added a feature to list out all picture tags tied to an actor
 ' 15.09.12 - Cam Setting will now only be reported in the debug build
 ' 15.09.16 - IgnoreBlocks ignored by MoveTo. Not any more.
+' 15.09.22 - A few tiny core adaptions to make animated texturing possible (though the draw mode has to deal with it more) :)
 
 
 Strict
@@ -29,7 +30,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.12"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.22"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -82,8 +83,9 @@ Type TKthuraObject
 	Field LoadTried
 	Field Frame
 	Field Frames,FrameWidth,FrameHeight
-	Field FrameSpeed
-	Field AnimationSpeed = -1 ' This setting automatically sets older objects not supporting animation. The editor will by default set this value to 4.
+	Field FrameSpeed = -1
+	Field framespeedticker
+	'Field AnimationSpeed = -1 ' This setting automatically sets older objects not supporting animation. The editor will by default set this value to 4.
 	Field InMotion = True
 	Field PlusX,PlusY,MinusX,MinusY
 	Field Rotation
@@ -224,7 +226,7 @@ Type TKthuraActor Extends TKthuraObject
 	bbdoc: Makes the character walk to a target position
 	about: Contrary to WalkTo, MoveTo uses a rather primitive way to find the way and the character will not be able to find the way when there are obstacles in the way. The character will simply stop moving upon touching those. An advantage of this routine is that it's able to be more precize than WalkTo. Please note the routine should not be used when the character is already walking with WalkTo, or you may get some very odd behavior.
 	End Rem
-	Method MoveTo(TX,TY,TIngoreBlocks=False)
+	Method MoveTo(TX,TY,TIgnoreBlocks=False)
 	Moving = True
 	MoveX = TX
 	MoveY = TY
@@ -303,6 +305,7 @@ Type TKthuraImageMap Extends TMap
 		ElseIf RL="@HOTEND"
 			HotEnd I
 		Else
+			RS = RL.Split(",")
 			SetImageHandle I,RS[0].toint(),RS[1].toint()	
 			EndIf			
 		EndIf
@@ -942,11 +945,13 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 						O.Dominance = SL[1].toInt()
 					Case "TEXTURE","TEXTUREFILE"
 						O.Texturefile = SL[1]
-					Case "FRAMES"
+					Case "FRAMES" ' Deprecated
 						O.Frames = SL[1].toInt()
+						KthuraWarning "FRAMES command inside an Kthura object map has been deprecated. Please remove it as soon as possible."
 					Case "CURRENTFRAME","FRAME"
 						O.FRAME = SL[1].TOINT()
-					Case "FRAMESIZE"
+					Case "FRAMESIZE" ' Deprecated
+						KthuraWarning "FRAMESIZE command inside an Kthura object map has been deprecated. Please remove it as soon as possible."
 						DL = SL[1].split("x")
 						If Len(DL)<2 
 							KthuraWarning " Invalid size definition in line #"+cl+" >> "+L
@@ -954,6 +959,9 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 							O.FrameWidth  = DL[0].toint()
 							O.FrameHeight = DL[1].toint()
 							EndIf
+					Case "FRAMESPEED"
+						o.FrameSpeed = SL[1].toint()
+						Print "Receveid string: "+DL[0]+" translated to: "+o.framespeed						
 					Case "ROTATION"
 						O.Rotation = SL[1].toint()		
 					Case "ALPHA"

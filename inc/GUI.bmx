@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.11
+Version: 15.09.22
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","15.09.11"
+MKL_Version "Kthura Map System - GUI.bmx","15.09.22"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
@@ -272,23 +272,7 @@ End Rem
 
 Global ParentGadget:TGadget
 Type TWorkPanel
-	Method New()
-	CreateLabel "Coordinates:" ,0,  0,250,25,ParentGadget
-	CreateLabel "Insert Point:",0, 25,250,25,parentgadget
-	CreateLabel "Size:"        ,0, 50,250,25,parentgadget
-	CreateLabel "Kind:"        ,0, 75,250,25,ParentGadget
-	CreateLabel "Labels:"      ,0,125,250,25,parentgadget
-	CreateLabel "Dominance:"   ,0,150,250,25,Parentgadget
-	CreateLabel "Alpha:"       ,0,175,250,25,parentgadget
-	CreateLabel "Impassible:"  ,0,200,250,25,parentgadget
-	CreateLabel "Rotation:"    ,0,225,250,25,parentgadget; CreateLabel "degrees",310,225, 150,25,parentgadget
-	'CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
-	'CreateLabel "Frames:"      ,0,225,250,25,parentgadget
-	'CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
-	'CreateLabel "Frame Height:",0,275,250,25,parentgadget
 
-	SetSliderRange alpha,0,1000; SetSliderValue alpha,1000
-	End Method
 	Field pw = ClientWidth(parentgadget)
 	Field ph = ClientHeight(parentgadget)
 	Field X:TGadget          = CreateTextField  (250,  0, 50,25,parentgadget)
@@ -305,9 +289,36 @@ Type TWorkPanel
 	Field alpha:TGadget      = CreateSlider     (250,175,200,25,parentGadget,Slider_horizontal | SLIDER_TRACKBAR)		
 	Field Impassible:TGadget = CreateButton(""  ,250,200,200,25,parentgadget,button_checkbox)
 	Field Rotation:TGadget   = CreateTextField   (250,225, 50,25,parentgadget)
+	Field R:TGadget          = CreateTextField   (250,250, 50,25,parentgadget) 
+	Field G:TGadget          = CreateTextField   (300,250, 50,25,parentgadget) 
+	Field B:TGadget          = CreateTextField   (350,250, 50,25,parentgadget) 
+	Field AnimSpeed:Tgadget  = CreateTextField   (250,275, 50,25,parentgadget)
 	'Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
 	'Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
 	'Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
+
+
+	Method New()
+	CreateLabel "Coordinates:"    ,0,  0,250,25,ParentGadget
+	CreateLabel "Insert Point:"   ,0, 25,250,25,parentgadget
+	CreateLabel "Size:"           ,0, 50,250,25,parentgadget
+	CreateLabel "Kind:"           ,0, 75,250,25,ParentGadget
+	CreateLabel "Labels:"         ,0,125,250,25,parentgadget
+	CreateLabel "Dominance:"      ,0,150,250,25,Parentgadget
+	CreateLabel "Alpha:"          ,0,175,250,25,parentgadget
+	CreateLabel "Impassible:"     ,0,200,250,25,parentgadget
+	CreateLabel "Rotation:"       ,0,225,250,25,parentgadget; CreateLabel "degrees",310,225, 150,25,parentgadget
+	CreateLabel "Color:"          ,0,250,250,25,parentgadget
+	CreateLabel "Animation Speed:",0,275,250,25,parentgadget; CreateLabel "(higher=slower)",310,275,150,25,parentgadget
+	'CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
+	'CreateLabel "Frames:"      ,0,225,250,25,parentgadget
+	'CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
+	'CreateLabel "Frame Height:",0,275,250,25,parentgadget
+	SetGadgetColor R,255,180,180; SetGadgetText R,255
+	SetGadgetColor G,180,255,180; SetGadgetText G,255
+	SetGadgetColor B,180,180,255; SetGadgetText B,255	
+	SetSliderRange alpha,0,1000; SetSliderValue alpha,1000
+	End Method
 	End Type
 
 Function NewWorkPanel:TWorkPanel(Parent:TGadget)
@@ -356,6 +367,10 @@ zonedata.kind.setenabled False
 zonedata.edittag.setenabled False
 zonedata.alpha.setenabled False
 zonedata.dominance.setenabled False
+zonedata.r.setenabled False
+zonedata.g.setenabled False
+zonedata.b.setenabled False
+zonedata.animspeed.setenabled False
 SetGadgetText ZoneData.kind,"Zone"
 SetGadgetText Zonedata.dominance,"$ffffff"
 SetButtonState ZoneData.impassible,0	
@@ -375,6 +390,10 @@ OtherData.w.setenabled False
 OtherData.h.setenabled False
 OtherData.kind.setenabled False
 OtherData.edittag.setenabled False
+OtherData.r.setenabled False
+OtherData.g.setenabled False
+OtherData.b.setenabled False
+otherdata.animspeed.setenabled False
 SetGadgetText OtherData.kind,""
 SetGadgetText OtherData.dominance,"20"
 SetButtonState OtherData.impassible,0	

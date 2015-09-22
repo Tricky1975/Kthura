@@ -6,28 +6,18 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.11
+        Version: 15.09.22
 End Rem
-Rem
 
-	(c) 2015 Jeroen Petrus Broks.
-	
-	This Source Code Form is subject to the terms of the 
-	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
-	distributed with this file, You can obtain one at 
-	http://mozilla.org/MPL/2.0/.
+' 15.09.22 - A few adaptions to make animated texturing possible
 
-
-Version: 15.08.23
-
-End Rem
 Strict
 Import "kthura_core.bmx"
 
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map System - KThura_Save.bmx","15.09.11"
+MKL_Version "Kthura Map System - KThura_Save.bmx","15.09.22"
 MKL_Lic     "Kthura Map System - KThura_Save.bmx","Mozilla Public License 2.0"
 
 Private
@@ -71,9 +61,10 @@ For O=EachIn kmap.fullobjectlist
 	WriteLine bte.stream,"~tLABELS = "+o.labels
 	WriteLine bte.stream,"~tDOMINANCE = "+o.dominance
 	WriteLine bte.stream,"~tTEXTURE = "+o.Texturefile
-	WriteLine bte.stream,"~tFRAMES = "+o.Frames
 	WriteLine bte.stream,"~tCURRENTFRAME = "+o.frame
-	WriteLine bte.stream,"~tFRAMESIZE = "+o.framewidth+"x"+o.frameheight
+	WriteLine bte.stream,"~tFRAMESPEED = "+Int(o.framespeed)
+	'WriteLine bte.stream,"~tFRAMES = "+o.Frames       ' These two were already technically taken out of use. They will remain in the core for awhile (being deprecated) to prevent trouble with older maps.
+	'WriteLine bte.stream,"~tFRAMESIZE = "+o.framewidth+"x"+o.frameheight      
 	WriteLine bte.stream,"~tALPHA = "+o.alpha
 	WriteLine bte.stream,"~tVISIBLE = "+o.visible
 	WriteLine bte.stream,"~tCOLOR = "+o.r+","+o.g+","+O.b

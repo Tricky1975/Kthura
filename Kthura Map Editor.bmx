@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.14
+Version: 15.09.22
 End Rem
 Strict
 
@@ -30,6 +30,7 @@ Contrary to regular 2d mapeditors Kthura is not tile based as in building up a m
 
 The first game in which this engine was used was "Moerker" and was named after its protagonist "Kthura" in this honor. (Though this game was suspended due to some issues I could not yet deal with. It might still be created later).
 End Rem
+
 
 ' Revisions
 ' 15.07.29 - GitHub Script set up
@@ -44,6 +45,8 @@ End Rem
 ' 15.09.11 - Added support for rotation
 '          - Added support for insertion points
 ' 15.09.14 - Rotten objects remover now also works on zones.
+' 15.09.22 - Added color support
+'          - Added animation support
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -101,7 +104,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.09.14"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.09.22"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

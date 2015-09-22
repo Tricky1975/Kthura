@@ -37,3 +37,6 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.12: Added KT_Copy tool. An command line tool that can create new maps out of portions of existing maps.
 - 15.09.14: "Rotten Objects" scanner now also scans the zones.
 - 15.09.16: Fixed "IngoreBlocks" ignoring bug
+- 15.09.22: Added color support to Obstacles and Tiled Areas
+- 15.09.22: Added animated texturing support
+- 15.09.22: Kthura now requires MacOS X 10.6 (Snow Leopard) at least to run 10.7 (Lion) is recommended (unless you compile the editor yourself in an OS version prior to Snow Leopard). (For Windows there are no additional version restrictions).

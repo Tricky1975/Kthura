@@ -6,12 +6,13 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.11
+        Version: 15.09.22
 End Rem
 
 ' 15.07.12 - First set release
 ' 15.08.04 - Support for customized spots
 ' 15.09.10 - Fixed: No textures needed for zones, so why try to load them?
+' 15.09.22 - Added color support on tiled areas and obstacles
 
 Strict
 Import "Kthura_core.bmx"
@@ -19,7 +20,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.09.11"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.09.22"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 
@@ -89,6 +90,9 @@ Type KTDrawDriver
 		EndIf
 	o.parent.textures.Load(O.parent.textureJCR,o.texturefile,o.kind,hot)
 	o.textureimage = o.parent.textures.img(o.kind+":"+o.texturefile)	
+	o.Frames = Len(o.textureimage.pixmaps)
+	o.FrameWidth = ImageWidth(o.textureimage)
+	o.Frameheight = ImageHeight(o.textureimage)
 	End Method
 	
 		
@@ -122,6 +126,12 @@ Type KTDrawTiledArea Extends ktdrawdriver
 	
 	Method Draw(O:TKthuraObject,x,y)
 	Local vx,vy,vw,vh ',ox#,oy#
+	If o.FrameSpeed>=0 And o.Frames
+		O.FrameSpeedTicker:+1
+		If O.FrameSpeedTicker>O.Framespeed O.Frame:+1 O.FrameSpeedTicker=0
+		If O.Frame>=O.Frames O.Frame=0
+		EndIf
+	SetColor o.r,o.g,o.b	
 	GetViewport vx,vy,vw,vh
 	'GetOrigin ox,oy
 	SetViewport O.X-x,O.Y-y,O.W,O.H
@@ -145,11 +155,21 @@ Type ktDrawObstacle Extends ktdrawdriver
 		EndIf	
 	o.parent.textures.Load(O.parent.textureJCR,o.texturefile,o.kind,"BOTTOMCENTER")
 	o.textureimage = o.parent.textures.img(o.kind+":"+o.texturefile)	
+	o.Frames = Len(o.textureimage.pixmaps)
+	o.FrameWidth = ImageWidth(o.textureimage)
+	o.Frameheight = ImageHeight(o.textureimage)
 	End Method
 
 		
 	Method Draw(O:TKthuraObject,x,y)
 	SetRotation O.Rotation
+	If o.FrameSpeed>=0 And o.Frames
+		O.FrameSpeedTicker:+1
+		If O.FrameSpeedTicker>O.Framespeed O.Frame:+1 O.FrameSpeedTicker=0
+		If O.Frame>=O.Frames O.Frame=0
+		'Print O.framespeed+":"+o.frames
+		EndIf
+	SetColor o.r,o.g,o.b	
 	If O.textureimage DrawImage O.TextureImage,O.X-x,O.Y-y,O.Frame Else DrawText "<TEXERROR>",O.X,O.Y
 	End Method
 	

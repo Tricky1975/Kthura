@@ -20,38 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.11
+Version: 15.09.22
 End Rem
-Rem
-/*
-	Kthura
-	Editor Part
-	
-	
-	
-	(c) JEROEN P. BROKS, 2015, All rights reserved
-	
-		This program is free software: you can redistribute it and/or modify
-		it under the terms of the GNU General Public License as published by
-		the Free Software Foundation, either version 3 of the License, or
-		(at your option) any later version.
-		
-		This program is distributed in the hope that it will be useful,
-		but WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-		GNU General Public License for more details.
-		You should have received a copy of the GNU General Public License
-		along with this program.  If not, see <http://www.gnu.org/licenses/>.
-		
-	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
-	to the project the exceptions are needed for.
-*/
 
-
-Version: 15.08.23
-
-End Rem
-MKL_Version "Kthura Map System - Editor.bmx","15.09.11"
+MKL_Version "Kthura Map System - Editor.bmx","15.09.22"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -70,8 +42,10 @@ Local ca:Tcanvasactionbase = canvasaction[t]
 ca.xdrawcanvas
 ' Draw "Other" spots
 For Local KO:TKthuraObject = EachIn Kthmap.fullobjectlist
+	'Print "D: "+KO.Kind
 	If OM.Have(KO.Kind) OM.Get(KO.Kind).Show(KO)
 	Next
+'Print "D: DONE!"	
 ' Show Grid
 If GridShow drawgrid
 ' Draw Work Lines
@@ -198,6 +172,9 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 	o.y = starty + screeny
 	o.w = w
 	o.h = h
+	o.R = TextFieldText(TiledAreaData.R).toInt() If O.R<0 O.R=0 ElseIf O.R>255 O.R=255
+	o.G = TextFieldText(TiledAreaData.R).toInt() If O.G<0 O.G=0 ElseIf O.G>255 O.G=255
+	o.B = TextFieldText(TiledAreaData.R).toInt() If O.B<0 O.B=0 ElseIf O.B>255 O.B=255
 	o.texturefile = tex
 	o.kind = "TiledArea"
 	o.dominance = TextFieldText(TiledAreaData.Dominance).toInt()
@@ -397,6 +374,9 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText P.Y,KO.Y
 		SetGadgetText P.W,KO.W
 		SetGadgetText P.H,KO.H
+		SetGadgetText P.R,KO.R
+		SetGadgetText P.G,KO.G
+		SetGadgetText P.B,KO.B
 		SetGadgetText P.Kind,KO.Kind; DisableGadget P.Kind ' Never change a kind manually. Unless you know what you are doing, this is dangerous.
 		SetGadgetText P.Tag,KO.Tag
 		SetGadgetText P.Labels,KO.Labels
@@ -406,6 +386,7 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText P.Rotation,KO.Rotation
 		SetGadgetText P.insx,KO.insertx
 		SetGadgetText p.insy,KO.inserty
+		SetGadgetText p.animspeed,ko.framespeed
 		EndIf		
 	?debug
 	If selectedobject csay "Selected object #"+SelectedObject.idnum Else csay "No object selected"
@@ -484,11 +465,16 @@ KO.X = TextFieldText(P.X).toint()
 KO.Y = TextFieldText(P.Y).toint()
 KO.W = TextFieldText(P.W).toint()
 KO.H = TextFieldText(P.H).toint()
+KO.R = TextFieldText(P.R).toint(); If KO.R<0 KO.R=0 ElseIf KO.R>255 KO.R=255
+KO.G = TextFieldText(P.G).toint(); If KO.G<0 KO.G=0 ElseIf KO.G>255 KO.G=255
+KO.B = TextFieldText(P.B).toint(); If KO.B<0 KO.B=0 ElseIf KO.B>255 KO.B=255
 KO.InsertX = TextFieldText(P.InsX).toint()
 KO.InsertY = TextFieldText(P.InsY).toint()
 KO.Rotation = TextFieldText(P.Rotation).toint(); While kO.rotation>=360 ko.rotation:-360 Wend; While kO.rotation<=-360 ko.rotation:+360 Wend	
 KO.dominance = TextFieldText(P.dominance).Toint()
+ko.framespeed = TextFieldText(p.animspeed).toint()
 Kthmap.totalremap
+DebugLog "ModifyMove() called and executed"
 End Function	
 
 Function ModifyImpassible()
@@ -545,10 +531,14 @@ addcallback callaction,modifydata.x,modifymove
 addcallback callaction,modifydata.y,modifymove
 addcallback callaction,modifydata.w,modifymove
 addcallback callaction,modifydata.h,modifymove
+addcallback callaction,modifydata.r,modifymove
+addcallback callaction,modifydata.g,modifymove
+addcallback callaction,modifydata.b,modifymove
 addcallback callaction,modifydata.insx,modifymove
 addcallback callaction,modifydata.insy,modifymove
 addcallback callaction,modifydata.rotation,modifymove
 addcallback callaction,modifydata.dominance,modifymove
+addcallback callaction,modifydata.animspeed,modifymove
 addcallback callaction,modifydata.impassible,modifyimpassible
 addcallback callaction,modifydata.Labels,modifylabels
 addcallback callaction,modifyremove,deleteobject
