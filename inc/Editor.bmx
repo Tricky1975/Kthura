@@ -515,6 +515,8 @@ Local KO:TKthuraObject = SelectedObject
 If Proceed("Do you really wish to delete object #"+KO.IdNum+"?")<>1 Return
 ListRemove Kthmap.fullobjectlist,KO
 kthmap.totalremap
+SelectedObject = Null
+allowmodifypanel false
 End Function
 
 Function OtherSelect()

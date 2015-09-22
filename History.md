@@ -40,4 +40,5 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.22: Added color support to Obstacles and Tiled Areas
 - 15.09.22: Added animated texturing support
 - 15.09.22: Kthura now requires MacOS X 10.6 (Snow Leopard) at least to run 10.7 (Lion) is recommended (unless you compile the editor yourself in an OS version prior to Snow Leopard). (For Windows there are no additional version restrictions).
-- 19.09.22: Deprecated a few older setups meant for animation, but it was clear they were not going to be used from the start. The saver ignores them now. The loader still sees them, but will throw a warning. After "Star Story" has been finished it's very likely to be removed form the loader as well.
+- 15.09.22: Deprecated a few older setups meant for animation, but it was clear they were not going to be used from the start. The saver ignores them now. The loader still sees them, but will throw a warning. After "Star Story" has been finished it's very likely to be removed form the loader as well.
+- 15.09.22: Fixed #26
