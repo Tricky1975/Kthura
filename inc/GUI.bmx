@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.22
+Version: 15.09.23
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","15.09.22"
+MKL_Version "Kthura Map System - GUI.bmx","15.09.23"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
@@ -336,6 +336,7 @@ tiledareadata.kind.setenabled False
 tiledareadata.edittag.setenabled False
 SetGadgetText tiledareadata.kind,"TiledArea"
 SetGadgetText tiledareadata.dominance,"20"
+SetGadgetText tiledareadata.animspeed,"-1"
 SetButtonState tiledAreaData.impassible,1	
 ListAddLast toolgadgets[0],tiledareapanel
 
@@ -353,6 +354,7 @@ ObstacleData.kind.setenabled False
 ObstacleData.edittag.setenabled False
 SetGadgetText ObstacleData.kind,"Obstacle"
 SetGadgetText ObstacleData.dominance,"20"
+SetGadgetText obstacledata.animspeed,"-1"
 SetButtonState ObstacleData.impassible,1	
 
 Global ZonePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)

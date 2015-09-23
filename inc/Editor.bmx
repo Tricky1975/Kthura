@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.22
+Version: 15.09.23
 End Rem
 
-MKL_Version "Kthura Map System - Editor.bmx","15.09.22"
+MKL_Version "Kthura Map System - Editor.bmx","15.09.23"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -34,6 +34,15 @@ If SelectedGadgetItem(Tabber)<>2 Return
 SetGraphics CanvasGraphics(Canvas)
 SetBlend alphablend
 Cls
+' If past the null barrier, make the background red
+If screenx<0 Then
+	SetColor 255,0,0
+	DrawRect 0,0,Abs(screenx),GadgetHeight(canvas)
+	EndIf
+If screeny<0 Then
+	SetColor 255,0,0
+	DrawRect 0,0,Gadgetwidth(canvas),Abs(screeny)
+	EndIf
 ' Draw the map
 DrawKthura kthmap,screenx,screeny
 ' Extra draw canvas
@@ -184,6 +193,7 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 	o.rotation = TextFieldText(TiledAreaData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
 	o.insertx = TextFieldText(TiledAreaData.InsX).toInt()
 	o.inserty = TextFieldText(TiledAreaData.InsY).toInt()
+	o.framespeed = TextFieldText(tiledareadata.animspeed).toint()
 	'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
 	kthmap.totalremap
 	work=False
@@ -241,12 +251,16 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	O.Kind = "Obstacle"
 	O.W=0
 	O.H=0
+	O.R=TextFieldText(obstacledata.r).toint()
+	O.G=TextFieldText(obstacledata.g).toint()
+	O.B=TextFieldText(obstacledata.b).toint()
 	O.Texturefile = tex
 	O.dominance = TextFieldText(ObstacleData.Dominance).toInt()
 	o.alpha = SliderValue(ObstacleData.Alpha) / Double(1000)
 	o.impassible = ButtonState(ObstacleData.impassible)
 	o.labels = TextFieldText(ObstacleData.Labels)
 	o.rotation = TextFieldText(ObstacleData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
+	o.framespeed = TextFieldText(obstacledata.animspeed).toint()
 	kthmap.totalremap
 	End Method
 
@@ -516,7 +530,7 @@ If Proceed("Do you really wish to delete object #"+KO.IdNum+"?")<>1 Return
 ListRemove Kthmap.fullobjectlist,KO
 kthmap.totalremap
 SelectedObject = Null
-allowmodifypanel false
+allowmodifypanel False
 End Function
 
 Function OtherSelect()
