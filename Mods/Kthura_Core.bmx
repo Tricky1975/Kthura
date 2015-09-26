@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.23
+        Version: 15.09.26
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -18,6 +18,7 @@ End Rem
 ' 15.09.12 - Cam Setting will now only be reported in the debug build
 ' 15.09.16 - IgnoreBlocks ignored by MoveTo. Not any more.
 ' 15.09.22 - A few tiny core adaptions to make animated texturing possible (though the draw mode has to deal with it more) :)
+' 15.09.23 - "ForcePassible" support
 
 
 Strict
@@ -30,7 +31,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.23"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.26"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -93,6 +94,7 @@ Type TKthuraObject
 	Field R=255,G=255,B=255
 	Field Alpha:Double = 1
 	Field Impassible = 1
+	Field ForcePassible = 0 ' Forces the blockmap builder to create a path, even if the other objects blocked it already. Only works on TiledAreas and Zones.
 	Field Visible = True
 	Field Data:StringMap = New StringMap
 	Field Parent:TKthura	
@@ -124,6 +126,27 @@ Type TKthuraObject
 	Method Reform(nx,ny,nw,nh,UpdateBlockMap=True)
 	Move nx,ny,False ' Don't build the blockmap twice, that only eats performance for no reason at all.
 	ReShape nw,nh,updateblockmap
+	End Method
+	
+	Rem
+	bbdoc: Assign data to a Kthura object
+	End Rem
+	Method DataDef(FieldName$,Value$)
+	MapInsert data,fieldname,value
+	End Method
+	
+	Rem
+	bbdoc: Alias for DataDef
+	End Rem
+	Method DataSet(F$,V$) 
+	datadef f,v 
+	End Method
+	
+	Rem
+	bbdoc: Retrieve data from a Kthura Object
+	End Rem
+	Method DataGet$(FieldName$)
+	Return Data.Value(fieldName)
 	End Method
 	
 	End Type
@@ -710,6 +733,26 @@ Type TKthura
 					EndIf	
 			End Select					
 		EndIf Next
+	' And this will force a way open if applicable	
+	For O=EachIn fullobjectlist If O.ForcePassible
+		X = O.X;   If X<0 X=0
+		Y = O.Y;   If Y<0 Y=0
+		W = O.W-1; If W<0 W=0
+		H = O.H-1; If H<0 H=0
+		Select O.Kind
+			Case "TiledArea","Zone"
+				TX = Floor(X/GW)
+				TY = Floor(Y/GH)						
+				TW = Ceil((X+W)/GW)
+				TH = Ceil((Y+H)/GH)
+				'Print "DEBUG: Blockmapping area ("+TX+","+TY+") to ("+TW+","+TH+")"
+				For AX=TX To TW
+					For AY=TY To TH
+						Blockmap[ax,ay]=False
+						Next
+					Next
+			End Select					
+		EndIf Next
 	End Method
 	
 	Rem
@@ -968,6 +1011,8 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 						O.Alpha = SL[1].todouble()
 					Case "IMPASSIBLE"
 						O.Impassible = SL[1].toint()					
+					Case "FORCEPASSIBLE"
+						O.ForcePassible = SL[1].toint()
 					Case "VISIBLE"
 						O.Visible = SL[1].toint()	
 					Default

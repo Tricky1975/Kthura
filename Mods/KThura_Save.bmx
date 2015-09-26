@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.22
+        Version: 15.09.23
 End Rem
 
 ' 15.09.22 - A few adaptions to make animated texturing possible
@@ -17,7 +17,7 @@ Import "kthura_core.bmx"
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map System - KThura_Save.bmx","15.09.22"
+MKL_Version "Kthura Map System - KThura_Save.bmx","15.09.23"
 MKL_Lic     "Kthura Map System - KThura_Save.bmx","Mozilla Public License 2.0"
 
 Private
@@ -69,6 +69,7 @@ For O=EachIn kmap.fullobjectlist
 	WriteLine bte.stream,"~tVISIBLE = "+o.visible
 	WriteLine bte.stream,"~tCOLOR = "+o.r+","+o.g+","+O.b
 	WriteLine bte.stream,"~tIMPASSIBLE = "+o.Impassible
+	WriteLine bte.stream,"~tFORCEPASSIBLE = "+o.ForcePassible
 	For Local dk$=EachIn MapKeys(o.data)
 		WriteLine bte.stream,"~tDATA."+dk+" = "+Replace(o.data.value(dk),"=","<is>")
 		Next

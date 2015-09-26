@@ -43,3 +43,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.22: Deprecated a few older setups meant for animation, but it was clear they were not going to be used from the start. The saver ignores them now. The loader still sees them, but will throw a warning. After "Star Story" has been finished it's very likely to be removed form the loader as well.
 - 15.09.22: Fixed #26
 - 15.09.23: Fixed #28 ( https://github.com/Tricky1975/Kthura/issues/28 )
+- 15.09.26: Enhanced the Lua Scripting API inside the editor

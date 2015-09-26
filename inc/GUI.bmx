@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.23
+Version: 15.09.26
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","15.09.23"
+MKL_Version "Kthura Map System - GUI.bmx","15.09.26"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
@@ -288,11 +288,12 @@ Type TWorkPanel
 	Field Dominance:TGadget  = CreateTextField  (250,150,200,25,parentgadget)
 	Field alpha:TGadget      = CreateSlider     (250,175,200,25,parentGadget,Slider_horizontal | SLIDER_TRACKBAR)		
 	Field Impassible:TGadget = CreateButton(""  ,250,200,200,25,parentgadget,button_checkbox)
-	Field Rotation:TGadget   = CreateTextField   (250,225, 50,25,parentgadget)
-	Field R:TGadget          = CreateTextField   (250,250, 50,25,parentgadget) 
-	Field G:TGadget          = CreateTextField   (300,250, 50,25,parentgadget) 
-	Field B:TGadget          = CreateTextField   (350,250, 50,25,parentgadget) 
-	Field AnimSpeed:Tgadget  = CreateTextField   (250,275, 50,25,parentgadget)
+	Field FcPassible:TGadget = CreateButton(""  ,250,225,200,25,parentgadget,button_checkbox)
+	Field Rotation:TGadget   = CreateTextField   (250,250, 50,25,parentgadget)
+	Field R:TGadget          = CreateTextField   (250,275, 50,25,parentgadget) 
+	Field G:TGadget          = CreateTextField   (300,275, 50,25,parentgadget) 
+	Field B:TGadget          = CreateTextField   (350,275, 50,25,parentgadget) 
+	Field AnimSpeed:Tgadget  = CreateTextField   (250,300, 50,25,parentgadget)
 	'Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
 	'Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
 	'Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
@@ -307,9 +308,10 @@ Type TWorkPanel
 	CreateLabel "Dominance:"      ,0,150,250,25,Parentgadget
 	CreateLabel "Alpha:"          ,0,175,250,25,parentgadget
 	CreateLabel "Impassible:"     ,0,200,250,25,parentgadget
-	CreateLabel "Rotation:"       ,0,225,250,25,parentgadget; CreateLabel "degrees",310,225, 150,25,parentgadget
-	CreateLabel "Color:"          ,0,250,250,25,parentgadget
-	CreateLabel "Animation Speed:",0,275,250,25,parentgadget; CreateLabel "(higher=slower)",310,275,150,25,parentgadget
+	CreateLabel "Force Passible:" ,0,225,250,25,parentgadget
+	CreateLabel "Rotation:"       ,0,250,250,25,parentgadget; CreateLabel "degrees",310,250, 150,25,parentgadget
+	CreateLabel "Color:"          ,0,275,250,25,parentgadget
+	CreateLabel "Animation Speed:",0,300,250,25,parentgadget; CreateLabel "(higher=slower)",310,300,150,25,parentgadget
 	'CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
 	'CreateLabel "Frames:"      ,0,225,250,25,parentgadget
 	'CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
@@ -352,6 +354,7 @@ ObstacleData.w.setenabled False
 ObstacleData.h.setenabled False
 ObstacleData.kind.setenabled False
 ObstacleData.edittag.setenabled False
+ObstacleData.FcPassible.SetEnabled False
 SetGadgetText ObstacleData.kind,"Obstacle"
 SetGadgetText ObstacleData.dominance,"20"
 SetGadgetText obstacledata.animspeed,"-1"
@@ -396,6 +399,7 @@ OtherData.r.setenabled False
 OtherData.g.setenabled False
 OtherData.b.setenabled False
 otherdata.animspeed.setenabled False
+otherData.FcPassible.SetEnabled False
 SetGadgetText OtherData.kind,""
 SetGadgetText OtherData.dominance,"20"
 SetButtonState OtherData.impassible,0	

@@ -41,7 +41,7 @@ If screenx<0 Then
 	EndIf
 If screeny<0 Then
 	SetColor 255,0,0
-	DrawRect 0,0,Gadgetwidth(canvas),Abs(screeny)
+	DrawRect 0,0,GadgetWidth(canvas),Abs(screeny)
 	EndIf
 ' Draw the map
 DrawKthura kthmap,screenx,screeny
@@ -189,6 +189,7 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 	o.dominance = TextFieldText(TiledAreaData.Dominance).toInt()
 	o.alpha = SliderValue(TiledAreaData.Alpha) / Double(1000)
 	o.impassible = ButtonState(tiledareadata.impassible)
+	o.forcepassible = ButtonState(tiledareadata.fcpassible)
 	o.labels = TextFieldText(TiledAreaData.Labels)
 	o.rotation = TextFieldText(TiledAreaData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
 	o.insertx = TextFieldText(TiledAreaData.InsX).toInt()
@@ -308,6 +309,7 @@ Type TCanvasZones Extends TCanvasTiledArea
 	o.kind = "Zone"
 	o.dominance = "$ffffff".toInt()
 	o.impassible = ButtonState(zonedata.impassible)
+	o.forcepassible = ButtonState(zonedata.fcpassible)
 	o.labels = TextFieldText(zoneData.Labels)
 	o.r = Rand(0,255)
 	o.g = Rand(0,255)
@@ -397,6 +399,7 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText P.Dominance,KO.Dominance
 		SetSliderValue P.alpha,KO.Alpha*1000
 		SetButtonState P.Impassible,KO.Impassible
+		SetButtonState P.FcPassible,KO.ForcePassible
 		SetGadgetText P.Rotation,KO.Rotation
 		SetGadgetText P.insx,KO.insertx
 		SetGadgetText p.insy,KO.inserty
@@ -496,6 +499,7 @@ Local P:Tworkpanel = modifydata
 Local KO:TKthuraObject = SelectedObject
 If Not ko Return
 KO.Impassible = ButtonState(P.Impassible)
+KO.ForcePassible = ButtonState(P.FcPassible)
 End Function
 
 Function ModifyLabels()

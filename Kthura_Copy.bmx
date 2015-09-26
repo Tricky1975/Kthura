@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.12
+Version: 15.09.23
 End Rem
 Strict
 Import tricky_units.MKL_Version
@@ -29,7 +29,7 @@ Import tricky_units.Bye
 Import tricky_kthura.Kthura_core
 Import tricky_kthura.Kthura_save
 
-MKL_Version "Kthura Map System - Kthura_Copy.bmx","15.09.12"
+MKL_Version "Kthura Map System - Kthura_Copy.bmx","15.09.23"
 MKL_Lic     "Kthura Map System - Kthura_Copy.bmx","GNU General Public License 3"
 
 Print "Kthura Copy"
@@ -42,7 +42,7 @@ ChangeDir LaunchDir
 
 'Global Tags:StringMap = New StringMap
 'Global Options:TList = New TList
-Global InputFile$,Outputfile$,Labels$[],Tags$[],Kinds$[]
+Global InputFile$,Outputfile$,Labels$[],Tags$[],Kinds$[],xmod,ymod
 
 Global argpos = 1
 
@@ -69,6 +69,10 @@ While argpos < Len(AppArgs)
 				Tags = Nextarg().split(",")	
 			Case "-k"
 				Kinds = Nextarg().split(",")	
+			Case "-x"
+				xmod = Nextarg().toint()
+			Case "-y"
+				ymod = Nextarg().toint()	
 			Default
 				Print "Unknown switch: "+AppArgs[argpos]
 			End Select
@@ -83,6 +87,8 @@ If Not inputfile
 	Print "-l <Labels>        only act on labels <labels>. Separated by commas)"
 	Print "-t <Tags>          only act on tags   <tags>.   Separated by commas)"
 	Print "-k <Kinds>         only act on kinds  <tags>.   Separated by commas)"
+	Print "-x <coords>        modify x coordniates by <coords> pixels"
+	Print "-y <coords>        modify y coordniates by <coords> pixels"
 	Bye
 	EndIf
 
@@ -131,6 +137,8 @@ For O = EachIn inkthura.fullobjectlist
 	ok = ok And allowobject([O.kind],Kinds)
 	If ok 
 		ListAddLast outkthura.fullobjectlist,O
+		O.X:+xmod
+		O.Y:+ymod
 		Print "Copied object #"+O.idnum
 		copied:+1
 		EndIf
