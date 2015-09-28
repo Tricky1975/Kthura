@@ -6,13 +6,14 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.23
+        Version: 15.09.28
 End Rem
 
 ' 15.07.12 - First set release
 ' 15.08.04 - Support for customized spots
 ' 15.09.10 - Fixed: No textures needed for zones, so why try to load them?
 ' 15.09.22 - Added color support on tiled areas and obstacles
+' 15.09.28 - Added boundary support
 
 Strict
 Import "Kthura_core.bmx"
@@ -20,8 +21,37 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.09.23"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.09.28"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
+
+Rem
+bbdoc: Start X Boundary
+about: Boundaries can be set up to improve performance. If they are set everything that falls outside the boudaries, will simply be ignored by the drawer. If the boundaries are not set, the drawer will draw everything regardless if it will be seen by the user or not. Proper usage of these values will speed up the performance. Inproper usage will result into very undesirable effects. People using Kthura in a full Max2D screen (I mean not in a MaxGUI canvas) may want to use @Kthura_GrabBoundaries in stead to be sure this is done the way it should be done.
+End Rem
+Global Kthura_Boundaries_Begin_X
+Rem
+bbdoc: Start Y Boundary
+End Rem
+Global Kthura_Boundaries_Begin_Y
+Rem
+bbdoc: End X Boundary
+End Rem
+Global Kthura_Boundaries_End_X
+Rem
+bbdoc: End Y Boundary
+End Rem
+Global Kthura_Boundaries_End_Y
+
+Rem
+bbdoc: Sets the boundaries based on the sizes of your graphics screen. This should work in Max2D games either in Windowed or full screen mode. I really don't know how this will behave within a MaxGUI canvas.
+End Rem
+Function Kthura_GrabBoundaries()
+Kthura_Boundaries_Begin_X = -5
+Kthura_Boundaries_Begin_Y = -5
+Kthura_Boundaries_End_X   = GraphicsWidth()+5
+Kthura_Boundaries_End_Y   = GraphicsHeight()+5
+' The -5 and +5 are just a few "security" margins, they should not be needed, but they were put in just in case.
+End Function
 
 
 Rem
@@ -42,10 +72,16 @@ Local d:ktdrawdriver
 Local okind$
 Local olist:TList = New TList
 Local ok
+Local boundaries = Kthura_Boundaries_Begin_X <> Kthura_Boundaries_End_X And Kthura_Boundaries_Begin_Y <> Kthura_Boundaries_End_X
 For k=EachIn MapKeys(KMap.DrawMap)
 	o = kmap.drawmap.get(k)	
 	ok=True
 	ok = ok And (o.visible Or ForceVisible)
+	If boundaries
+		d = ktdrawdriver(MapValueForKey(drawdrivers,okind))
+		Assert d Else "Unknown object kind: "+okind
+		ok = ok And d.inboundaries(o)
+		EndIf
 	If ok ListAddLast olist,o
 	Next
 For o=EachIn olist	
@@ -102,6 +138,8 @@ Type KTDrawDriver
 	o.Frameheight = ImageHeight(o.textureimage)
 	End Method
 	
+	Method InBoundaries(O:TKthuraObject) Return True End Method ' If no boundaries setting is know just return true.
+	
 		
 	End Type
 	
@@ -148,6 +186,14 @@ Type KTDrawTiledArea Extends ktdrawdriver
 	SetViewport vx,vy,vw,vh
 	End Method
 	
+	Method InBoundaries(O:TKthuraObject)
+	Return ..
+		O.X    >=Kthura_boundaries_begin_X And ..
+		O.X+O.W<=Kthura_boundaries_end_x   And ..
+		O.Y    >=Kthura_boundaries_begin_Y And ..
+		O.Y+O.H<=Kthura_boundaries_end_Y  
+	End Method
+	
 	End Type
 	
 Type ktDrawObstacle Extends ktdrawdriver
@@ -182,6 +228,17 @@ Type ktDrawObstacle Extends ktdrawdriver
 		EndIf
 	SetColor o.r,o.g,o.b	
 	If O.textureimage DrawImage O.TextureImage,O.X-x,O.Y-y,O.Frame Else DrawText "<TEXERROR>",O.X,O.Y
+	End Method
+
+	Method InBoundaries(O:TKthuraObject)
+	If Not O.textureimage Return True ' Let the drawer itself handle this as an error, we cannot handle it!
+	Return ..
+		O.Y-ImageHeight(o.textureimage)>= Kthura_boundaries_begin_Y And ..
+		O.Y+ImageHeight(o.textureimage)>= Kthura_boundaries_begin_Y And ..
+		O.X-ImageWidth(o.textureImage)>=Kthura_boundaries_begin_X And ..
+		O.Y+ImageWidth(o.textureImage)<=Kthura_boundaries_end_X
+		' I wanted to make sure stuff always pops up. 
+		' It will make the system only more demanding to take all handles added to the images into account and this way we also have no trouble with rotations.		
 	End Method
 	
 	End Type

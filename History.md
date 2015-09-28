@@ -44,3 +44,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.22: Fixed #26
 - 15.09.23: Fixed #28 ( https://github.com/Tricky1975/Kthura/issues/28 )
 - 15.09.26: Enhanced the Lua Scripting API inside the editor
+- 15.09.28: Boundary support
