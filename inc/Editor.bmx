@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.23
+Version: 15.09.29
 End Rem
 
-MKL_Version "Kthura Map System - Editor.bmx","15.09.23"
+MKL_Version "Kthura Map System - Editor.bmx","15.09.29"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -560,6 +560,7 @@ addcallback callaction,modifydata.rotation,modifymove
 addcallback callaction,modifydata.dominance,modifymove
 addcallback callaction,modifydata.animspeed,modifymove
 addcallback callaction,modifydata.impassible,modifyimpassible
+addcallback callaction,modifydata.fcpassible,modifyimpassible
 addcallback callaction,modifydata.Labels,modifylabels
 addcallback callaction,modifyremove,deleteobject
 addcallback callaction,modifydata.edittag,modifyretag
