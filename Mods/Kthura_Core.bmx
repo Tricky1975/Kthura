@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.26
+        Version: 15.09.29
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -19,6 +19,7 @@ End Rem
 ' 15.09.16 - IgnoreBlocks ignored by MoveTo. Not any more.
 ' 15.09.22 - A few tiny core adaptions to make animated texturing possible (though the draw mode has to deal with it more) :)
 ' 15.09.23 - "ForcePassible" support
+' 15.09.29 - Negative dominance blocked
 
 
 Strict
@@ -31,7 +32,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.26"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.29"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -559,6 +560,10 @@ Type TKthura
 	Method RemapDrawMap()
 	ClearMap drawmap
 	For Local O:TKthuraObject=EachIn fullobjectlist
+		If o.dominance<0 
+			o.dominance = 0
+			KthuraWarning "Negative dominance value in object #"+O.IDNum+" has been set to zero."
+			EndIf
 		MapInsert drawmap,Hex(O.dominance)+"."+Hex(+O.Y)+"."+Hex(O.idnum),O
 		Next
 	End Method

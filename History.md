@@ -47,3 +47,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.28: Boundary support
 - 15.09.29: Fixed #29
 - 15.09.29: Fixed #30
+- 15.09.29: Fixed #22
