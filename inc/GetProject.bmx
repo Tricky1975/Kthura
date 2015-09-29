@@ -40,7 +40,7 @@ SetStatusText window,"Project: "+Project+"~tMap: "+file+"~tKthura"
 If prid.c("Grid.Default.W") defaultgridw = prid.c("Grid.Default.W").toint()	
 If prid.c("Grid.Default.W") defaultgridh = prid.c("Grid.Default.H").toint()	
 ShowGadget window
-LoadProject true
+LoadProject True
 End Function
 
 Function LoadProject(GeneralDataLoad=False)
@@ -114,7 +114,7 @@ Local skipped$
 Local HaveSpots=prid.list("CSpots")<>Null
 If havespots havespots = CountList(prid.list("CSpots"))>0
 ' Add custom spots
-If prid.list("CSpots")
+If prid.list("CSpots") And GeneralDataLoad
  For Local CS$=EachIn prid.list("CSpots")
 
 	If Left(CS$,1)<>"$" 
@@ -174,7 +174,7 @@ If HaveGenData And GeneralDataload
 			addcallback callaction,gdg,GeneralDataUpdate
 			EndIf
 		Next
-ElseIf Not GeneralDataLoad
+ElseIf GeneralDataLoad
 	Print "Client format General Data Tab: "+GTW+"x"+GTH
 	Print "No General Data fields found, so let's put the warning in this tab"
 	CSay("No general data fields were set up for this project")
