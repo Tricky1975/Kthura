@@ -21,7 +21,7 @@ Rem
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
 Version: 15.09.02
-End Rem
+'End Rem
 Rem
 /*
 	Kthura
@@ -62,14 +62,20 @@ Project = FilePicker("Please select your project:","Projects"); If Not project B
 PRID = LoadIni("Projects/"+Project)
 Local File$ = FilePicker("Please select your map file:",PRID.C("Maps"),1,True)
 If Not file Bye
+filename = file
 mapfile = PRID.C("Maps")+"/"+File
 mapfile = Replace(mapfile,"//","/")
 SetStatusText window,"Project: "+Project+"~tMap: "+file+"~tKthura"
 If prid.c("Grid.Default.W") defaultgridw = prid.c("Grid.Default.W").toint()	
 If prid.c("Grid.Default.W") defaultgridh = prid.c("Grid.Default.H").toint()	
-' grab texture dirs
-Local f$,ff$,BD
 ShowGadget window
+LoadProject true
+End Function
+
+Function LoadProject(GeneralDataLoad=False)
+Local f$,ff$,BD
+Local file$=filename
+' grab texture dirs
 If prid.list("TexturesGrabFolders")
 	For f=EachIn prid.list("TexturesGrabFolders")
 		csay "Grabbing texture dir: "+F
@@ -154,7 +160,7 @@ If prid.list("CSpots")
 			EndIf
 		EndIf
 	Next
- endif	
+ EndIf	
 If skipped And havespots
 	Notify "The following items require a script file dedicated to this project which doesn't exist:~n~n"+skipped+"~n~nPlease create a file named "+CurrentDir()+"/Scripts/Projects/"+Project+".lua in order to get them to work!"
 Else
@@ -169,9 +175,8 @@ Local gdy=gth
 Local gdp=0
 Local gdg:TGadget
 Local cpanel:TGadget
-
 If HaveGenData HaveGenData = CountList(Prid.list("GeneralData"))>0
-If HaveGenData
+If HaveGenData And GeneralDataload
 	Print CountList(Prid.list("GeneralData"))+" General Data fields found, so let's put them in"
 	If prid.c("GeneralPageMax").toint() GDPanels = New TGadget[prid.c("GeneralPageMax").toint()]
 	For Local fld$=EachIn prid.list("GeneralData")
@@ -198,7 +203,7 @@ If HaveGenData
 			addcallback callaction,gdg,GeneralDataUpdate
 			EndIf
 		Next
-Else
+ElseIf Not GeneralDataLoad
 	Print "Client format General Data Tab: "+GTW+"x"+GTH
 	Print "No General Data fields found, so let's put the warning in this tab"
 	CSay("No general data fields were set up for this project")

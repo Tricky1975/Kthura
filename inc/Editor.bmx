@@ -99,6 +99,7 @@ Function ScrollRight()	screenx:+(defaultgridh/2) End Function; Addcallback callm
 Function EditorSave()
 Csay "Saving: "+Mapfile
 SaveKthura kthmap,mapfile
+LoadProject
 End Function
 addcallback callmenu,Hex(1000),editorsave
 

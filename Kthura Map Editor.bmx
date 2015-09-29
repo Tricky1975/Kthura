@@ -49,6 +49,7 @@ End Rem
 '          - Added animation support
 ' 15.09.23 - Force passible support
 ' 15.09.26 - Enchanced the Lua Scripting APIs with more features
+' 15.09.27 - Fixed the "modified JCR6 file" bug.
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver

@@ -21,7 +21,7 @@ Rem
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
 Version: 15.09.02
-End Rem
+'End Rem
 Rem
 /*
 	Kthura Map System
@@ -57,6 +57,7 @@ MKL_Lic     "Kthura Map System - Globals.bmx","GNU General Public License 3"
 ' Project
 Global Project$
 Global MapFile$
+Global FileName$
 Global ShotFile$
 Global PrID:TIni
 Global KthMap:TKthura
