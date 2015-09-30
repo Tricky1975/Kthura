@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.29
+        Version: 15.09.26
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -32,7 +32,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.29"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","15.09.26"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -190,6 +190,7 @@ Type TKthuraActor Extends TKthuraObject
 	Field WalkingToX,WalkingToY	
 	Field FoundPath:PathFinderUnit
 	Field PathLength
+	Field Cycle = -1
 	
 	Rem
 	bbdoc:Will return a string containing all pictures tied to an actor as a string (with ; as separators).<br>This only works on picbundle actors.
@@ -364,6 +365,7 @@ Type TKthura
 	Field ForeignMap:TKthuralistMap = New TKthuralistmap
 	Field TagMap:TKThuramap = New TKThuramap
 	Field TagMapByLabel:TkthuraLabelMap = New TKThuraLabelMap
+	Field Cycle:Long = 0
 	
 	Field textures:TKthuraImageMap = New TKThuraImageMap
 	

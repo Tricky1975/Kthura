@@ -73,6 +73,7 @@ Local okind$
 Local olist:TList = New TList
 Local ok
 Local boundaries = Kthura_Boundaries_Begin_X <> Kthura_Boundaries_End_X And Kthura_Boundaries_Begin_Y <> Kthura_Boundaries_End_X
+kmap.cycle:+1
 For k=EachIn MapKeys(KMap.DrawMap)
 	o = kmap.drawmap.get(k)	
 	ok=True
@@ -188,10 +189,10 @@ Type KTDrawTiledArea Extends ktdrawdriver
 	
 	Method InBoundaries(O:TKthuraObject)
 	Return ..
-		O.X    >=Kthura_boundaries_begin_X And ..
-		O.X+O.W<=Kthura_boundaries_end_x   And ..
-		O.Y    >=Kthura_boundaries_begin_Y And ..
-		O.Y+O.H<=Kthura_boundaries_end_Y  
+		O.X    >=Kthura_Boundaries_Begin_X And ..
+		O.X+O.W<=Kthura_Boundaries_End_X   And ..
+		O.Y    >=Kthura_Boundaries_Begin_Y And ..
+		O.Y+O.H<=Kthura_Boundaries_End_Y  
 	End Method
 	
 	End Type
@@ -233,10 +234,10 @@ Type ktDrawObstacle Extends ktdrawdriver
 	Method InBoundaries(O:TKthuraObject)
 	If Not O.textureimage Return True ' Let the drawer itself handle this as an error, we cannot handle it!
 	Return ..
-		O.Y-ImageHeight(o.textureimage)>= Kthura_boundaries_begin_Y And ..
-		O.Y+ImageHeight(o.textureimage)>= Kthura_boundaries_begin_Y And ..
-		O.X-ImageWidth(o.textureImage)>=Kthura_boundaries_begin_X And ..
-		O.Y+ImageWidth(o.textureImage)<=Kthura_boundaries_end_X
+		O.Y-ImageHeight(o.textureimage)>= Kthura_Boundaries_Begin_Y And ..
+		O.Y+ImageHeight(o.textureimage)>= Kthura_Boundaries_Begin_Y And ..
+		O.X-ImageWidth(o.textureImage)>=Kthura_Boundaries_Begin_X And ..
+		O.Y+ImageWidth(o.textureImage)<=Kthura_Boundaries_End_X
 		' I wanted to make sure stuff always pops up. 
 		' It will make the system only more demanding to take all handles added to the images into account and this way we also have no trouble with rotations.		
 	End Method
@@ -282,6 +283,8 @@ Type KTDrawActor Extends ktdrawdriver
 	Local A:TKthuraActor = TKthuraActor(O)
 	If Not A Return KthuraError("Actor #"+O.idnum+" is not an actor but nevertheless still marked as such")
 	If A.singlepicfile And a.picbundledir Return KthuraError("Actor #"+O.IDnum+" has both a picbundle and a singlepic, which is not allowed!")
+	If A.Cycle = A.Parent.Cycle Return
+	A.Cycle = A.Parent.Cycle
 	SetRotation A.Rotation
 	Local I:TImage
 	Local ErrorText$ = "Ok!"
