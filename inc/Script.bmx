@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.26
+Version: 15.10.01
 End Rem
 Global spotme:TKthuraObject
 Type TLuaSPOT ' BLD: Object SPOT\nObject used for spot placement and showing
@@ -30,9 +30,9 @@ Type TLuaSPOT ' BLD: Object SPOT\nObject used for spot placement and showing
 	Return spotme
 	End Method
 	
-	Method DrawMe() ' BLD: Draws a marker on screen where the spot is located
+	Method DrawMe(rad) ' BLD: Draws a marker on screen where the spot is located
 	If Not spotME Return CSay("? ERROR! A DrawMe request was done, while SPOTS.ME is currently not in use")
-	DrawSpot spotME,spotME.R,spotME.G,spotME.B
+	DrawSpot spotME,spotME.R,spotME.G,spotME.B,rad
 	End Method
 	
 	Method Kill() ' BLD: Destroy the spot "ME". This feature is most of all for cancelling stuff

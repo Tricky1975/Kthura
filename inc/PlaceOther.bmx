@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.22
+Version: 15.10.01
 End Rem
 Type TOtherMap Extends TMap
 	
@@ -119,15 +119,15 @@ MapInsert om,"Exit",New totherexit
 MapInsert om,"Entrance",om.get("Exit")
 
 
-Function DrawSpot(KO:TKthuraObject,R,G,B)
+Function DrawSpot(KO:TKthuraObject,R,G,B,Rad=5)
 Local sx,sy,ex,ey
-sx = KO.X-5
-sy = KO.Y-5
-ex = KO.X+5
-ey = KO.Y+5
+sx = KO.X-rad
+sy = KO.Y-rad
+ex = KO.X+rad
+ey = KO.Y+rad
 SetColor Abs(Sin(MilliSecs()/100)*(R)),Abs(Sin(MilliSecs()/100)*(G)),Abs(Sin(MilliSecs()/100)*(B))
 'DrawOval sx-screenx,sy-screeny,ex-screenx,ey-screeny
-DrawOpenCircle KO.x-screenx,ko.y-screeny,5
+DrawOpenCircle KO.x-screenx,ko.y-screeny,rad
 DrawLine sx-screenx,KO.y-screeny,ex-screenx,KO.Y-screeny
 DrawLine ko.x-screenx,sy-screeny,ko.x-screenx,ey-screeny
 End Function
