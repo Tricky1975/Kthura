@@ -49,3 +49,4 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.29: Fixed #30
 - 15.09.29: Fixed #22
 - 15.15.10.01: Radius in script spotting support
+- 15.10.02: Fixed radius issue in Lua

@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.29
+Version: 15.10.02
 End Rem
 Strict
 
@@ -50,6 +50,8 @@ End Rem
 ' 15.09.23 - Force passible support
 ' 15.09.26 - Enchanced the Lua Scripting APIs with more features
 ' 15.09.27 - Fixed the "modified JCR6 file" bug.
+' 15.09.28 - Radius support spots
+' 15.10.02 - Fixed a bug in radius support lua
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -107,7 +109,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.09.29"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.10.02"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True
