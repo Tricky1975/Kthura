@@ -22,6 +22,9 @@ Rem
 	to the project the exceptions are needed for.
 Version: 15.10.02
 End Rem
+
+MKL_Version "Kthura Map System - Script.bmx","15.10.02"
+MKL_Lic     "Kthura Map System - Script.bmx","GNU General Public License 3"
 Global spotme:TKthuraObject
 Type TLuaSPOT ' BLD: Object SPOT\nObject used for spot placement and showing
 

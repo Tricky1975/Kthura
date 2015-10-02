@@ -20,8 +20,12 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.01
+Version: 15.10.03
 End Rem
+
+MKL_Version "Kthura Map System - PlaceOther.bmx","15.10.03"
+MKL_Lic     "Kthura Map System - PlaceOther.bmx","GNU General Public License 3"
+
 Type TOtherMap Extends TMap
 	
 	Method Get:totherbase(Tag$)
@@ -59,8 +63,9 @@ Type TOtherExit Extends totherbase
 	o.kind = "Exit"
 	o.tag = tag
 	o.impassible = ButtonState(otherdata.impassible)
-	o.alpha = SliderValue(ObstacleData.Alpha) / Double(1000)
-	o.dominance = TextFieldText(ObstacleData.Dominance).toint()
+	o.alpha = SliderValue(otherData.Alpha) / Double(1000)
+	o.dominance = TextFieldText(otherData.Dominance).toint()
+	o.labels = TextFieldText(otherdata.labels)
 	If gridmode
 		o.x = (Floor(x/currentgridw)*currentgridw)+(currentgridw/2) + screenx
 		o.y = (Floor(y/currentgridh)*currentgridh)+currentgridh     + screeny
@@ -90,8 +95,9 @@ Type TCustomExit Extends totherbase
 	Local O:TKthuraObject = kthmap.createobject()
 	o.tag = ""
 	o.impassible = ButtonState(otherdata.impassible)
-	o.alpha = SliderValue(ObstacleData.Alpha) / Double(1000)
-	o.dominance = TextFieldText(ObstacleData.Dominance).toint()
+	o.alpha = SliderValue(OtherData.Alpha) / Double(1000)
+	o.dominance = TextFieldText(OtherData.Dominance).toint()
+	o.labels = TextFieldText(otherdata.labels)
 	If gridmode
 		o.x = (Floor(x/currentgridw)*currentgridw)+(currentgridw/2) + screenx
 		o.y = (Floor(y/currentgridh)*currentgridh)+currentgridh     + screeny

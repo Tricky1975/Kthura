@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.02
+Version: 15.09.29
 End Rem
 Strict
 
@@ -52,6 +52,7 @@ End Rem
 ' 15.09.27 - Fixed the "modified JCR6 file" bug.
 ' 15.09.28 - Radius support spots
 ' 15.10.02 - Fixed a bug in radius support lua
+' 15.10.03 - Fixed a bug not properly taking over some data in the "Other" spots.
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -109,7 +110,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.10.02"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.09.29"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True
@@ -125,7 +126,7 @@ Include   "inc/Globals.bmx"
 Include   "inc/CamSaveLoad.bmx"
 Include   "inc/GetProject.bmx"
 Include   "inc/GUI.bmx"
-Include   "inc/placeother.bmx" ' This must always be placed AFTER the inc/GUI.bmx call!
+Include   "inc/PlaceOther.bmx" ' This must always be placed AFTER the inc/GUI.bmx call!
 Include   "inc/Export.bmx"
 Include   "inc/script.bmx"
 Include   "inc/areaeffect.bmx"
