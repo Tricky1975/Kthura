@@ -54,3 +54,7 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.10.09: File Tables now also saved in zlib format
 - 15.10.09: Odd stuff happening, needs to be sorted out
 - 15.10.09: Some trouble with the Git Updater fixed.
+
+(One Important Note To Self:
+NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be allergic for that!!!)
+
