@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.10.01
+        Version: 15.10.03
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -20,6 +20,7 @@ End Rem
 ' 15.09.22 - A few tiny core adaptions to make animated texturing possible (though the draw mode has to deal with it more) :)
 ' 15.09.23 - "ForcePassible" support
 ' 15.09.29 - Negative dominance blocked
+' 15.10.03 - DataDump() debug function added. I don't know why, but I need it now (for a bug that can't possibly come to be).
 
 
 Strict
@@ -32,7 +33,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.10.01"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","15.10.03"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -148,6 +149,18 @@ Type TKthuraObject
 	End Rem
 	Method DataGet$(FieldName$)
 	Return Data.Value(fieldName)
+	End Method
+	
+	Rem 
+	bbdoc: Dumps all data fields
+	about: This function is soley meant for debugging purposes
+	End Rem
+	Method DataDump$()
+	Local ret$
+	For Local k$=EachIn MapKeys(data)
+		ret:+k+"="+data.value(k)+"; "
+		Next
+	Return ret
 	End Method
 	
 	End Type

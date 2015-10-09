@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.29
+Version: 15.10.03
 End Rem
 Strict
 
@@ -110,7 +110,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.09.29"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.10.03"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

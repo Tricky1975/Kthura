@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.10.01
+        Version: 15.10.06
 End Rem
 
 ' 15.07.12 - First set release
@@ -21,7 +21,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.10.01"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.10.06"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -78,6 +78,8 @@ For k=EachIn MapKeys(KMap.DrawMap)
 	o = kmap.drawmap.get(k)	
 	ok=True
 	ok = ok And (o.visible Or ForceVisible)
+	okind = o.kind
+	If Prefixed(okind,"$") okind="CSpot"
 	If boundaries
 		d = ktdrawdriver(MapValueForKey(drawdrivers,okind))
 		Assert d Else "Unknown object kind: "+okind
@@ -189,10 +191,12 @@ Type KTDrawTiledArea Extends ktdrawdriver
 	
 	Method InBoundaries(O:TKthuraObject)
 	Return ..
+		( ..
 		O.X    >=Kthura_Boundaries_Begin_X And ..
+		O.Y    >=Kthura_Boundaries_Begin_Y ..
+		) Or ( ..
 		O.X+O.W<=Kthura_Boundaries_End_X   And ..
-		O.Y    >=Kthura_Boundaries_Begin_Y And ..
-		O.Y+O.H<=Kthura_Boundaries_End_Y  
+		O.Y+O.H<=Kthura_Boundaries_End_Y  )
 	End Method
 	
 	End Type

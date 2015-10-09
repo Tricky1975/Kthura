@@ -82,5 +82,5 @@ Kthura_GetCam cx,cy
 WriteLine bte.stream,"CAM = "+cx+"x"+cy	
 WriteLine bte.stream,"BLOCKMAPGRID = "+KMap.blockmapgridw+"x"+KMap.BlockmapGridh
 bte.close	
-BTO.CLOSE
+BTO.CLOSE "zlib"
 End Function
