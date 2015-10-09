@@ -52,3 +52,5 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.10.02: Fixed radius issue in Lua
 - 15.10.03: Fixed #32
 - 15.10.09: File Tables now also saved in zlib format
+- 15.10.09: Odd stuff happening, needs to be sorted out
+- 15.10.09: Some trouble with the Git Updater fixed.
