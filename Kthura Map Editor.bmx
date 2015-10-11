@@ -53,6 +53,7 @@ End Rem
 ' 15.09.28 - Radius support spots
 ' 15.10.02 - Fixed a bug in radius support lua
 ' 15.10.03 - Fixed a bug not properly taking over some data in the "Other" spots.
+' 15.10.11 - The undesirable behavior caused by JCR6's new changed check has now been resolved. A few feature that CAN take advantage of it MAY still come though.
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -118,6 +119,8 @@ Kthura_DrawZones = True
 ' Use OpenGL (nope, I'm not even thinking about supporting DirectX, sorry!)
 SetGraphicsDriver (GLMax2DDriver(),GRAPHICS_ALPHABUFFER|GRAPHICS_BACKBUFFER|GRAPHICS_ACCUMBUFFER)
 
+' Don't make JCR6 check stuff all the time. Kthura doesn't handle that well, so we can better make Kthura handle such things by itself.
+JCR6CheckChange = False
 
 ' Well, with all the imports out of da way, let's now concentrate on all files to be included in order to set up the editor
 Include   "inc/Assign.bmx"

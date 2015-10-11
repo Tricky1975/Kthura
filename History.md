@@ -48,7 +48,7 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 - 15.09.29: Fixed #29
 - 15.09.29: Fixed #30
 - 15.09.29: Fixed #22
-- 15.15.10.01: Radius in script spotting support
+- 15.10.01: Radius in script spotting support
 - 15.10.02: Fixed radius issue in Lua
 - 15.10.03: Fixed #32
 - 15.10.09: File Tables now also saved in zlib format
@@ -58,3 +58,5 @@ The version numbers are in Ubuntu style. Meaning they are formatted yy.mm.dd
 (One Important Note To Self:
 NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be allergic for that!!!)
 
+- 15.10.09: Fixed a faulty item in this very file.
+- 15.10.11: Fixed #33
