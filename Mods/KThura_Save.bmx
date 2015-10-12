@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.09.23
+        Version: 15.10.12
 End Rem
 
 ' 15.09.22 - A few adaptions to make animated texturing possible
@@ -17,7 +17,7 @@ Import "kthura_core.bmx"
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map System - KThura_Save.bmx","15.09.23"
+MKL_Version "Kthura Map System - KThura_Save.bmx","15.10.12"
 MKL_Lic     "Kthura Map System - KThura_Save.bmx","Mozilla Public License 2.0"
 
 Private
@@ -38,7 +38,6 @@ End Rem
 Function SaveKthura(KMap:TKthura,url:Object,prefix:String="",SaveBlockMap=True,algorithm$="zlib")
 Local BTO:TJCRCreate
 Local BTE:TJCRCreateStream
-Local O:TKthuraObject
 If TJCRCreate(url) 
 	BTO = TJCRCreate(url)
 ElseIf String(url)
@@ -50,7 +49,37 @@ If Not KMap Return KthuraError("Kthura: Trying to save a null-map")
 SaveStringMap bto,"Data",kmap.data,"zlib"
 bte = bto.createentry(prefix+"Objects",algorithm)
 WriteLine bte.stream,"-- Generated: "+CurrentDate()+"; "+CurrentTime()
-For O=EachIn kmap.fullobjectlist
+If kmap.multi Then
+	WriteLine bte.stream,"~n~nLAYERS"
+	For Local K$=EachIn MapKeys(kmap.multi)
+		WriteLine bte.stream,"~t"+k$
+		Next
+	WriteLine bte.stream,"__END"
+	For Local K$=EachIn MapKeys(kmap.multi)
+		WriteLine bte.stream,"LAYER = "+k$
+		writelayer bte,kmap.getmultilayer(k)
+		Next
+	For Local Klay$=EachIn	MapKeys(kmap.multi)
+		If kmap.getmultilayer(klay)=kmap WriteLine bte.stream,"~n~nLAYER = "+Klay+"~n-- This last definition will make sure the system will chose the layer given up as base when this file was saved."
+		Next
+Else
+	Writelayer bte,kmap
+	EndIf
+bte.close	
+bte = bto.createentry(prefix+"Settings",algorithm)
+Local cx,cy
+WriteLine bte.stream,"-- Generated: "+CurrentDate()+"; "+CurrentTime()
+Kthura_GetCam cx,cy
+WriteLine bte.stream,"CAM = "+cx+"x"+cy	
+WriteLine bte.stream,"BLOCKMAPGRID = "+KMap.blockmapgridw+"x"+KMap.BlockmapGridh
+bte.close	
+BTO.CLOSE "zlib"	
+End Function
+
+Private
+Function WriteLayer(bte:TJCRCreateStream,Layer:TKthura)
+Local O:TKthuraObject
+For O=EachIn Layer.fullobjectlist
 	WriteLine bte.stream,"~n~nNEW"
 	WriteLine bte.stream,"~tKIND = "+o.kind
 	WriteLine bte.stream,"~tCOORD = "+o.X+","+o.y
@@ -74,13 +103,4 @@ For O=EachIn kmap.fullobjectlist
 		WriteLine bte.stream,"~tDATA."+dk+" = "+Replace(o.data.value(dk),"=","<is>")
 		Next
 	Next
-bte.close	
-bte = bto.createentry(prefix+"Settings",algorithm)
-Local cx,cy
-WriteLine bte.stream,"-- Generated: "+CurrentDate()+"; "+CurrentTime()
-Kthura_GetCam cx,cy
-WriteLine bte.stream,"CAM = "+cx+"x"+cy	
-WriteLine bte.stream,"BLOCKMAPGRID = "+KMap.blockmapgridw+"x"+KMap.BlockmapGridh
-bte.close	
-BTO.CLOSE "zlib"
 End Function

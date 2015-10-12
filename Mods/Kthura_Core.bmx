@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.10.03
+        Version: 15.10.12
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -33,7 +33,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.10.03"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","15.10.12"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -986,10 +986,17 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Settings"))
 		
 ' Load Objects
 CL=0
+Local ReadLayers = False
 For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 	CL:+1
 	L = Trim(RL)
-	If L And Left(L,2)<>"--"
+	If readlayers
+		If L="__END" 
+			readlayers=False
+		Else
+			ret.addtomulti(L)	
+			EndIf
+	ElseIf L And Left(L,2)<>"--"
 		SL = L.Split("=")
 		For ak=0 Until Len SL SL[ak]=Trim(SL[ak]) Next
 		If Left(SL[0],5).toupper()="DATA."
@@ -1006,13 +1013,20 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 				EndIf
 		Else
 			SL[0]=Upper(SL[0])
-			If Len(SL)<2 And SL[0]<>"NEW"
+			If Len(SL)<2 And SL[0]<>"NEW" And SL[0]<>"LAYERS"
 				KthuraWarning " Invalid definition in line #"+CL+" >> "+L
 			ElseIf SL[0]<>"NEW" And (Not O)
 				KthuraError "ERROR! Cannot define data when no object is defined! Line #"+cl+" >> "+L
 				Return				
 			Else
 				Select SL[0]
+					Case "LAYERS"
+						If ret.multi KthuraError "Duplicate layers! Layers may only be set ONCE in a Kthura Object list!"
+						ret.MakeMulti("__TEMP__CREATE")
+						MapRemove ret.multi,"__TEMP_CREATE"
+						ReadLayers = True
+					Case "LAYER"
+						ret = ret.GetMultiLayer(SL[1])	
 					Case "NEW"
 						O = ret.CreateObject(False)
 					Case "KIND" 
