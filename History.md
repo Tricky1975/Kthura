@@ -61,3 +61,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 15.10.09: Fixed a faulty item in this very file.
 - 15.10.11: Fixed #33
 - 15.10.12: Core, load, save support for multi-map. I only need to test this and to adept the editor to this.
+- 15.10.12: Read [this commit](?)

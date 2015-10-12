@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.26
+Version: 15.10.12
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","15.09.26"
+MKL_Version "Kthura Map System - GUI.bmx","15.10.12"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
@@ -64,7 +64,8 @@ End Function
 ' Define the main window
 AppTitle = "Kthura Map Editor"
 
-Global fixedfont:tguifont = LookupGuiFont(guifont_monospaced,15)
+Global fixedfont  :tguifont = LookupGuiFont(guifont_monospaced,15)
+Global fixedfont10:tguifont = LookupGuiFont(guifont_monospaced,10)
 
 Global DSW = ClientWidth(Desktop())
 Global DSH = ClientHeight(Desktop())
@@ -86,7 +87,7 @@ AddGadgetItem tabber,"Console Output"
 ' The tabber panels
 Global TabPanels:TGadget[4]
 TabPanels[0] = CreateLabel("Kthura map editor "+MKL_NewestVersion()+"~n~nCoded by Tricky~n~n(c) Jeroen P Broks 2015-"+Year()+"~n~nThe Kthura modules have been licensed under the Mozilla Public License 2.0~nThis editor has been licensed under the GNU General Public License v3~n~n"+MKL_GetAllversions(),0,0,tw,th,tabber)
-SetGadgetFont tabpanels[0],fixedfont
+SetGadgetFont tabpanels[0],fixedfont10
 TabPanels[1] = CreateTabber(0,0,tw,th,tabber)
 Global GeneralTabber:TGadget = TabPanels[1]
 Global GTW = ClientWidth (GeneralTabber)
@@ -238,7 +239,10 @@ UpdateWindowMenu Window
 ' Editor base tab
 Global edw = ClientWidth(editor)
 Global edh = ClientHeight(editor)
-Global Canvas:TGadget = CreateCanvas(0,0,edw-500,edh,editor)
+Global LayerSelector:TGadget = CreateListBox(0,0,199,edh-25,editor); SetGadgetColor layerselector,0,0,0,1; SetGadgetColor layerselector,0,180,255,0
+Global LayerAdd:TGadget = CreateButton("+",0,edh-25,50,25,editor)
+Global layerremove:TGadget = CreateButton("-",55,edh-25,50,25,editor)
+Global Canvas:TGadget = CreateCanvas(200,0,edw-(500+200),edh,editor)
 Global ToolTabber:TGadget = CreateTabber(edw-500,0,500,edh,editor)
 Global cvw = ClientWidth(canvas)
 Global cvh = ClientHeight(canvas)

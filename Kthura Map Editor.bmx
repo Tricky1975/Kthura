@@ -32,7 +32,7 @@ The first game in which this engine was used was "Moerker" and was named after i
 End Rem
 
 
-' Revisions
+' Revisions (version numbers are based on the calendar)
 ' 15.07.29 - GitHub Script set up
 '          - Fixed modify alpha ignore bug
 ' 15.08.01 - Export features now present
@@ -53,7 +53,8 @@ End Rem
 ' 15.09.28 - Radius support spots
 ' 15.10.02 - Fixed a bug in radius support lua
 ' 15.10.03 - Fixed a bug not properly taking over some data in the "Other" spots.
-' 15.10.11 - The undesirable behavior caused by JCR6's new changed check has now been resolved. A few feature that CAN take advantage of it MAY still come though.
+' 15.10.11 - The undesirable behavior caused by JCR6's new changed check has now been resolved. A future feature that CAN take advantage of it MAY still come though.
+' 15.10.12 - Multi-Map support
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -134,8 +135,10 @@ Include   "inc/Export.bmx"
 Include   "inc/script.bmx"
 Include   "inc/areaeffect.bmx"
 Include   "inc/Editor.bmx"
+Include   "inc/Layers.bmx"
 Include   "inc/go.bmx"
 
+SetGadgetText TabPanels[0] ,"Kthura map editor "+MKL_NewestVersion()+"~n~nCoded by Tricky~n~n(c) Jeroen P Broks 2015-"+Year()+"~n~nThe Kthura modules have been licensed under the Mozilla Public License 2.0~nThis editor has been licensed under the GNU General Public License v3~n~n"+MKL_GetAllversions()
 
 
 

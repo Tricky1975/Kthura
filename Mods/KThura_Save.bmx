@@ -56,7 +56,7 @@ If kmap.multi Then
 		Next
 	WriteLine bte.stream,"__END"
 	For Local K$=EachIn MapKeys(kmap.multi)
-		WriteLine bte.stream,"LAYER = "+k$
+		WriteLine bte.stream,"~n~nLAYER = "+k$
 		writelayer bte,kmap.getmultilayer(k)
 		Next
 	For Local Klay$=EachIn	MapKeys(kmap.multi)

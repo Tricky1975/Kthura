@@ -428,6 +428,8 @@ Type TKthura
 	Local layer:TKthura = New TKthura
 	layer.multi = multi
 	layer.data = data
+	Layer.textures = textures
+	layer.texturejcr = texturejcr
 	MapInsert multi,layername,layer
 	End Method
 	
@@ -1015,7 +1017,7 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 			SL[0]=Upper(SL[0])
 			If Len(SL)<2 And SL[0]<>"NEW" And SL[0]<>"LAYERS"
 				KthuraWarning " Invalid definition in line #"+CL+" >> "+L
-			ElseIf SL[0]<>"NEW" And (Not O)
+			ElseIf SL[0]<>"NEW" And SL[0]<>"LAYERS" And SL[0]<>"LAYER" And (Not O)
 				KthuraError "ERROR! Cannot define data when no object is defined! Line #"+cl+" >> "+L
 				Return				
 			Else
@@ -1023,10 +1025,10 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 					Case "LAYERS"
 						If ret.multi KthuraError "Duplicate layers! Layers may only be set ONCE in a Kthura Object list!"
 						ret.MakeMulti("__TEMP__CREATE")
-						MapRemove ret.multi,"__TEMP_CREATE"
+						MapRemove ret.multi,"__TEMP__CREATE"
 						ReadLayers = True
 					Case "LAYER"
-						ret = ret.GetMultiLayer(SL[1])	
+						ret = ret.GetMultiLayer(SL[1])
 					Case "NEW"
 						O = ret.CreateObject(False)
 					Case "KIND" 
@@ -1107,6 +1109,10 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 		EndIf
 	Next	
 ' Return all this shit
-ret.totalremap
+If ret.multi
+	ret.multiremap
+Else
+	ret.totalremap
+	EndIf
 Return ret	
 End Function

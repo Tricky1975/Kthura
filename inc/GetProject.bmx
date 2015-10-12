@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.29
+Version: 15.10.12
 End Rem
-MKL_Version "Kthura Map System - GetProject.bmx","15.09.29"
+MKL_Version "Kthura Map System - GetProject.bmx","15.10.12"
 MKL_Lic     "Kthura Map System - GetProject.bmx","GNU General Public License 3"
 
 Function GetProject()
@@ -182,4 +182,5 @@ ElseIf GeneralDataLoad
 	AddGadgetItem GeneralTabber,"NO GENERAL DATA IN THIS PROJECT"
 	CreateLabel "No general data fields were set up for this project",0,GTH/2,GTW,25,GeneralTabber,Label_Center	
 	EndIf	
+updatelayerbox	
 End Function
