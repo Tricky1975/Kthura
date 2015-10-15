@@ -340,6 +340,7 @@ tiledareadata.w.setenabled False
 tiledareadata.h.setenabled False
 tiledareadata.kind.setenabled False
 tiledareadata.edittag.setenabled False
+Global insertposlink:tgadget = CreateButton("Link2Pos",350, 25, 80,25,TiledAreaPanel,button_checkbox)
 SetGadgetText tiledareadata.kind,"TiledArea"
 SetGadgetText tiledareadata.dominance,"20"
 SetGadgetText tiledareadata.animspeed,"-1"

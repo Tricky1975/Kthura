@@ -193,8 +193,13 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 	o.forcepassible = ButtonState(tiledareadata.fcpassible)
 	o.labels = TextFieldText(TiledAreaData.Labels)
 	o.rotation = TextFieldText(TiledAreaData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
-	o.insertx = TextFieldText(TiledAreaData.InsX).toInt()
-	o.inserty = TextFieldText(TiledAreaData.InsY).toInt()
+	If ButtonState(InsertPosLink)
+		o.insertx = -o.x
+		o.inserty = -o.y
+	Else
+		o.insertx = TextFieldText(TiledAreaData.InsX).toInt()
+		o.inserty = TextFieldText(TiledAreaData.InsY).toInt()
+		EndIf
 	o.framespeed = TextFieldText(tiledareadata.animspeed).toint()
 	'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
 	kthmap.totalremap
@@ -547,6 +552,11 @@ Else
 	EndIf
 End Function
 
+Function Link2PosOrNot()
+tiledareadata.insx.setenabled Not ButtonState(insertposlink)
+tiledareadata.insy.setenabled Not ButtonState(insertposlink)
+End Function
+addcallback callaction,insertposlink,link2posornot
 
 addcallback callaction,modifydata.x,modifymove
 addcallback callaction,modifydata.y,modifymove

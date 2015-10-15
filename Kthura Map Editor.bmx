@@ -55,6 +55,7 @@ End Rem
 ' 15.10.03 - Fixed a bug not properly taking over some data in the "Other" spots.
 ' 15.10.11 - The undesirable behavior caused by JCR6's new changed check has now been resolved. A future feature that CAN take advantage of it MAY still come though.
 ' 15.10.12 - Multi-Map support
+' 15.10.14 - Insert point link
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver

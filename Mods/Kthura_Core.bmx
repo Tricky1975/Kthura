@@ -414,7 +414,7 @@ Type TKthura
 	End Rem
 	Method MakeMulti(ThisIs$="__BASE")
 	If multi KthuraWarning "Cannot create multi-map, because this map already IS a multi map"; Return 
-	multi = New tmap
+	multi = New TMap
 	MapInsert multi,thisis,Self
 	End Method
 	
@@ -451,6 +451,9 @@ Type TKthura
 	Method MultiRemap()
 	If Not multi KthuraError "Cannot perform a multiremap when a map is not a multi map"; Return
 	For Local K:TKthura = EachIn MapValues(Multi) 
+		?debug
+		Print "Remapping ..."
+		?
 		K.totalremap
 		Next
 	End Method

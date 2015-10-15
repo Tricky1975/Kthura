@@ -62,3 +62,5 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 15.10.11: Fixed #33
 - 15.10.12: Core, load, save support for multi-map. I only need to test this and to adept the editor to this.
 - 15.10.12: Read [this commit](https://github.com/Tricky1975/Kthura/commit/ca9dedc9b609838bba5826695b895291d5d36189)
+- 15.10.15: Insert to position support
+- 15.10.15: Windows build does now also support Multi-Map (I was too lazy to update the Windows version earlier. Sorry).
