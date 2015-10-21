@@ -56,6 +56,7 @@ End Rem
 ' 15.10.11 - The undesirable behavior caused by JCR6's new changed check has now been resolved. A future feature that CAN take advantage of it MAY still come though.
 ' 15.10.12 - Multi-Map support
 ' 15.10.14 - Insert point link
+' 15.10.21 - Fixed "color ignore" bug in the tiled area
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver

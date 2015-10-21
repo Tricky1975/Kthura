@@ -183,8 +183,8 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 	o.w = w
 	o.h = h
 	o.R = TextFieldText(TiledAreaData.R).toInt() If O.R<0 O.R=0 ElseIf O.R>255 O.R=255
-	o.G = TextFieldText(TiledAreaData.R).toInt() If O.G<0 O.G=0 ElseIf O.G>255 O.G=255
-	o.B = TextFieldText(TiledAreaData.R).toInt() If O.B<0 O.B=0 ElseIf O.B>255 O.B=255
+	o.G = TextFieldText(TiledAreaData.G).toInt() If O.G<0 O.G=0 ElseIf O.G>255 O.G=255
+	o.B = TextFieldText(TiledAreaData.B).toInt() If O.B<0 O.B=0 ElseIf O.B>255 O.B=255
 	o.texturefile = tex
 	o.kind = "TiledArea"
 	o.dominance = TextFieldText(TiledAreaData.Dominance).toInt()

@@ -64,3 +64,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 15.10.12: Read [this commit](https://github.com/Tricky1975/Kthura/commit/ca9dedc9b609838bba5826695b895291d5d36189)
 - 15.10.15: Insert to position support
 - 15.10.15: Windows build does now also support Multi-Map (I was too lazy to update the Windows version earlier. Sorry).
+- 15.10.21: Fixed #39 (Coloring ignore bug in Tiled Areas)
