@@ -72,7 +72,7 @@ Local d:ktdrawdriver
 Local okind$
 Local olist:TList = New TList
 Local ok
-Local boundaries = Kthura_Boundaries_Begin_X <> Kthura_Boundaries_End_X And Kthura_Boundaries_Begin_Y <> Kthura_Boundaries_End_X
+Local boundaries = Kthura_Boundaries_Begin_X <> Kthura_Boundaries_End_X And Kthura_Boundaries_Begin_Y <> Kthura_Boundaries_End_Y
 kmap.cycle:+1
 For k=EachIn MapKeys(KMap.DrawMap)
 	o = kmap.drawmap.get(k)	
@@ -83,7 +83,7 @@ For k=EachIn MapKeys(KMap.DrawMap)
 	If boundaries
 		d = ktdrawdriver(MapValueForKey(drawdrivers,okind))
 		Assert d Else "Unknown object kind: "+okind
-		ok = ok And d.inboundaries(o)
+		ok = ok And d.inboundaries(o,x,y)
 		EndIf
 	If ok ListAddLast olist,o
 	Next
@@ -141,7 +141,7 @@ Type KTDrawDriver
 	o.Frameheight = ImageHeight(o.textureimage)
 	End Method
 	
-	Method InBoundaries(O:TKthuraObject) Return True End Method ' If no boundaries setting is know just return true.
+	Method InBoundaries(O:TKthuraObject,sx,sy) Return True End Method ' If no boundaries setting is know just return true.
 	
 		
 	End Type
@@ -189,14 +189,21 @@ Type KTDrawTiledArea Extends ktdrawdriver
 	SetViewport vx,vy,vw,vh
 	End Method
 	
-	Method InBoundaries(O:TKthuraObject)
+	Method InBoundaries(O:TKthuraObject,sx,sy)
+	Rem
 	Return ..
 		( ..
-		O.X    >=Kthura_Boundaries_Begin_X And ..
-		O.Y    >=Kthura_Boundaries_Begin_Y ..
+		O.X-sx    >=Kthura_Boundaries_Begin_X And ..
+		O.Y-sy    >=Kthura_Boundaries_Begin_Y ..
 		) Or ( ..
-		O.X+O.W<=Kthura_Boundaries_End_X   And ..
-		O.Y+O.H<=Kthura_Boundaries_End_Y  )
+		(O.X+O.W)-sx<=Kthura_Boundaries_End_X   And ..
+		(O.Y+O.H)-sy<=Kthura_Boundaries_End_Y  )
+	End Rem
+	If (O.X+O.W)-sx<Kthura_Boundaries_Begin_X Return False
+	If (O.Y+O.H)-sy<Kthura_Boundaries_Begin_Y Return False
+	If O.X-sx      >Kthura_Boundaries_End_X   Return False
+	If O.X-sy      >Kthura_Boundaries_End_Y   Return False
+	Return true
 	End Method
 	
 	End Type
@@ -235,13 +242,13 @@ Type ktDrawObstacle Extends ktdrawdriver
 	If O.textureimage DrawImage O.TextureImage,O.X-x,O.Y-y,O.Frame Else DrawText "<TEXERROR>",O.X,O.Y
 	End Method
 
-	Method InBoundaries(O:TKthuraObject)
+	Method InBoundaries(O:TKthuraObject,sx,sy)
 	If Not O.textureimage Return True ' Let the drawer itself handle this as an error, we cannot handle it!
 	Return ..
-		O.Y-ImageHeight(o.textureimage)>= Kthura_Boundaries_Begin_Y And ..
-		O.Y+ImageHeight(o.textureimage)>= Kthura_Boundaries_Begin_Y And ..
-		O.X-ImageWidth(o.textureImage)>=Kthura_Boundaries_Begin_X And ..
-		O.Y+ImageWidth(o.textureImage)<=Kthura_Boundaries_End_X
+		(O.Y-sy)+ImageHeight(o.textureimage)>= Kthura_Boundaries_Begin_Y And ..
+		(O.Y-sy)-ImageHeight(o.textureimage)<= Kthura_Boundaries_End_Y And ..
+		(O.X-sx)+ImageWidth(o.textureImage)>=Kthura_Boundaries_Begin_X And ..
+		(O.X-sx)-ImageWidth(o.textureImage)<=Kthura_Boundaries_End_X
 		' I wanted to make sure stuff always pops up. 
 		' It will make the system only more demanding to take all handles added to the images into account and this way we also have no trouble with rotations.		
 	End Method
