@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.10.12
+        Version: 15.10.22
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -33,7 +33,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.10.12"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","15.10.22"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -238,6 +238,7 @@ Type TKthuraActor Extends TKthuraObject
 	Rem
 	bbdoc: Makes an actor walk to a target position.
 	about: If the target coordinates are impossible to reach, your request will simply be ignored.
+	returns: True is the requested target coordinates can be reached and False if that was not possible.
 	End Rem
 	Method WalkTo(TX,TY)
 	UKthura = parent
@@ -257,6 +258,7 @@ Type TKthuraActor Extends TKthuraObject
 		WalkY = TY
 		Pathlength = LengthWay(p)
 		EndIf
+	Return p.success	
 	End Method
 	
 	

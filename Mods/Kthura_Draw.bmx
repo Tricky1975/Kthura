@@ -202,8 +202,8 @@ Type KTDrawTiledArea Extends ktdrawdriver
 	If (O.X+O.W)-sx<Kthura_Boundaries_Begin_X Return False
 	If (O.Y+O.H)-sy<Kthura_Boundaries_Begin_Y Return False
 	If O.X-sx      >Kthura_Boundaries_End_X   Return False
-	If O.X-sy      >Kthura_Boundaries_End_Y   Return False
-	Return true
+	If O.Y-sy      >Kthura_Boundaries_End_Y   Return False
+	Return True
 	End Method
 	
 	End Type

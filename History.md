@@ -66,3 +66,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 15.10.15: Windows build does now also support Multi-Map (I was too lazy to update the Windows version earlier. Sorry).
 - 15.10.21: Fixed #39 (Coloring ignore bug in Tiled Areas)
 - 15.10.22: Fixed #40
+- 15.11.06: I added support for WalkTo to return True or False depending if a WalkTo request was possible or not.
