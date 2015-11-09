@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.12
+Version: 15.11.09
 End Rem
-MKL_Version "Kthura Map System - GetProject.bmx","15.10.12"
+MKL_Version "Kthura Map System - GetProject.bmx","15.11.09"
 MKL_Lic     "Kthura Map System - GetProject.bmx","GNU General Public License 3"
 
 Function GetProject()
@@ -30,7 +30,7 @@ Function GetProject()
 CSay "Loaded JCR dir drivers: "+JCR_DirDrivers()
 ?
 Project = FilePicker("Please select your project:","Projects"); If Not project Bye
-PRID = LoadIni("Projects/"+Project)
+LoadIni("Projects/"+Project,PRID)
 Local File$ = FilePicker("Please select your map file:",PRID.C("Maps"),1,True)
 If Not file Bye
 filename = file

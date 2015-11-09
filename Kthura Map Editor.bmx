@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.22
+Version: 15.11.09
 End Rem
 Strict
 
@@ -57,6 +57,7 @@ End Rem
 ' 15.10.12 - Multi-Map support
 ' 15.10.14 - Insert point link
 ' 15.10.21 - Fixed "color ignore" bug in the tiled area
+' 15.11.09 - Removed the reference to the old deprecated IniFile module and switched to IniFile2
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -97,7 +98,7 @@ Import    tricky_units.FilePicker
 Import    tricky_units.MKL_Version
 Import    tricky_units.Bye
 Import    tricky_units.advdatetime
-Import    tricky_units.Initfile
+Import    tricky_units.Initfile2
 Import    tricky_units.ListDir
 Import    tricky_units.ranger
 Import    tricky_units.trickycircle
@@ -114,7 +115,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.10.22"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.11.09"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

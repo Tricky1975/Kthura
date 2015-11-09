@@ -67,3 +67,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 15.10.21: Fixed #39 (Coloring ignore bug in Tiled Areas)
 - 15.10.22: Fixed #40
 - 15.11.06: I added support for WalkTo to return True or False depending if a WalkTo request was possible or not.
+- 15.11.09: Removed the deprecated InitFile and place the current version in.
