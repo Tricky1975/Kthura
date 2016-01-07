@@ -1,12 +1,12 @@
 Rem
         Kthura_Core.bmx
-	(c) 2015 Jeroen Petrus Broks.
+	(c) 2015, 2016 Jeroen Petrus Broks.
 	
 	This Source Code Form is subject to the terms of the 
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.11.07
+        Version: 16.01.07
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -22,6 +22,7 @@ End Rem
 ' 15.09.29 - Negative dominance blocked
 ' 15.10.03 - DataDump() debug function added. I don't know why, but I need it now (for a bug that can't possibly come to be).
 ' 15.11.07 - Added OnXY and OnSpot support for actors. The production of the game Star Story showed this was needed.
+' 16.01.07 - Scaling support added
 
 
 Strict
@@ -34,7 +35,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","15.11.07"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","16.01.07"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -107,6 +108,8 @@ Type TKthuraObject
 	Field Visible = True
 	Field Data:StringMap = New StringMap
 	Field Parent:TKthura	
+	Field ScaleX=1000
+	Field ScaleY=1000
 	
 	Rem
 	bbdoc: Moves an object.
@@ -265,7 +268,7 @@ Type TKthuraActor Extends TKthuraObject
 		WalkY = TY
 		Pathlength = LengthWay(p)
 		EndIf
-	Return p.success Or (onSpotSuccess And OnXY(TX,TY))
+	Return p.success Or (OnSpotSuccess And OnXY(TX,TY))
 	End Method
 	
 	Rem
@@ -1136,6 +1139,14 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 						O.ForcePassible = SL[1].toint()
 					Case "VISIBLE"
 						O.Visible = SL[1].toint()	
+					Case "SCALE"
+						DL = SL[1].split(",")
+						If Len(DL)<2 
+							KthuraWarning " Invalid scale set definition in line #"+cl+" >> "+L
+						Else
+							O.ScaleX = DL[0].toint()
+							O.ScaleY = DL[1].toint()
+							EndIf
 					Default
 						KthuraWarning " Unknown variable "+SL[0]+"! In line #"+CL+". Request ignored >> "+L												
 					End Select

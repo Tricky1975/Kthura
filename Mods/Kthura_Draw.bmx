@@ -1,12 +1,12 @@
 Rem
         Kthura_Draw.bmx
-	(c) 2015 Jeroen Petrus Broks.
+	(c) 2015, 2016 Jeroen Petrus Broks.
 	
 	This Source Code Form is subject to the terms of the 
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.11.07
+        Version: 16.01.07
 End Rem
 
 ' 15.07.12 - First set release
@@ -14,6 +14,7 @@ End Rem
 ' 15.09.10 - Fixed: No textures needed for zones, so why try to load them?
 ' 15.09.22 - Added color support on tiled areas and obstacles
 ' 15.09.28 - Added boundary support
+' 16.01.07 - Scaling support added
 
 Strict
 Import "Kthura_core.bmx"
@@ -21,7 +22,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","15.11.07"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.01.07"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -107,6 +108,7 @@ For o=EachIn olist
 '		EndIf
 	Next
 SetRotation 0	
+SetScale 1,1
 End Function
 
 
@@ -232,6 +234,7 @@ Type ktDrawObstacle Extends ktdrawdriver
 		
 	Method Draw(O:TKthuraObject,x,y)
 	SetRotation O.Rotation
+	SetScale O.ScaleX/Double(1000),O.ScaleY/Double(1000)
 	If o.FrameSpeed>=0 And o.Frames
 		O.FrameSpeedTicker:+1
 		If O.FrameSpeedTicker>O.Framespeed O.Frame:+1 O.FrameSpeedTicker=0
@@ -297,6 +300,7 @@ Type KTDrawActor Extends ktdrawdriver
 	If A.Cycle = A.Parent.Cycle Return
 	A.Cycle = A.Parent.Cycle
 	SetRotation A.Rotation
+	SetScale A.ScaleX/Double(1000),A.ScaleY/Double(1000)
 	Local I:TImage
 	Local ErrorText$ = "Ok!"
 	Local AcX,AcY

@@ -1,15 +1,16 @@
 Rem
         KThura_Save.bmx
-	(c) 2015 Jeroen Petrus Broks.
+	(c) 2015, 2016 Jeroen Petrus Broks.
 	
 	This Source Code Form is subject to the terms of the 
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 15.10.12
+        Version: 16.01.07
 End Rem
 
 ' 15.09.22 - A few adaptions to make animated texturing possible
+' 16.01.07 - Scaling support added
 
 Strict
 Import "kthura_core.bmx"
@@ -17,7 +18,7 @@ Import "kthura_core.bmx"
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map System - KThura_Save.bmx","15.10.12"
+MKL_Version "Kthura Map System - KThura_Save.bmx","16.01.07"
 MKL_Lic     "Kthura Map System - KThura_Save.bmx","Mozilla Public License 2.0"
 
 Private
@@ -99,6 +100,7 @@ For O=EachIn Layer.fullobjectlist
 	WriteLine bte.stream,"~tCOLOR = "+o.r+","+o.g+","+O.b
 	WriteLine bte.stream,"~tIMPASSIBLE = "+o.Impassible
 	WriteLine bte.stream,"~tFORCEPASSIBLE = "+o.ForcePassible
+	WriteLine bte.stream,"~tSCALE = "+O.ScaleX+","+O.ScaleY
 	For Local dk$=EachIn MapKeys(o.data)
 		WriteLine bte.stream,"~tDATA."+dk+" = "+Replace(o.data.value(dk),"=","<is>")
 		Next

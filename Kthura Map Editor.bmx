@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.11.09
+Version: 16.01.07
 End Rem
 Strict
 
@@ -58,6 +58,8 @@ End Rem
 ' 15.10.14 - Insert point link
 ' 15.10.21 - Fixed "color ignore" bug in the tiled area
 ' 15.11.09 - Removed the reference to the old deprecated IniFile module and switched to IniFile2
+' 16.01.07 - Scaling support added
+
 
 ' Drivers JCR6
 Framework jcr6.zlibdriver
@@ -115,7 +117,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","15.11.09"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.01.07"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

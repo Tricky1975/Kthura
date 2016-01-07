@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.22
+Version: 16.01.07
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","15.10.22"
+MKL_Version "Kthura Map System - GUI.bmx","16.01.07"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 
@@ -279,25 +279,28 @@ Type TWorkPanel
 
 	Field pw = ClientWidth(parentgadget)
 	Field ph = ClientHeight(parentgadget)
-	Field X:TGadget          = CreateTextField  (250,  0, 50,25,parentgadget)
-	Field Y:TGadget          = CreateTextField  (300,  0, 50,25,parentgadget)
-	Field InsX:TGadget       = CreateTextField  (250, 25, 40,25,parentgadget)
-	Field InsY:TGadget       = CreateTextField  (300, 25, 40,25,parentgadget)
-	Field W:TGadget          = CreateTextField  (250, 50, 50,25,parentgadget)
-	Field H:TGadget          = CreateTextField  (300, 50, 50,25,parentgadget)
-	Field Kind:TGadget       = CreateTextField  (250, 75,200,25,parentgadget)
-	Field EditTag:TGadget    = CreateButton("Tag:",0,100,200,25,parentgadget)
-	Field Tag:TGadget        = CreateLabel ("--",250,100,200,25,parentgadget)
-	Field Labels:TGadget     = CreateTextField  (250,125,200,25,parentgadget)
-	Field Dominance:TGadget  = CreateTextField  (250,150,200,25,parentgadget)
-	Field alpha:TGadget      = CreateSlider     (250,175,200,25,parentGadget,Slider_horizontal | SLIDER_TRACKBAR)		
-	Field Impassible:TGadget = CreateButton(""  ,250,200,200,25,parentgadget,button_checkbox)
-	Field FcPassible:TGadget = CreateButton(""  ,250,225,200,25,parentgadget,button_checkbox)
-	Field Rotation:TGadget   = CreateTextField   (250,250, 50,25,parentgadget)
-	Field R:TGadget          = CreateTextField   (250,275, 50,25,parentgadget) 
-	Field G:TGadget          = CreateTextField   (300,275, 50,25,parentgadget) 
-	Field B:TGadget          = CreateTextField   (350,275, 50,25,parentgadget) 
-	Field AnimSpeed:Tgadget  = CreateTextField   (250,300, 50,25,parentgadget)
+	Field X:TGadget          = CreateTextField   (250,  0, 50,25,parentgadget)
+	Field Y:TGadget          = CreateTextField   (300,  0, 50,25,parentgadget)
+	Field InsX:TGadget       = CreateTextField   (250, 25, 40,25,parentgadget)
+	Field InsY:TGadget       = CreateTextField   (300, 25, 40,25,parentgadget)
+	Field W:TGadget          = CreateTextField   (250, 50, 50,25,parentgadget)
+	Field H:TGadget          = CreateTextField   (300, 50, 50,25,parentgadget)
+	Field Kind:TGadget       = CreateTextField   (250, 75,200,25,parentgadget)
+	Field EditTag:TGadget    = CreateButton("Tag:" ,0,100,200,25,parentgadget)
+	Field Tag:TGadget        = CreateLabel ("--" ,250,100,200,25,parentgadget)
+	Field Labels:TGadget     = CreateTextField   (250,125,200,25,parentgadget)
+	Field Dominance:TGadget  = CreateTextField   (250,150,200,25,parentgadget)
+	Field alpha:TGadget      = CreateSlider      (250,175,200,25,parentGadget,Slider_horizontal | SLIDER_TRACKBAR)		
+	Field Impassible:TGadget = CreateButton(""   ,250,200,200,25,parentgadget,button_checkbox)
+	Field FcPassible:TGadget = CreateButton(""   ,250,225,200,25,parentgadget,button_checkbox)
+	Field Rotation:TGadget   = CreateTextField    (250,250, 50,25,parentgadget)
+	Field R:TGadget          = CreateTextField    (250,275, 50,25,parentgadget) 
+	Field G:TGadget          = CreateTextField    (300,275, 50,25,parentgadget) 
+	Field B:TGadget          = CreateTextField    (350,275, 50,25,parentgadget) 
+	Field AnimSpeed:TGadget  = CreateTextField    (250,300, 50,25,parentgadget)
+	Field ScaleX:TGadget     = CreateTextField    (250,325, 50,25,parentgadget)
+	Field ScaleY:TGadget     = CreateTextField    (300,325, 50,25,parentgadget)
+	Field ScaleLink:TGadget  = CreateButton("Link",375,325, 50,25,parentgadget,button_checkbox)
 	'Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
 	'Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
 	'Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
@@ -316,6 +319,7 @@ Type TWorkPanel
 	CreateLabel "Rotation:"       ,0,250,250,25,parentgadget; CreateLabel "degrees",310,250, 150,25,parentgadget
 	CreateLabel "Color:"          ,0,275,250,25,parentgadget
 	CreateLabel "Animation Speed:",0,300,250,25,parentgadget; CreateLabel "(higher=slower)",310,300,150,25,parentgadget
+	CreateLabel "Scale:"          ,0,325,250,25,parentgadget
 	'CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
 	'CreateLabel "Frames:"      ,0,225,250,25,parentgadget
 	'CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
@@ -324,6 +328,9 @@ Type TWorkPanel
 	SetGadgetColor G,180,255,180; SetGadgetText G,255
 	SetGadgetColor B,180,180,255; SetGadgetText B,255	
 	SetSliderRange alpha,0,1000; SetSliderValue alpha,1000
+	SetButtonState scalelink,1
+	SetGadgetText scalex,1000
+	SetGadgetText scaley,1000
 	End Method
 	End Type
 
@@ -340,12 +347,16 @@ tiledareadata.w.setenabled False
 tiledareadata.h.setenabled False
 tiledareadata.kind.setenabled False
 tiledareadata.edittag.setenabled False
-Global insertposlink:tgadget = CreateButton("Link2Pos",350, 25, 80,25,TiledAreaPanel,button_checkbox)
+Global insertposlink:TGadget = CreateButton("Link2Pos",350, 25, 80,25,TiledAreaPanel,button_checkbox)
 SetGadgetText tiledareadata.kind,"TiledArea"
 SetGadgetText tiledareadata.dominance,"20"
 SetGadgetText tiledareadata.animspeed,"-1"
 SetButtonState tiledAreaData.impassible,1	
 ListAddLast toolgadgets[0],tiledareapanel
+tiledareadata.scalex.setenabled False
+tiledareadata.scaley.setenabled False
+tiledareadata.scalelink.setenabled False
+
 
 
 Global ObstaclePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
@@ -381,6 +392,9 @@ zonedata.r.setenabled False
 zonedata.g.setenabled False
 zonedata.b.setenabled False
 zonedata.animspeed.setenabled False
+zonedata.scalex.setenabled False
+zonedata.scaley.setenabled False
+zonedata.scalelink.setenabled False
 SetGadgetText ZoneData.kind,"Zone"
 SetGadgetText Zonedata.dominance,"$ffffff"
 SetButtonState ZoneData.impassible,0	
@@ -408,6 +422,10 @@ otherData.FcPassible.SetEnabled False
 SetGadgetText OtherData.kind,""
 SetGadgetText OtherData.dominance,"20"
 SetButtonState OtherData.impassible,0	
+otherdata.scalex.setenabled False
+otherdata.scaley.setenabled False
+otherdata.scalelink.setenabled False
+
 
 'Global AreaEffectPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global AreaEffectList:TGadget= CreateListBox(0,00,ttw,tth,tooltabber)

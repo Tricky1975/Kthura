@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,10 +20,14 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.22
+Version: 16.01.07
 End Rem
 
-MKL_Version "Kthura Map System - Editor.bmx","15.10.22"
+' updates
+' 15.08.15 - Initial version
+' 16.01.07 - Scaling support added
+
+MKL_Version "Kthura Map System - Editor.bmx","16.01.07"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -268,6 +272,8 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	o.labels = TextFieldText(ObstacleData.Labels)
 	o.rotation = TextFieldText(ObstacleData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
 	o.framespeed = TextFieldText(obstacledata.animspeed).toint()
+	o.scalex = TextFieldText(obstacledata.scalex).toint()
+	o.scaley = TextFieldText(obstacledata.scaley).toint()
 	kthmap.totalremap
 	End Method
 
@@ -410,6 +416,9 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText P.insx,KO.insertx
 		SetGadgetText p.insy,KO.inserty
 		SetGadgetText p.animspeed,ko.framespeed
+		SetGadgetText p.scalex,ko.scalex
+		SetGadgetText p.scaley,ko.scaley
+		SetButtonState p.scalelink,ko.scalex=ko.scaley
 		EndIf		
 	?debug
 	If selectedobject csay "Selected object #"+SelectedObject.idnum Else csay "No object selected"
@@ -496,9 +505,24 @@ KO.InsertY = TextFieldText(P.InsY).toint()
 KO.Rotation = TextFieldText(P.Rotation).toint(); While kO.rotation>=360 ko.rotation:-360 Wend; While kO.rotation<=-360 ko.rotation:+360 Wend	
 KO.dominance = TextFieldText(P.dominance).Toint()
 ko.framespeed = TextFieldText(p.animspeed).toint()
+ko.scalex = TextFieldText(p.scalex).toint()
+ko.scaley = TextFieldText(p.scaley).toint()
 Kthmap.totalremap
 DebugLog "ModifyMove() called and executed"
 End Function	
+
+Function FieldScaleX(P:TWorkPanel)
+If ButtonState(p.scalelink) SetGadgetText P.scaley,GadgetText(P.scalex)
+End Function
+
+Function FieldScaleY(P:TWorkPanel)
+If ButtonState(p.scalelink) SetGadgetText P.scalex,GadgetText(P.scaley)
+End Function
+
+Function modifyscalex() FieldScaleX Modifydata modifymove; End Function
+Function modifyscaley() fieldscaleY modifydata modifymove; End Function
+Function obstaclescalex() FieldScaleX obstacledata End Function
+Function obstaclescaley() FieldScaleY obstacledata End Function
 
 Function ModifyImpassible()
 Local P:Tworkpanel = modifydata
@@ -577,6 +601,11 @@ addcallback callaction,modifyremove,deleteobject
 addcallback callaction,modifydata.edittag,modifyretag
 addcallback callaction,modifydata.alpha,modifyalpha
 addcallback callselect,otherobjects,otherselect
+ADDCALLBACK CALLACTION,MODIFYDATA.SCALEX,MODIFYSCALEX
+ADDCALLBACK CALLACTION,MODIFYDATA.SCALEY,MODIFYSCALEY
+ADDCALLBACK CALLACTION,OBSTACLEDATA.SCALEX,OBSTACLESCALEX
+ADDCALLBACK CALLACTION,OBSTACLEDATA.SCALEY,OBSTACLESCALEY
+
 	
 CanvasAction[0] = New TCanvasTiledArea
 canvasaction[1] = New TcanvasObstacle
