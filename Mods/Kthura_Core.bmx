@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.01.07
+        Version: 16.01.10
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -23,6 +23,7 @@ End Rem
 ' 15.10.03 - DataDump() debug function added. I don't know why, but I need it now (for a bug that can't possibly come to be).
 ' 15.11.07 - Added OnXY and OnSpot support for actors. The production of the game Star Story showed this was needed.
 ' 16.01.07 - Scaling support added
+' 16.01.10 - Showing / hiding by label now supports the "*ALL*" parameter to handle everything regardless of label.
 
 
 Strict
@@ -35,7 +36,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","16.01.07"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","16.01.10"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -913,7 +914,7 @@ Type TKthura
 	For o = EachIn fullobjectlist
 		ok=False
 		For cl=EachIn reqlab
-			ok = ok Or ListContains(ListFromArray(TrimSplit(o.labels,",")),cl)
+			ok = ok Or Upper(lab)="*ALL*" Or ListContains(ListFromArray(TrimSplit(o.labels,",")),cl)
 			Next
 		If ok
 			o.visible = visboolean
