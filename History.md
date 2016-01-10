@@ -70,3 +70,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 15.11.09: Removed the deprecated InitFile and place the current version in.
 - 16.01.07: Scaling support
 - 16.01.10: '*ALL*' support in showing and hiding by label
+- 16.10.10: Fixed issue #43

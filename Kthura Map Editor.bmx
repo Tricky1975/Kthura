@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.01.07
+Version: 16.01.10
 End Rem
 Strict
 
@@ -59,6 +59,7 @@ End Rem
 ' 15.10.21 - Fixed "color ignore" bug in the tiled area
 ' 15.11.09 - Removed the reference to the old deprecated IniFile module and switched to IniFile2
 ' 16.01.07 - Scaling support added
+' 16.01.10 - Zone scaling bug fixed
 
 
 ' Drivers JCR6
@@ -117,7 +118,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.01.07"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.01.10"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

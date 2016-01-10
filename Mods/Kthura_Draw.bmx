@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.01.07
+        Version: 16.01.10
 End Rem
 
 ' 15.07.12 - First set release
@@ -22,7 +22,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.01.07"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.01.10"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -153,6 +153,7 @@ Type KTDrawZones Extends ktdrawdriver
 	Method Draw(O:TKthuraObject,x,y)
 	If Not Kthura_DrawZones Return
 	SetRotation 0
+	SetScale 1,1
 	SetColor O.R,O.G,O.B
 	SetAlpha .5
 	DrawRect O.X-x,O.Y-y,O.W,O.H	
