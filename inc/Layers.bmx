@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.12
+Version: 16.02.07
 End Rem
 MKL_Lic     "Kthura Map System - Layers.bmx","GNU General Public License 3"
-MKL_Version "Kthura Map System - Layers.bmx","15.10.12"
+MKL_Version "Kthura Map System - Layers.bmx","16.02.07"
 
 Function UpdateLayerBox(Update=True)
 Local seli=-1
@@ -74,6 +74,7 @@ If s<0 ' prevent illegal selections
 Local l$=GadgetItemText(LayerSelector,s)
 kthmap = kthmap.getmultilayer(l)	
 If u UpdateLayerBox False
+SelectedObject = null
 End Function
 addcallback callselect,LayerSelector,Layer_select
 

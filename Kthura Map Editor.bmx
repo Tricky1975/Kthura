@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.01.23
+Version: 16.02.07
 End Rem
 Strict
 
@@ -61,6 +61,9 @@ End Rem
 ' 16.01.07 - Scaling support added
 ' 16.01.10 - Zone scaling bug fixed
 ' 16.01.23 - Debug tag list added
+' 16.02.07 - OS driven color selector supported
+'          - CallBack also supports XTRA for extra data
+'          - FIXED: Keep object selected through layer change bug
 
 
 ' Drivers JCR6
@@ -119,7 +122,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.01.23"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.02.07"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True
