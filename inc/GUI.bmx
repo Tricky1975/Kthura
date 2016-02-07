@@ -20,15 +20,17 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.01.07
+Version: 16.01.23
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","16.01.07"
+MKL_Version "Kthura Map System - GUI.bmx","16.01.23"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
+Global CallBackXTRA:Object
 
 ' Call back functions
 Type TCallBackfunction
 	Field func()
+	Field XTRA:Object
 	End Type
 
 Global CallAction:TMap = New TMap	
@@ -36,15 +38,17 @@ Global CallMenu:TMap = New TMap
 Global CallSelect:TMap = New TMap
 
 
-Function AddCallBack(CallMap:TMap,tag:Object,f())
+Function AddCallBack(CallMap:TMap,tag:Object,f(),XTRA:Object=Null)
 Local r:TCallBackfunction = New tcallbackfunction
 r.func = f
+r.XTRA=XTRA
 MapInsert callmap,tag,r
 End Function
 
 Function CallBack(CallMap:TMap,Tag:Object)
 Local r:TCallBackfunction = tcallbackfunction(MapValueForKey(callmap,tag))
 If Not r Return
+CallBackXTRA = r.XTRA
 r.func()
 End Function
 
@@ -183,6 +187,19 @@ CreateMenu "Count Objects",4003,debugmenu
 Include "CountObjects.bmx"
 addcallback callmenu,Hex(4003),CountObjects
 
+CreateMenu "List object tags",4005,debugmenu
+Function ListTags()
+Local c = 0
+AddTextAreaText GALE_ExitGadget,"~nTags:~n"
+For Local tag$=EachIn MapKeys(kthmap.tagmap)
+	AddTextAreaText GALE_ExitGadget," = "+tag+"  ("+TKthuraObject(MapValueForKey(kthmap.tagmap,tag)).Kind+")~n"
+	C:+1
+	Next
+AddTextAreaText GALE_ExitGadget,"Total Tags:"+c+"~n~n"
+End Function
+addcallback callmenu,Hex(4005),ListTags
+
+
 CreateMenu "Go To Screen Position",4004,debugmenu
 Function GoToScreenPosition()
 Local pos$ = MaxGUI_Input("Please enter the X and Y separated by a comma")
@@ -297,6 +314,8 @@ Type TWorkPanel
 	Field R:TGadget          = CreateTextField    (250,275, 50,25,parentgadget) 
 	Field G:TGadget          = CreateTextField    (300,275, 50,25,parentgadget) 
 	Field B:TGadget          = CreateTextField    (350,275, 50,25,parentgadget) 
+	Field ColorSelector:TGadget = CreateButton("..",400,275,50,25,parentgadget)
+	Field UseColor:Byte      = 1
 	Field AnimSpeed:TGadget  = CreateTextField    (250,300, 50,25,parentgadget)
 	Field ScaleX:TGadget     = CreateTextField    (250,325, 50,25,parentgadget)
 	Field ScaleY:TGadget     = CreateTextField    (300,325, 50,25,parentgadget)
@@ -334,9 +353,13 @@ Type TWorkPanel
 	End Method
 	End Type
 
+Global WorkPanelList:TList = New TList
+
 Function NewWorkPanel:TWorkPanel(Parent:TGadget)
 Parentgadget = Parent
-Return New TWorkPanel
+Local ret:Tworkpanel = New TWorkPanel
+ListAddLast Workpanellist,ret
+Return ret
 End Function
 
 Global TiledAreaPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
@@ -388,9 +411,10 @@ zonedata.kind.setenabled False
 zonedata.edittag.setenabled False
 zonedata.alpha.setenabled False
 zonedata.dominance.setenabled False
-zonedata.r.setenabled False
-zonedata.g.setenabled False
-zonedata.b.setenabled False
+'zonedata.r.setenabled False
+'zonedata.g.setenabled False
+'zonedata.b.setenabled False
+zonedata.usecolor = False
 zonedata.animspeed.setenabled False
 zonedata.scalex.setenabled False
 zonedata.scaley.setenabled False
@@ -414,9 +438,10 @@ OtherData.w.setenabled False
 OtherData.h.setenabled False
 OtherData.kind.setenabled False
 OtherData.edittag.setenabled False
-OtherData.r.setenabled False
-OtherData.g.setenabled False
-OtherData.b.setenabled False
+'OtherData.r.setenabled False
+'OtherData.g.setenabled False
+'OtherData.b.setenabled False
+Otherdata.UseColor = False
 otherdata.animspeed.setenabled False
 otherData.FcPassible.SetEnabled False
 SetGadgetText OtherData.kind,""
@@ -459,8 +484,29 @@ End Function
 UpdateTooltabber
 addcallback callaction,tooltabber,updatetooltabber
 
+Function ColorSelector()
+Local p:Tworkpanel=tworkpanel(CallBackXTRA)
+If Not p Then Notify "Internal Error~n~nCallBackXTRA = NULL~n~nPlease report this as a bug!"; End
+Local ok  = requestcolor(TextFieldText(P.R).toInt(),TextFieldText(P.G).toInt(),TextFieldText(P.B).toInt())
+If ok
+	SetGadgetText p.r,RequestedRed()
+	SetGadgetText p.g,RequestedGreen()
+	SetGadgetText p.b,RequestedBlue()
+	EndIf
+End Function
 
 
+'Initiate stuff that goes for all panels
+Function Init4AllPanels()
+For Local P:TWorkPanel = EachIn WorkPanelList
+	p.r.setenabled p.usecolor
+	p.g.setenabled p.usecolor
+	p.b.setenabled p.usecolor
+	p.colorselector.setenabled p.usecolor
+	If p.usecolor AddCallBack CallAction,p.colorselector,colorselector,p
+	Next
+End Function
+init4allpanels
 
 
 
