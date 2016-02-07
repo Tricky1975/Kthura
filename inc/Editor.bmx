@@ -20,14 +20,14 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.01.07
+Version: 16.02.07
 End Rem
 
 ' updates
 ' 15.08.15 - Initial version
 ' 16.01.07 - Scaling support added
 
-MKL_Version "Kthura Map System - Editor.bmx","16.01.07"
+MKL_Version "Kthura Map System - Editor.bmx","16.02.07"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -546,6 +546,11 @@ HideGadget window
 Local tag$=MaxGUI_Input("Please tag this object:")
 ShowGadget window
 If MaxGUI_InputAccepted 
+	If KO.Tag=Tag Then Return
+	If MapContains(KO.Parent.TagMap,Tag) 
+		Notify "ERROR! Tag ~q"+Tag+"~q already exists! Please Select another!"
+		Return
+		EndIf
 	KO.Tag = tag
 	SetGadgetText modifydata.tag,tag
 	EndIf
