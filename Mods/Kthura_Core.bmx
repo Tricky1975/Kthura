@@ -526,13 +526,18 @@ Type TKthura
 		End Select
 	End Method
 	
+	Field WarnCoordInObjectFromTag = False
+	
 	Rem
 	bbdoc: Retrieve an object from a tag and performs a check if the coordinate is within the object or not.
 	returns: True if this is the case, and False if not. (duh)
 	End Rem	
 	Method CoordInObjectFromTag(Tag$,x,y)
 	Local O:TKthuraObject = tagmap.get(Tag)
-	If Not O Return Print("WARNING! <TKthura>. CoordInObjectFromTag("+Tag+","+x+","+y+"): There is no object with tag: "+Tag)
+	If Not O 
+	   If warncoordinobjectfromtag Print("WARNING! <TKthura>. CoordInObjectFromTag("+Tag+","+x+","+y+"): There is no object with tag: "+Tag)
+	   Return 
+	   endif
 	Return CoordInObject(O,x,y)
 	End Method
 	

@@ -74,3 +74,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 16.02.07: Added color selector support
 - 16.02.07: FIXED: Switching layers will keep selected object selected
 - 16.02.07: FIXED: Tag not checked upon entering bug. I may need to change this all once multi-tagging is supported though
+- 16.02.18: Fixed an issue of too many unneeded warnings
