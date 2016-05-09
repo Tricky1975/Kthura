@@ -11,6 +11,9 @@ End Rem
 
 ' 15.09.22 - A few adaptions to make animated texturing possible
 ' 16.01.07 - Scaling support added
+' 16.05.08 - Blockmap grid can now be read from object file. This in order to have better support for multi-maps.
+'          - Reading Blockmap grid is now deprecated for the settings file. I will still leave it in in order not to have to re-save all Star Story maps, but giant remakes of Kthura or ports to other languages will NOT support it. (In this save routine the feature is already removed) :)
+
 
 Strict
 Import "kthura_core.bmx"
@@ -72,13 +75,14 @@ Local cx,cy
 WriteLine bte.stream,"-- Generated: "+CurrentDate()+"; "+CurrentTime()
 Kthura_GetCam cx,cy
 WriteLine bte.stream,"CAM = "+cx+"x"+cy	
-WriteLine bte.stream,"BLOCKMAPGRID = "+KMap.blockmapgridw+"x"+KMap.BlockmapGridh
+'WriteLine bte.stream,"BLOCKMAPGRID = "+KMap.blockmapgridw+"x"+KMap.BlockmapGridh
 bte.close	
 BTO.CLOSE "zlib"	
 End Function
 
 Private
 Function WriteLayer(bte:TJCRCreateStream,Layer:TKthura)
+WriteLine bte.stream,"~nBLOCKMAPGRID = "+Layer.blockmapgridw+"x"+Layer.BlockmapGridh+"~n"
 Local O:TKthuraObject
 For O=EachIn Layer.fullobjectlist
 	WriteLine bte.stream,"~n~nNEW"

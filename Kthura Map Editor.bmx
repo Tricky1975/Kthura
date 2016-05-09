@@ -65,6 +65,7 @@ End Rem
 '          - CallBack also supports XTRA for extra data
 '          - FIXED: Keep object selected through layer change bug
 '          - FIXED: Tag not checked upon entering bug. I may need to change this all once multi-tagging is supported though
+' 16.05.08 - Rebuilt for newly set up blockmap saving routine. This does not alter the source of the editor itself, but I name it here, as the compiled version DOES take effect from this.
 
 
 ' Drivers JCR6

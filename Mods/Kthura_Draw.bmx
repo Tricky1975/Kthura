@@ -260,6 +260,31 @@ Type ktDrawObstacle Extends ktdrawdriver
 	End Method
 	
 	End Type
+	
+Type ktDrawPic Extends ktDrawObstacle
+	
+	Field Hot$="TOPLEFT"
+
+	Method OGetTex(O:TKthuraObject)		
+	' I now this is kinda double, however, BlitzMax does not accept it in the "clean" way, so this "dirty" way will have to suffice.
+	If Not O.texturefile
+		If Not O.loadtried KthuraWarning O.kind+" #"+O.IDNum+" has no valid texture file tied to it!"
+		O.loadtried = True
+		Return
+		EndIf	
+	o.parent.textures.Load(O.parent.textureJCR,o.texturefile,o.kind)
+	o.textureimage = o.parent.textures.img(o.kind+":"+o.texturefile)	
+	If o.textureimage
+		o.Frames = Len(o.textureimage.pixmaps)
+		o.FrameWidth = ImageWidth(o.textureimage)
+		o.Frameheight = ImageHeight(o.textureimage)
+		Else 
+		KthuraError "Texture "+o.texturefile+" not properly loaded" 
+		EndIf
+	End Method
+
+End Type
+
 		
 	
 Type KTDrawActor Extends ktdrawdriver
@@ -417,6 +442,7 @@ MapInsert drawdrivers,"TiledArea",New ktdrawtiledarea
 MapInsert drawdrivers,"Zone",New ktdrawzones
 MapInsert drawdrivers,"Actor",New ktdrawactor
 MapInsert DrawDrivers,"Obstacle",New ktdrawobstacle
+MapInsert DrawDrivers,"Pic",New ktdrawpic
 For Local K$=EachIn OtherNames MapInsert drawdrivers,K,DKOther Next
 
 

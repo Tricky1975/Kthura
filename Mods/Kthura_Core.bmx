@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.01.10
+        Version: 16.02.18
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -24,6 +24,8 @@ End Rem
 ' 15.11.07 - Added OnXY and OnSpot support for actors. The production of the game Star Story showed this was needed.
 ' 16.01.07 - Scaling support added
 ' 16.01.10 - Showing / hiding by label now supports the "*ALL*" parameter to handle everything regardless of label.
+' 16.05.08 - Blockmap grid can now be read from object file. This in order to have better support for multi-maps.
+'          - Reading Blockmap grid is now deprecated for the settings file. I will still leave it in in order not to have to re-save all Star Story maps, but giant remakes of Kthura or ports to other languages will NOT support it.
 
 
 Strict
@@ -36,7 +38,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","16.01.10"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","16.02.18"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -537,7 +539,7 @@ Type TKthura
 	If Not O 
 	   If warncoordinobjectfromtag Print("WARNING! <TKthura>. CoordInObjectFromTag("+Tag+","+x+","+y+"): There is no object with tag: "+Tag)
 	   Return 
-	   endif
+	   EndIf
 	Return CoordInObject(O,x,y)
 	End Method
 	
@@ -1015,7 +1017,7 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Settings"))
 						Print "Cam set to: "+DL[0].toint()+"x"+DL[1].toint()	
 						?
 						EndIf
-				Case "BLOCKMAPGRID"		
+				Case "BLOCKMAPGRID" ' In settings file deprecated as of version 16.05.08		
 					DL = SL[1].split("x")
 					If Len(DL)<2 
 						KthuraWarning " Invalid blockmap grid definition in line #"+cl+" >> "+L
@@ -1041,6 +1043,8 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 			readlayers=False
 		Else
 			ret.addtomulti(L)	
+			ret.GetMultiLayer:TKthura(L).blockmapgridw = ret.blockmapgridw
+			ret.GetMultiLayer:TKthura(L).blockmapgridh = ret.blockmapgridh
 			EndIf
 	ElseIf L And Left(L,2)<>"--"
 		SL = L.Split("=")
@@ -1059,13 +1063,21 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 				EndIf
 		Else
 			SL[0]=Upper(SL[0])
-			If Len(SL)<2 And SL[0]<>"NEW" And SL[0]<>"LAYERS"
+			If Len(SL)<2 And SL[0]<>"NEW" And SL[0]<>"LAYERS" 
 				KthuraWarning " Invalid definition in line #"+CL+" >> "+L
-			ElseIf SL[0]<>"NEW" And SL[0]<>"LAYERS" And SL[0]<>"LAYER" And (Not O)
+			ElseIf SL[0]<>"NEW" And SL[0]<>"LAYERS" And SL[0]<>"LAYER" And (Not O) And SL[0]<>"BLOCKMAPGRID"
 				KthuraError "ERROR! Cannot define data when no object is defined! Line #"+cl+" >> "+L
 				Return				
 			Else
 				Select SL[0]
+					Case "BLOCKMAPGRID"		
+						DL = SL[1].split("x")
+						If Len(DL)<2 
+							KthuraWarning " Invalid blockmap grid definition in line #"+cl+" >> "+L
+						Else
+							ret.blockmapgridw = DL[0].toint()
+							ret.blockmapgridh = DL[1].toint()
+						EndIf
 					Case "LAYERS"
 						If ret.multi KthuraError "Duplicate layers! Layers may only be set ONCE in a Kthura Object list!"
 						ret.MakeMulti("__TEMP__CREATE")
