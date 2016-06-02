@@ -45,6 +45,12 @@ End Rem
 Global Kthura_Boundaries_End_Y
 
 Rem
+bbdoc: If you have custom objects in your game, you can attach a function making use of this custom function here to make Kthura act on it the way you want. There is only ONE function like this, however, since Kthura objects support a wide variety of data you can attach to it (with no official limit) you can work out multiple functionality. Important to note is that this feature requires knowledge of Kthura's integry, so this feature is only for advanced users. When a custom draw item is present, but this function is not defined, Kthura will just put in a Marker.
+End Rem
+Global CustomDraw(KthuraObject:TKthuraObject,CamX,CamY)
+
+
+Rem
 bbdoc: Sets the boundaries based on the sizes of your graphics screen. This should work in Max2D games either in Windowed or full screen mode. I really don't know how this will behave within a MaxGUI canvas.
 End Rem
 Function Kthura_GrabBoundaries()
@@ -149,6 +155,23 @@ Type KTDrawDriver
 	
 		
 	End Type
+
+Function NoCustFunc(O:TKthuraObject,x,y)
+	Local ox = o.x-x
+	Local oy = o.y-y
+	SetColor Rand(0,255),Rand(0,255),Rand(0,255)
+	DrawLine Ox-10,oy,ox+10,oy
+	DrawLine ox,oy-10,ox,oy+10
+End Function
+	
+Type ktdrawcustom Extends ktdrawdriver
+
+	Method Draw(O:TKthuraObject,x,y)
+		If Not CustomDraw CustomDraw = NoCustFunc
+		CustomDraw O,x,y
+	End Method
+	
+End Type	
 	
 Type KTDrawZones Extends ktdrawdriver
 
@@ -443,6 +466,7 @@ MapInsert drawdrivers,"Zone",New ktdrawzones
 MapInsert drawdrivers,"Actor",New ktdrawactor
 MapInsert DrawDrivers,"Obstacle",New ktdrawobstacle
 MapInsert DrawDrivers,"Pic",New ktdrawpic
+MapInsert DrawDrivers,"Custom",New ktdrawcustom
 For Local K$=EachIn OtherNames MapInsert drawdrivers,K,DKOther Next
 
 

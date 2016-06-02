@@ -86,6 +86,25 @@ Type TOtherExit Extends totherbase
 	
 	End Type
 	
+Type TCustom Extends totherbase
+
+	Method place(x,y)
+	Local o:TKthuraObject = kthmap.createobject()
+	o.kind="Custom"
+	If gridmode
+		o.x = (Floor(x/currentgridw)*currentgridw)+(currentgridw/2) + screenx
+		o.y = (Floor(y/currentgridh)*currentgridh)+currentgridh     + screeny
+	Else
+		o.x = ex + screenx
+		o.y = ey + screeny
+		EndIf
+	End Method
+	
+	Method show(O:TKthuraObject) End Method '-- Not applicable	
+	
+	End Type
+		
+	
 Type TCustomExit Extends totherbase
 	Field R = Rand(0,255)
 	Field G = Rand(0,255)
@@ -123,6 +142,7 @@ Type TCustomExit Extends totherbase
 
 MapInsert om,"Exit",New totherexit
 MapInsert om,"Entrance",om.get("Exit")
+MapInsert om,"Custom",New tcustom
 
 
 Function DrawSpot(KO:TKthuraObject,R,G,B,Rad=5)

@@ -77,3 +77,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 16.02.18: Fixed an issue of too many unneeded warnings
 - 16.05.09: - Pic support
 - 16.05.09: Included and thus closed #52
+- 16.06.02: Object type 'Custom' supported
