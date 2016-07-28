@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.01.07
+        Version: 16.06.12
 End Rem
 
 ' 15.09.22 - A few adaptions to make animated texturing possible
@@ -21,7 +21,7 @@ Import "kthura_core.bmx"
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map System - KThura_Save.bmx","16.01.07"
+MKL_Version "Kthura Map System - KThura_Save.bmx","16.06.12"
 MKL_Lic     "Kthura Map System - KThura_Save.bmx","Mozilla Public License 2.0"
 
 Private

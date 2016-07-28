@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.10.03
+Version: 16.06.12
 End Rem
 
-MKL_Version "Kthura Map System - PlaceOther.bmx","15.10.03"
+MKL_Version "Kthura Map System - PlaceOther.bmx","16.06.12"
 MKL_Lic     "Kthura Map System - PlaceOther.bmx","GNU General Public License 3"
 
 Type TOtherMap Extends TMap

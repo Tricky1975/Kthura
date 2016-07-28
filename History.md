@@ -78,3 +78,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 16.05.09: - Pic support
 - 16.05.09: Included and thus closed #52
 - 16.06.02: Object type 'Custom' supported
+- 16.07.28: Blockmap and edit support for 'Pic' class

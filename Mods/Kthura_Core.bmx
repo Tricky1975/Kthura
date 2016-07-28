@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.02.18
+        Version: 16.07.28
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -26,6 +26,7 @@ End Rem
 ' 16.01.10 - Showing / hiding by label now supports the "*ALL*" parameter to handle everything regardless of label.
 ' 16.05.08 - Blockmap grid can now be read from object file. This in order to have better support for multi-maps.
 '          - Reading Blockmap grid is now deprecated for the settings file. I will still leave it in in order not to have to re-save all Star Story maps, but giant remakes of Kthura or ports to other languages will NOT support it.
+' 16.06.11 - Adapted for compatibility with BlitzMax NG
 
 
 Strict
@@ -38,7 +39,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","16.02.18"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","16.07.28"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -261,8 +262,12 @@ Type TKthuraActor Extends TKthuraObject
 	'DebugLog "= Original X: "+ x+" >> "+Floor(X/Parent.BlockMapGridW)	
 	'DebugLog "= Original Y: "+ y+" >> "+Floor(Y/Parent.BlockMapGridH)	
 	'DebugLog "= Target   X: "+tx+" >> "+Floor(TX/Parent.BlockMapGridW)	
-	'DebugLog "= Target   Y: "+ty+" >> "+Floor(TY/Parent.BlockMapGridH)	
+	'DebugLog "= Target   Y: "+ty+" >> "+Floor(TY/Parent.BlockMapGridH)
+	?bmxng
+	Local p:PathFinderUnit = FindTheWay(Float(Floor(X/Parent.BlockMapGridW))	,Float(Floor(Y/Parent.BlockMapGridH))	,Int(Floor(TX/Parent.BlockMapGridW)),Int(Floor(TY/Parent.BlockMapGridH)))
+	?Not bmxng
 	Local p:PathFinderUnit = FindTheWay(Floor(X/Parent.BlockMapGridW)		,Floor(Y/Parent.BlockMapGridH)		,Floor(TX/Parent.BlockMapGridW)		,Floor(TY/Parent.BlockMapGridH)		)
+	?
 	If p.success
 		walkspot=0
 		FoundPath = p
@@ -797,7 +802,7 @@ Type TKthura
 	Local GH = BlockMapGridH
 	Local X,Y,W,H,BX,BY,TX,TY,AX,AY,TW,TH
 	Local BoundX,BoundY
-	Local iw,tiw
+	Local iw,tiw,ih,tih
 	' Let's first get the bounderies
 	For O=EachIn fullobjectlist
 			X = O.X;   If X<0 X=0
@@ -814,7 +819,12 @@ Type TKthura
 					TX = Floor(X/GW)
 					TY = Floor(Y/GH)						
 					If TX>BoundX BoundX=TX
-					If TY>BoundY BoundY=TY						
+					If TY>BoundY BoundY=TY
+				Case "Pic"
+					TX = Floor(X/GW)
+					TY = Floor(Y/GW)
+					If TX>BoundX BoundX=TX
+					If TY>BoundY BoundY=TY
 				End Select
 		Next
 	BlockMapBoundW = BoundX
@@ -848,7 +858,21 @@ Type TKthura
 					For ax=TX-(tiw) To tx+(tiw)
 						If ax>=0 And ax<=BoundX And ty<=boundy And ty>=0 blockmap[ax,ty]=True 
 						Next
-					EndIf	
+					EndIf
+			Case "Pic"
+				TX  = Floor( X   /GW)
+				TY  = Floor( Y   /GH)		
+				blockmap[tx,ty]=True			
+				If o.textureimage
+					iw  = ImageWidth (o.textureimage)
+					tiw = Ceil(iw / GW)
+					ih  = ImageHeight(o.textureimage)
+					tih = Ceil(ih / Gh)
+					For ax=TX Until tx+(tiw) For ay=ty Until ty+tih
+						If ax>=0 And ax<=BoundX And ay<=boundy And ay>=0 blockmap[ax,ay]=True 
+						Next Next
+					EndIf
+						
 			End Select					
 		EndIf Next
 	' And this will force a way open if applicable	
@@ -1119,7 +1143,7 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 						O.Labels = SL[1]
 					Case "COLOR"
 						DL = SL[1].split(",")
-						If Len DL<3
+						If (Len DL)<3
 							KthuraWarning " Invalid color definition in line #"+cl+" >> "+L
 						Else
 							o.r = DL[0].toint()

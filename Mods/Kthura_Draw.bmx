@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.01.14
+        Version: 16.06.12
 End Rem
 
 ' 15.07.12 - First set release
@@ -16,6 +16,10 @@ End Rem
 ' 15.09.28 - Added boundary support
 ' 16.01.07 - Scaling support added
 ' 16.01.14 - Fixed an alpha bug that popped up if the last drawn object had an alpha value lower than 1
+' 16.06.05 - Support "Custom" object
+' 16.06.11 - NG adeptions
+
+ 
 
 Strict
 Import "Kthura_core.bmx"
@@ -23,7 +27,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.01.14"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.06.12"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -135,7 +139,11 @@ Type KTDrawDriver
 	End Method
 	
 	Method OAlpha(O:TKthuraObject)
+	?bmxng
+	SetAlpha Float(o.alpha)
+	?Not bmxng
 	SetAlpha O.alpha
+	?
 	End Method
 	
 	Method OGetTex(O:TKthuraObject)		
@@ -260,7 +268,11 @@ Type ktDrawObstacle Extends ktdrawdriver
 		
 	Method Draw(O:TKthuraObject,x,y)
 	SetRotation O.Rotation
+	?bmxng
+	SetScale O.ScaleX/Float(1000),O.ScaleY/Float(1000)
+	?Not bmxg	
 	SetScale O.ScaleX/Double(1000),O.ScaleY/Double(1000)
+	?
 	If o.FrameSpeed>=0 And o.Frames
 		O.FrameSpeedTicker:+1
 		If O.FrameSpeedTicker>O.Framespeed O.Frame:+1 O.FrameSpeedTicker=0
@@ -351,7 +363,11 @@ Type KTDrawActor Extends ktdrawdriver
 	If A.Cycle = A.Parent.Cycle Return
 	A.Cycle = A.Parent.Cycle
 	SetRotation A.Rotation
+	?bmxng
+	SetScale A.ScaleX/Float(1000),A.ScaleY/float(1000)
+	?Not bmxng
 	SetScale A.ScaleX/Double(1000),A.ScaleY/Double(1000)
+	?
 	Local I:TImage
 	Local ErrorText$ = "Ok!"
 	Local AcX,AcY

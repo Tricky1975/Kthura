@@ -20,14 +20,15 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.02.07
+Version: 16.07.28
 End Rem
 
 ' updates
 ' 15.08.15 - Initial version
 ' 16.01.07 - Scaling support added
+' 16.07.28 - "Pic" style objects now clickable in the "modify" module.
 
-MKL_Version "Kthura Map System - Editor.bmx","16.02.07"
+MKL_Version "Kthura Map System - Editor.bmx","16.07.28"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -377,6 +378,12 @@ Type TCanvasModify Extends tcanvasactionbase
 					If ex+screenx>KO.X-(w/2) And ex+screenx<KO.X+(w/2) And ey+screeny>KO.Y-h And ey+screeny<KO.Y And KO.dominance>=cdom SELECTEDOBJECT = KO
 					'Print "Obstacle check: ~n- Mouse: ("+Int(ex+screenx)+","+Int(ey+screeny)+")~n- Area: ("+Int(KO.X-(w/2))+","+Int(KO.Y-h)+") - ("+Int(KO.X+(w/2))+","+KO.Y+")~n- Dominance:"+KO.Dominance+" ___ Old: "+cdom+"~n- Boolcheck: "+Int(ex+screenx>KO.X-(w/2) And ex+screenx<KO.X+(w/2) And ey-screeny>KO.Y-h And ey-screeny<KO.Y And KO.dominance>=cdom)+"~n- Selected: "+Int(SelectedObject=KO)
 					EndIf	
+			Case "Pic"
+				If KO.textureImage
+					w = ImageWidth(KO.textureimage)
+					h = ImageHeight(KO.textureimage)
+					If ex+screenx>KO.X And ex+screenx<KO.X+w And ey+screeny>KO.Y And ey+screeny<KO.Y+h And KO.dominance>=cdom SELECTEDOBJECT = KO
+				EndIf		
 			Default
 				Select Chr(KO.Kind[0])
 					Case "$"
