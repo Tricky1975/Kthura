@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.07.28
+        Version: 16.08.21
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -27,6 +27,7 @@ End Rem
 ' 16.05.08 - Blockmap grid can now be read from object file. This in order to have better support for multi-maps.
 '          - Reading Blockmap grid is now deprecated for the settings file. I will still leave it in in order not to have to re-save all Star Story maps, but giant remakes of Kthura or ports to other languages will NOT support it.
 ' 16.06.11 - Adapted for compatibility with BlitzMax NG
+' 16.08.21 - Loading a new texture will automatically rebuild the blockmap. This can be turned off manually, but it's undocumentented and only recommended for those who know what they are doing.
 
 
 Strict
@@ -39,7 +40,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","16.07.28"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","16.08.21"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -336,6 +337,9 @@ Type tkthuraListmap Extends TMap
 	End Type
 	
 Type TKthuraImageMap Extends TMap
+
+	Field autoreblockmap:Byte = True
+	Field Parent:TKthura
 	
 	Method Img:TImage(Tag$)	
 	Return TImage(MapValueForKey(Self,Upper(tag)))
@@ -392,6 +396,7 @@ Type TKthuraImageMap Extends TMap
 		EndIf
 	MapInsert Self,Upper(Prefix+":"+file),I
 	DebugLog "Picture stored "+Prefix+":"+file
+	If parent And autoreblockmap parent.buildblockmap
 	Return I
 	End Method
 	
@@ -434,6 +439,10 @@ Type TKthura
 	Field BlockMapBoundH = 100
 	
 	Field BlockMap:Byte[,] = New Byte[100+1,100+1]
+	
+	Method New()
+		textures.parent = Self
+	End Method
 	
 	Method CreateObject:TKthuraObject(Update=True)
 	Local ret:TKthuraObject = New TKthuraObject

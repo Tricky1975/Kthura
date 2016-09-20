@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.06.12
+        Version: 16.09.20
 End Rem
 
 ' 15.07.12 - First set release
@@ -18,6 +18,7 @@ End Rem
 ' 16.01.14 - Fixed an alpha bug that popped up if the last drawn object had an alpha value lower than 1
 ' 16.06.05 - Support "Custom" object
 ' 16.06.11 - NG adeptions
+' 16.08.21 - Made sure that if a tilemap requests a new texture, the autoreblockmap is not performed. It's not needed then, and it only slows stuff down.
 
  
 
@@ -27,7 +28,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.06.12"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.09.20"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -205,16 +206,29 @@ Type KTDrawZones Extends ktdrawdriver
 
 Type KTDrawTiledArea Extends ktdrawdriver
 
-	'Method OGetText(O:TKthuraObject)
-	'End Method
+	Method OGetTex(O:TKthuraObject)		
+	Local ts = o.parent.textures.autoreblockmap
+	o.parent.textures.autoreblockmap = 0
+	If Not O.texturefile
+		If Not O.loadtried KthuraWarning O.kind+" #"+O.IDNum+" has no valid texture file tied to it!"
+		O.loadtried = True
+		Return
+		EndIf
+	o.parent.textures.Load(O.parent.textureJCR,o.texturefile,o.kind,hot)
+	o.textureimage = o.parent.textures.img(o.kind+":"+o.texturefile)	
+	o.Frames = Len(o.textureimage.pixmaps)
+	o.FrameWidth = ImageWidth(o.textureimage)
+	o.Frameheight = ImageHeight(o.textureimage)
+	o.parent.textures.autoreblockmap = ts
+	End Method
 	
 	Method Draw(O:TKthuraObject,x,y)
 	Local vx,vy,vw,vh ',ox#,oy#
 	If o.FrameSpeed>=0 And o.Frames
 		O.FrameSpeedTicker:+1
 		If O.FrameSpeedTicker>O.Framespeed O.Frame:+1 O.FrameSpeedTicker=0
-		If O.Frame>=O.Frames O.Frame=0
 		EndIf
+	If O.Frame>=O.Frames O.Frame=0
 	SetColor o.r,o.g,o.b	
 	GetViewport vx,vy,vw,vh
 	'GetOrigin ox,oy
@@ -364,7 +378,7 @@ Type KTDrawActor Extends ktdrawdriver
 	A.Cycle = A.Parent.Cycle
 	SetRotation A.Rotation
 	?bmxng
-	SetScale A.ScaleX/Float(1000),A.ScaleY/float(1000)
+	SetScale A.ScaleX/Float(1000),A.ScaleY/Float(1000)
 	?Not bmxng
 	SetScale A.ScaleX/Double(1000),A.ScaleY/Double(1000)
 	?

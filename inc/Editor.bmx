@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.07.28
+Version: 16.09.20
 End Rem
 
 ' updates
@@ -28,7 +28,7 @@ End Rem
 ' 16.01.07 - Scaling support added
 ' 16.07.28 - "Pic" style objects now clickable in the "modify" module.
 
-MKL_Version "Kthura Map System - Editor.bmx","16.07.28"
+MKL_Version "Kthura Map System - Editor.bmx","16.09.20"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -206,6 +206,7 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 		o.inserty = TextFieldText(TiledAreaData.InsY).toInt()
 		EndIf
 	o.framespeed = TextFieldText(tiledareadata.animspeed).toint()
+	o.frame = TextFieldText(tiledareadata.frame).toint()
 	'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
 	kthmap.totalremap
 	work=False
@@ -273,6 +274,7 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	o.labels = TextFieldText(ObstacleData.Labels)
 	o.rotation = TextFieldText(ObstacleData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
 	o.framespeed = TextFieldText(obstacledata.animspeed).toint()
+	o.frame = TextFieldText(obstacledata.frame).toint()
 	o.scalex = TextFieldText(obstacledata.scalex).toint()
 	o.scaley = TextFieldText(obstacledata.scaley).toint()
 	kthmap.totalremap
@@ -425,6 +427,7 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText p.animspeed,ko.framespeed
 		SetGadgetText p.scalex,ko.scalex
 		SetGadgetText p.scaley,ko.scaley
+		SetGadgetText p.frame,ko.frame
 		SetButtonState p.scalelink,ko.scalex=ko.scaley
 		EndIf		
 	?debug
@@ -497,25 +500,29 @@ Type TCanvasAreaEffect Extends TCanvasActionBase
 	
 	
 Function ModifyMove()
-Local P:Tworkpanel = modifydata
-Local KO:TKthuraObject = SelectedObject
-If Not ko Return
-KO.X = TextFieldText(P.X).toint()
-KO.Y = TextFieldText(P.Y).toint()
-KO.W = TextFieldText(P.W).toint()
-KO.H = TextFieldText(P.H).toint()
-KO.R = TextFieldText(P.R).toint(); If KO.R<0 KO.R=0 ElseIf KO.R>255 KO.R=255
-KO.G = TextFieldText(P.G).toint(); If KO.G<0 KO.G=0 ElseIf KO.G>255 KO.G=255
-KO.B = TextFieldText(P.B).toint(); If KO.B<0 KO.B=0 ElseIf KO.B>255 KO.B=255
-KO.InsertX = TextFieldText(P.InsX).toint()
-KO.InsertY = TextFieldText(P.InsY).toint()
-KO.Rotation = TextFieldText(P.Rotation).toint(); While kO.rotation>=360 ko.rotation:-360 Wend; While kO.rotation<=-360 ko.rotation:+360 Wend	
-KO.dominance = TextFieldText(P.dominance).Toint()
-ko.framespeed = TextFieldText(p.animspeed).toint()
-ko.scalex = TextFieldText(p.scalex).toint()
-ko.scaley = TextFieldText(p.scaley).toint()
-Kthmap.totalremap
-DebugLog "ModifyMove() called and executed"
+	Local P:Tworkpanel = modifydata
+	Local KO:TKthuraObject = SelectedObject
+	If Not ko Return
+	KO.X = TextFieldText(P.X).toint()
+	KO.Y = TextFieldText(P.Y).toint()
+	KO.W = TextFieldText(P.W).toint()
+	KO.H = TextFieldText(P.H).toint()
+	KO.R = TextFieldText(P.R).toint(); If KO.R<0 KO.R=0 ElseIf KO.R>255 KO.R=255
+	KO.G = TextFieldText(P.G).toint(); If KO.G<0 KO.G=0 ElseIf KO.G>255 KO.G=255
+	KO.B = TextFieldText(P.B).toint(); If KO.B<0 KO.B=0 ElseIf KO.B>255 KO.B=255
+	KO.InsertX = TextFieldText(P.InsX).toint()
+	KO.InsertY = TextFieldText(P.InsY).toint()
+	KO.Rotation = TextFieldText(P.Rotation).toint(); While kO.rotation>=360 ko.rotation:-360 Wend; While kO.rotation<=-360 ko.rotation:+360 Wend	
+	KO.dominance = TextFieldText(P.dominance).Toint()
+	ko.framespeed = TextFieldText(p.animspeed).toint()
+	ko.scalex = TextFieldText(p.scalex).toint()
+	ko.scaley = TextFieldText(p.scaley).toint()
+	ko.frame = TextFieldText(p.frame).toint()
+	If ko.frame < 0
+		ko.frame = 0
+	EndIf
+	Kthmap.totalremap
+	DebugLog "ModifyMove() called and executed"
 End Function	
 
 Function FieldScaleX(P:TWorkPanel)
@@ -601,6 +608,7 @@ addcallback callaction,modifydata.h,modifymove
 addcallback callaction,modifydata.r,modifymove
 addcallback callaction,modifydata.g,modifymove
 addcallback callaction,modifydata.b,modifymove
+addcallback callaction,modifydata.frame,modifymove
 addcallback callaction,modifydata.insx,modifymove
 addcallback callaction,modifydata.insy,modifymove
 addcallback callaction,modifydata.rotation,modifymove

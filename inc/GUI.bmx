@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.02.07
+Version: 16.09.20
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","16.02.07"
+MKL_Version "Kthura Map System - GUI.bmx","16.09.20"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 Global CallBackXTRA:Object
@@ -317,9 +317,10 @@ Type TWorkPanel
 	Field ColorSelector:TGadget = CreateButton("..",400,275,50,25,parentgadget)
 	Field UseColor:Byte      = 1
 	Field AnimSpeed:TGadget  = CreateTextField    (250,300, 50,25,parentgadget)
-	Field ScaleX:TGadget     = CreateTextField    (250,325, 50,25,parentgadget)
-	Field ScaleY:TGadget     = CreateTextField    (300,325, 50,25,parentgadget)
-	Field ScaleLink:TGadget  = CreateButton("Link",375,325, 50,25,parentgadget,button_checkbox)
+	Field Frame:TGadget      = CreateTextField    (250,325, 50,25,parentgadget)
+	Field ScaleX:TGadget     = CreateTextField    (250,350, 50,25,parentgadget)
+	Field ScaleY:TGadget     = CreateTextField    (300,350, 50,25,parentgadget)
+	Field ScaleLink:TGadget  = CreateButton("Link",375,350, 50,25,parentgadget,button_checkbox)
 	'Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
 	'Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
 	'Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
@@ -338,7 +339,8 @@ Type TWorkPanel
 	CreateLabel "Rotation:"       ,0,250,250,25,parentgadget; CreateLabel "degrees",310,250, 150,25,parentgadget
 	CreateLabel "Color:"          ,0,275,250,25,parentgadget
 	CreateLabel "Animation Speed:",0,300,250,25,parentgadget; CreateLabel "(higher=slower)",310,300,150,25,parentgadget
-	CreateLabel "Scale:"          ,0,325,250,25,parentgadget
+	CreateLabel "Frame:"          ,0,325,250,25,parentgadget
+	CreateLabel "Scale:"          ,0,350,250,25,parentgadget
 	'CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
 	'CreateLabel "Frames:"      ,0,225,250,25,parentgadget
 	'CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
@@ -487,7 +489,7 @@ addcallback callaction,tooltabber,updatetooltabber
 Function ColorSelector()
 Local p:Tworkpanel=tworkpanel(CallBackXTRA)
 If Not p Then Notify "Internal Error~n~nCallBackXTRA = NULL~n~nPlease report this as a bug!"; End
-Local ok  = requestcolor(TextFieldText(P.R).toInt(),TextFieldText(P.G).toInt(),TextFieldText(P.B).toInt())
+Local ok  = RequestColor(TextFieldText(P.R).toInt(),TextFieldText(P.G).toInt(),TextFieldText(P.B).toInt())
 If ok
 	SetGadgetText p.r,RequestedRed()
 	SetGadgetText p.g,RequestedGreen()
