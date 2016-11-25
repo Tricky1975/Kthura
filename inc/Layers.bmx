@@ -58,7 +58,8 @@ If Not kthmap.multi
 n = Trim(MaxGUI_Input("Enter a name for the new layer"))	
 If n 
 	ok = Not Prefixed(n,"__")
-	If Not ok Notify "The name you entered is illegal. Possible reasons:~n-~tNames may not be prefixed with ~q__~q as that is reseved for Kthura itself." Else kthmap.addtomulti n
+	ok = ok And (Not MapContains(kthmap.multi,n))
+	If Not ok Notify "The name you entered is illegal. Possible reasons:~n-~tNames may not be prefixed with ~q__~q as that is reseved for Kthura itself.~n- The name of this layer may already exist." Else kthmap.addtomulti n
 	updatelayerbox
 	EndIf
 End Function
@@ -74,7 +75,7 @@ If s<0 ' prevent illegal selections
 Local l$=GadgetItemText(LayerSelector,s)
 kthmap = kthmap.getmultilayer(l)	
 If u UpdateLayerBox False
-SelectedObject = null
+SelectedObject = Null
 End Function
 addcallback callselect,LayerSelector,Layer_select
 
