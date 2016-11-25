@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.06.12
+        Version: 16.11.25
 End Rem
 
 ' 15.09.22 - A few adaptions to make animated texturing possible
@@ -21,8 +21,50 @@ Import "kthura_core.bmx"
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map System - KThura_Save.bmx","16.06.12"
+MKL_Version "Kthura Map System - KThura_Save.bmx","16.11.25"
 MKL_Lic     "Kthura Map System - KThura_Save.bmx","Mozilla Public License 2.0"
+
+
+Rem
+bbdoc: This type can be used to add extra data to Kthura. Most Kthura based games will not use it (unless you code them yourself to do so), but it can still be handy, especially for editor settings etc.
+End Rem
+Type T_Kthura_XSaveFunctions
+	Rem
+	bbdoc: Define the function used for saving in this field.
+	End Rem
+	Field Action(J:TJCRCreate)
+	
+	Rem
+	bbdoc: You can name the stuff you save here, which can appear on the std-out. Just for debugging purposes.
+	End Rem
+	Field Name$
+	
+	
+	Rem
+	'' bbdoc: This will contain the JCR6 object Kthura is saving to. KthuraSave() defines this for you, and it's best not to assign any data to this yourself (unless you know what you are doing).
+	'' Removed from docs, as I found out this one was not gonna work.
+	End Rem
+	' Field J:TJCRCreate
+	
+End Type
+
+
+Rem
+bbdoc: The list used by Kthura while saving.
+End Rem
+Global L_Kthura_XSaveFunctions:TList = New TList
+
+Rem
+bbdoc: Just a quick way to add extra actions. Kthura_Save() will execute them in the same order as they are added.
+End Rem
+Function KthuraSave_AddAction(Action(J:TJCRCreate),Name$="")	
+	Local T:T_Kthura_XSaveFunctions = New T_Kthura_XSavefunctions
+	t.action=action
+	t.name = name
+	ListAddLast L_kthura_xsavefunctions,t
+	Print "Extra save action added"
+End Function
+
 
 Private
 Function F_GetCam(X Var,Y Var) x=0; Y=0 End Function
@@ -76,6 +118,11 @@ WriteLine bte.stream,"-- Generated: "+CurrentDate()+"; "+CurrentTime()
 Kthura_GetCam cx,cy
 WriteLine bte.stream,"CAM = "+cx+"x"+cy	
 'WriteLine bte.stream,"BLOCKMAPGRID = "+KMap.blockmapgridw+"x"+KMap.BlockmapGridh
+For Local KS:T_Kthura_xsavefunctions = EachIn L_kthura_xsavefunctions
+	If KS.Name Print "Kthura Save XTRA> "+KS.Name
+	'KS.J = bto
+	If Not KS.Action Then Print "WARNING! No action function!" Else KS.Action(bto)
+Next	
 bte.close	
 BTO.CLOSE "zlib"	
 End Function

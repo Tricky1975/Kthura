@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.08.21
+        Version: 16.11.25
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -40,7 +40,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","16.08.21"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","16.11.25"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -115,6 +115,19 @@ Type TKthuraObject
 	Field Parent:TKthura	
 	Field ScaleX=1000
 	Field ScaleY=1000
+	
+	Rem
+	bbdoc: Sets alpha rate of an object in a scale of 0 to 1000.
+	about: This method has specifically been set up for hooking up Kthura objects to Lua. The communication between BlitzMax and Lua is downright terrible when it comes to non-integer numbers. This method has to end that.
+	End Rem
+	Method SetAlpha(alphavalue)
+		If alphavalue>1000 Then alphavalue=1000 ElseIf alphavalue<0 Then alphavalue=0
+		alpha = Double(alphavalue) / Double(1000)
+	End Method
+	
+	Method GetAlpha()
+	       Return Floor(alpha*1000)
+	End method
 	
 	Rem
 	bbdoc: Moves an object.

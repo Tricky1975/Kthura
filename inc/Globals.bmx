@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.29
+Version: 16.11.25
 End Rem
-MKL_Version "Kthura Map System - Globals.bmx","15.09.29"
+MKL_Version "Kthura Map System - Globals.bmx","16.11.25"
 MKL_Lic     "Kthura Map System - Globals.bmx","GNU General Public License 3"
 
 ' Project
@@ -75,7 +75,7 @@ Global ProjectScript:TLua
 
 ' General Data pages
 Global GDPanels:TGadget[] = New TGadget[5]
-Global GDFields:TMap = New tmap
+Global GDFields:TMap = New TMap
 
 ' Edit
 Global SelectedObject:TKthuraObject
@@ -83,3 +83,9 @@ Global SelectedObject:TKthuraObject
 ' Console will remain amber. In Windows too!!!!
 Global PCOnsole:TGadget
 Global OldConsoleText$
+
+
+' Texture Settings
+Global TextureSettings:TMap = New TMap
+
+Function GetTextureSettings:Stringmap(Tex$) Return StringMap(MapValueForKey(TextureSettings,Tex)) End Function

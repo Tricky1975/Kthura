@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.09.20
+Version: 16.11.25
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","16.09.20"
+MKL_Version "Kthura Map System - GUI.bmx","16.11.25"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 Global CallBackXTRA:Object
@@ -210,6 +210,12 @@ screeny = pss[1].toint()
 End Function
 addcallback callmenu,Hex(4004),GoToScreenPosition
 
+CreateMenu "Check canvas format",4005,debugmenu
+Function CheckCanvasFormat()
+	Notify "Canvas Format: "+ClientWidth(canvas)+"x"+ClientHeight(canvas)
+End Function
+addcallback callmenu,Hex(4005),CheckCanvasFormat
+
 
 ' Debug build menu. This one should ONLY be used in the debug build and should therefore not appear in the release build. Oh yeah, and let's always make this menu go last (for obvious reasons). :-P
 ?Debug
@@ -277,9 +283,13 @@ AddGadgetItem tooltabber,"Modify"		' 5
 If Not CanvasGraphics(Canvas) AddTextAreaText GALE_ConsoleGadget,"WARNING! Something went wrong in the canvas definitions!~n"
 Global ToolGadgets:TList[] = [New TList,New TList,New TList,New TList,New TList,New TList]
 
-Global TextureBox:TGadget = CreateListBox(0,0,ttw,300,tooltabber)
+Global TextureQuick:TGadget = CreateComboBox(0,0,ttw,25,tooltabber)
+Global TextureBox:TGadget = CreateListBox(0,25,ttw,275,tooltabber)
 ListAddLast toolgadgets[0],texturebox 
 ListAddLast toolgadgets[1],texturebox
+
+Addcallback CallAction,TextureQuick,Tex_WPLoad
+Addcallback CallSelect,TextureQuick,Tex_WPLoad
 Rem
 Global NewObject:TGadget = CreateButton("New Object",0,300,250,25,tooltabber,button_radio)
 SetButtonState NewObject,1

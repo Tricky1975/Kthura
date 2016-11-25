@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,36 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.02
-End Rem
-Rem
-/*
-	Kthura
-	Area Effect Support
-	
-	
-	
-	(c) Jeroen P. Broks, 2015, All rights reserved
-	
-		This program is free software: you can redistribute it and/or modify
-		it under the terms of the GNU General Public License as published by
-		the Free Software Foundation, either version 3 of the License, or
-		(at your option) any later version.
-		
-		This program is distributed in the hope that it will be useful,
-		but WITHOUT ANY WARRANTY; without even the implied warranty of
-		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-		GNU General Public License for more details.
-		You should have received a copy of the GNU General Public License
-		along with this program.  If not, see <http://www.gnu.org/licenses/>.
-		
-	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
-	to the project the exceptions are needed for.
-*/
-
-
-Version: 15.08.23
-
+Version: 16.11.25
 End Rem
 Type TAEGadget
 	Field G:TGadget
@@ -261,6 +232,27 @@ AE.Tag = Tag
 MapInsert MapAreaEffect,Tag,Ae
 End Function
 
+Type TForcePassible Extends tbaseareaeffect
+	Method Action(X,Y,W,H)
+		Local cnt,letsdoit
+		For Local O:TKthuraObject = EachIn kthmap.fullobjectlist
+			Select O.kind
+				Case "TiledArea","Zone"
+					letsdoit = (o.x>x And o.x<x+w And o.y>y And o.y<y+h) Or (o.x+o.w>x And o.x+o.w<x+w And o.y+o.h>y And o.y+o.h<y+h)
+					Print "TiledArea/Zone("+O.kind+") "+O.IDNUM+" result "+letsdoit
+				Default
+					letsdoit = (o.x>x And o.x<x+w And o.y>y And o.y<y+h)	
+					Print "Other."+o.kind+" "+O.IDNUM+" result "+letsdoit+"     itemcoords("+O.X+","+O.Y+")   Range("+x+","+y+")-("+Int(x+w)+","+Int(y+h)+")"
+				End Select	
+			If letsdoit
+				o.forcepassible = 1
+				cnt:+1
+			EndIf
+		Next
+		Notify "Number of objects modified: "+cnt
+	End Method
+End Type		
+
 
 Type TRelabel Extends Tbaseareaeffect
 
@@ -307,7 +299,38 @@ Type TRelabel Extends Tbaseareaeffect
 
 	End Type
 	
+Type TMove Extends TBaseAreaEffect
+
+	Method New()
+		createareaeffectdialog Self,"Please set up how much I need to move things","string X;string Y"
+	End Method
+	
+	Method action(X,Y,W,H)
+		Local ok,letsdoit
+		Local s:StringMap = GetResults()
+		If Not s Return Print("Request Cancelled")
+		Local mx=s.value("X").toint()
+		Local my=s.value("Y").toint()
+		For Local O:TKthuraObject = EachIn kthmap.fullobjectlist
+			Select O.kind
+				Case "TiledArea","Zone"
+					letsdoit = (o.x>x And o.x<x+w And o.y>y And o.y<y+h) Or (o.x+o.w>x And o.x+o.w<x+w And o.y+o.h>y And o.y+o.h<y+h)
+					Print "TiledArea/Zone("+O.kind+") "+O.IDNUM+" result "+letsdoit
+				Default
+					letsdoit = (o.x>x And o.x<x+w And o.y>y And o.y<y+h)	
+					Print "Other."+o.kind+" "+O.IDNUM+" result "+letsdoit+"     itemcoords("+O.X+","+O.Y+")   Range("+x+","+y+")-("+Int(x+w)+","+Int(y+h)+")"
+			End Select	
+			If letsdoit
+				O.X:+mx
+				O.Y:+my
+			EndIf
+		Next
+	End Method
+End Type	
+			
 CreateAE "Relabel", New TRelabel
+CreateAE "Force Passibe", New TForcePassible
+createAE "Move objects", New TMove
 
 
 

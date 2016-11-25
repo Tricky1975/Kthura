@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.11.09
+Version: 16.11.25
 End Rem
-MKL_Version "Kthura Map System - GetProject.bmx","15.11.09"
+MKL_Version "Kthura Map System - GetProject.bmx","16.11.25"
 MKL_Lic     "Kthura Map System - GetProject.bmx","GNU General Public License 3"
 
 Function GetProject()
@@ -98,6 +98,7 @@ For f=EachIn MapKeys(texturedir.entries)
 If FileType(mapfile) 'And False ' And False was used in the early draft of the editor as the saving routine did not yet fully work. ;)
 	csay "Loading: "+Mapfile
 	kthmap = LoadKthura(mapfile,"",texturedir)
+	LoadTexSettings mapfile
 	Else
 	csay "No map found, so creating a new map"
 	kthmap = New TKthura

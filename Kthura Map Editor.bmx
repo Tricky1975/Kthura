@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.06.12
+Version: 16.11.25
 End Rem
 Strict
 
@@ -66,6 +66,7 @@ End Rem
 '          - FIXED: Keep object selected through layer change bug
 '          - FIXED: Tag not checked upon entering bug. I may need to change this all once multi-tagging is supported though
 ' 16.05.08 - Rebuilt for newly set up blockmap saving routine. This does not alter the source of the editor itself, but I name it here, as the compiled version DOES take effect from this.
+' 16.09.20 - Frame edit support
 
 
 ' Drivers JCR6
@@ -124,7 +125,7 @@ Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.06.12"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.11.25"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True
@@ -139,6 +140,7 @@ JCR6CheckChange = False
 Include   "inc/Assign.bmx"
 Include   "inc/error.bmx"
 Include   "inc/Globals.bmx"
+Include   "inc/TexSettingsLoadSave.bmx"
 Include   "inc/CamSaveLoad.bmx"
 Include   "inc/GetProject.bmx"
 Include   "inc/GUI.bmx"

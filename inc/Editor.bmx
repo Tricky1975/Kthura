@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.09.20
+Version: 16.11.25
 End Rem
 
 ' updates
@@ -28,7 +28,7 @@ End Rem
 ' 16.01.07 - Scaling support added
 ' 16.07.28 - "Pic" style objects now clickable in the "modify" module.
 
-MKL_Version "Kthura Map System - Editor.bmx","16.09.20"
+MKL_Version "Kthura Map System - Editor.bmx","16.11.25"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -210,6 +210,7 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 	'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
 	kthmap.totalremap
 	work=False
+	Tex_WPSave tiledareadata
 	End Method
 	
 	Method MouseLeave()
@@ -278,6 +279,7 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	o.scalex = TextFieldText(obstacledata.scalex).toint()
 	o.scaley = TextFieldText(obstacledata.scaley).toint()
 	kthmap.totalremap
+	tex_WPSave ObstacleData
 	End Method
 
 

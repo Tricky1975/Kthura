@@ -80,3 +80,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 16.06.02: Object type 'Custom' supported
 - 16.07.28: Blockmap and edit support for 'Pic' class
 - 16.09.20: Frame editing support
+- 16.12.25: Fixed #56
