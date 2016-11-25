@@ -290,7 +290,8 @@ Type TRelabel Extends Tbaseareaeffect
 				Next
 			If ok
 				If s.value("Replace")="true" orilabel="" Else orilabel = O.labels
-				If orilabel Orilabel:+","
+				Print "Replace="+s.value("Replace")+"; o.labels="+o.labels+"; orilabel="+orilabel
+				If orilabel Orilabel:+","				
 				o.labels=orilabel+s.value("Label")
 				EndIf
 			EndIf
