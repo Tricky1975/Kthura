@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.11.25
+Version: 16.12.04
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","16.11.25"
+MKL_Version "Kthura Map System - GUI.bmx","16.12.04"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 Global CallBackXTRA:Object
@@ -210,11 +210,11 @@ screeny = pss[1].toint()
 End Function
 addcallback callmenu,Hex(4004),GoToScreenPosition
 
-CreateMenu "Check canvas format",4005,debugmenu
+CreateMenu "Check canvas format",4006,debugmenu
 Function CheckCanvasFormat()
 	Notify "Canvas Format: "+ClientWidth(canvas)+"x"+ClientHeight(canvas)
 End Function
-addcallback callmenu,Hex(4005),CheckCanvasFormat
+addcallback callmenu,Hex(4006),CheckCanvasFormat
 
 
 ' Debug build menu. This one should ONLY be used in the debug build and should therefore not appear in the release build. Oh yeah, and let's always make this menu go last (for obvious reasons). :-P

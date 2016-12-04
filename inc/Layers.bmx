@@ -20,10 +20,10 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.02.07
+Version: 16.12.04
 End Rem
 MKL_Lic     "Kthura Map System - Layers.bmx","GNU General Public License 3"
-MKL_Version "Kthura Map System - Layers.bmx","16.02.07"
+MKL_Version "Kthura Map System - Layers.bmx","16.12.04"
 
 Function UpdateLayerBox(Update=True)
 Local seli=-1
