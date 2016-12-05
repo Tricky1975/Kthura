@@ -82,3 +82,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 16.09.20: Frame editing support
 - 16.12.25: Fixed #56
 - 16.12.04: Fixed issue #58
+- 16.12.05: Rotten object detector now also scans for unknown shit

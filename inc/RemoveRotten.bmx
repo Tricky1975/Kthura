@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 15.09.14
+Version: 16.12.05
 End Rem
 Function RemoveRotten() 
 Local O:TKthuraObject 
@@ -29,6 +29,7 @@ For O=EachIn kthmap.fullobjectlist
 	problem = ""
 	If O.W<0 Or O.H<0 problem="Negative size or width: "+O.W+"x"+O.Y
 	If (O.W=0 Or O.H=0) And (O.kind = "TiledArea" Or O.kind="Zone") problem=O.kind+" needs to be at least 1x1 pixels~n~n"+O.W+"x"+O.H
+	If Prefixed(O.kind,"$") And (Not MapContains(OM,o.kind) ) problem = "Object found of an unknown type "+O.kind+".~n~n~nNormally this can only happen when you either transfer a map from one project to another, or when the config file is changed.~n~nEither way I don't know it now, and I suggest a removal."
 	If problem
 		Select Proceed("Problem with object #"+O.idnum+"~nKind: "+O.Kind+"~n~n"+problem+"~n~n~nDo you want to remove it?")
 			Case -1 kthmap.totalremap; Return
