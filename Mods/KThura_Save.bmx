@@ -1,12 +1,12 @@
 Rem
         KThura_Save.bmx
-	(c) 2015, 2016 Jeroen Petrus Broks.
+	(c) 2015, 2016, 2017 Jeroen Petrus Broks.
 	
 	This Source Code Form is subject to the terms of the 
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.11.25
+        Version: 17.01.16
 End Rem
 
 ' 15.09.22 - A few adaptions to make animated texturing possible
@@ -21,7 +21,7 @@ Import "kthura_core.bmx"
 Import jcr6.zlibdriver
 
 
-MKL_Version "Kthura Map System - KThura_Save.bmx","16.11.25"
+MKL_Version "Kthura Map System - KThura_Save.bmx","17.01.16"
 MKL_Lic     "Kthura Map System - KThura_Save.bmx","Mozilla Public License 2.0"
 
 
@@ -58,10 +58,10 @@ Rem
 bbdoc: Just a quick way to add extra actions. Kthura_Save() will execute them in the same order as they are added.
 End Rem
 Function KthuraSave_AddAction(Action(J:TJCRCreate),Name$="")	
-	Local T:T_Kthura_XSaveFunctions = New T_Kthura_XSavefunctions
+	Local T:T_Kthura_XSaveFunctions = New T_Kthura_XSaveFunctions
 	t.action=action
 	t.name = name
-	ListAddLast L_kthura_xsavefunctions,t
+	ListAddLast L_Kthura_XSaveFunctions,t
 	Print "Extra save action added"
 End Function
 
@@ -118,7 +118,7 @@ WriteLine bte.stream,"-- Generated: "+CurrentDate()+"; "+CurrentTime()
 Kthura_GetCam cx,cy
 WriteLine bte.stream,"CAM = "+cx+"x"+cy	
 'WriteLine bte.stream,"BLOCKMAPGRID = "+KMap.blockmapgridw+"x"+KMap.BlockmapGridh
-For Local KS:T_Kthura_xsavefunctions = EachIn L_kthura_xsavefunctions
+For Local KS:T_Kthura_XSaveFunctions = EachIn L_Kthura_XSaveFunctions
 	If KS.Name Print "Kthura Save XTRA> "+KS.Name
 	'KS.J = bto
 	If Not KS.Action Then Print "WARNING! No action function!" Else KS.Action(bto)
@@ -152,6 +152,7 @@ For O=EachIn Layer.fullobjectlist
 	WriteLine bte.stream,"~tIMPASSIBLE = "+o.Impassible
 	WriteLine bte.stream,"~tFORCEPASSIBLE = "+o.ForcePassible
 	WriteLine bte.stream,"~tSCALE = "+O.ScaleX+","+O.ScaleY
+	WriteLine bte.stream,"~tBLEND = "+O.AltBlend
 	For Local dk$=EachIn MapKeys(o.data)
 		WriteLine bte.stream,"~tDATA."+dk+" = "+Replace(o.data.value(dk),"=","<is>")
 		Next

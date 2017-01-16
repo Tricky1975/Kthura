@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, 2017, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.11.25
+Version: 17.01.16
 End Rem
 Strict
 
@@ -67,6 +67,8 @@ End Rem
 '          - FIXED: Tag not checked upon entering bug. I may need to change this all once multi-tagging is supported though
 ' 16.05.08 - Rebuilt for newly set up blockmap saving routine. This does not alter the source of the editor itself, but I name it here, as the compiled version DOES take effect from this.
 ' 16.09.20 - Frame edit support
+' 17.01.08 - Just recompiled, but now it has "raw import" support in the Lua scripting routine due to a GALE upgrade :P
+' 17.01.16 - Alternate Blend Support
 
 
 ' Drivers JCR6
@@ -124,8 +126,10 @@ Import    "Mods/Kthura_Core.bmx"
 Import    "Mods/Kthura_Draw.bmx"
 Import    "Mods/Kthura_Save.bmx"
 
+GALE_USING = True
+
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","16.11.25"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.01.16"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

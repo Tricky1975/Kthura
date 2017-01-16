@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, 2017, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.12.04
+Version: 17.01.16
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","16.12.04"
+MKL_Version "Kthura Map System - GUI.bmx","17.01.16"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 Global CallBackXTRA:Object
@@ -331,6 +331,7 @@ Type TWorkPanel
 	Field ScaleX:TGadget     = CreateTextField    (250,350, 50,25,parentgadget)
 	Field ScaleY:TGadget     = CreateTextField    (300,350, 50,25,parentgadget)
 	Field ScaleLink:TGadget  = CreateButton("Link",375,350, 50,25,parentgadget,button_checkbox)
+	Field AltBlend:TGadget   = CreateComboBox     (250,375,200,25,parentgadget)
 	'Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
 	'Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
 	'Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
@@ -351,6 +352,14 @@ Type TWorkPanel
 	CreateLabel "Animation Speed:",0,300,250,25,parentgadget; CreateLabel "(higher=slower)",310,300,150,25,parentgadget
 	CreateLabel "Frame:"          ,0,325,250,25,parentgadget
 	CreateLabel "Scale:"          ,0,350,250,25,parentgadget
+	CreateLabel "Alternate Blend:",0,375,250,25,parentgadget
+	AddGadgetItem AltBlend,"Don't use"
+	AddGadgetItem AltBlend,"Mask"
+	AddGadgetItem AltBlend,"Solid"
+	AddGadgetItem AltBlend,"Alpha"
+	AddGadgetItem AltBlend,"Light"
+	AddGadgetItem AltBlend,"Shade"
+	SelectGadgetItem altblend,0
 	'CreateLabel ""             ,0,200,pw ,25,parentgadget,Label_separator
 	'CreateLabel "Frames:"      ,0,225,250,25,parentgadget
 	'CreateLabel "Frame Width:" ,0,250,250,25,parentgadget
@@ -435,6 +444,7 @@ SetGadgetText ZoneData.kind,"Zone"
 SetGadgetText Zonedata.dominance,"$ffffff"
 SetButtonState ZoneData.impassible,0	
 ListAddLast toolgadgets[2],ZonePanel
+zonedata.altblend.setenabled False
 
 
 

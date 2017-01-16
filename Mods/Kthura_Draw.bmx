@@ -1,12 +1,12 @@
 Rem
         Kthura_Draw.bmx
-	(c) 2015, 2016 Jeroen Petrus Broks.
+	(c) 2015, 2016, 2017 Jeroen Petrus Broks.
 	
 	This Source Code Form is subject to the terms of the 
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.09.20
+        Version: 17.01.16
 End Rem
 
 ' 15.07.12 - First set release
@@ -28,7 +28,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","16.09.20"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","17.01.16"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -111,10 +111,12 @@ For o=EachIn olist
 			d = ktdrawdriver(MapValueForKey(drawdrivers,okind))
 			Assert d Else "Unknown object kind: "+okind
 			If Not d Return KthuraError("Unknown object kind: "+o.kind)
+			d.ablend o
 			d.ocol o
 			d.oalpha o
 			d.ogettex o			
 			d.draw o,x,y
+			d.rblend o
 			'DrawText "MAPTAG: "+k,x+o.x,y+o.y ' Debug line. There were some issues with the DrawMap builder in the first drafts of Kthura
 			EndIf
 '		EndIf
@@ -137,6 +139,14 @@ Type KTDrawDriver
 	
 	Method OCol(O:TKthuraObject)
 	SetColor O.r,O.g,O.b
+	End Method
+	
+	Method ABlend(O:TKthuraObject)
+		If O.altblend SetBlend O.Altblend
+	End Method
+	
+	Method RBlend(O:TKthuraObject)
+		If O.altblend SetBlend AlphaBlend
 	End Method
 	
 	Method OAlpha(O:TKthuraObject)

@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, 2017, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.11.25
+Version: 17.01.16
 End Rem
 
 ' updates
@@ -28,7 +28,7 @@ End Rem
 ' 16.01.07 - Scaling support added
 ' 16.07.28 - "Pic" style objects now clickable in the "modify" module.
 
-MKL_Version "Kthura Map System - Editor.bmx","16.11.25"
+MKL_Version "Kthura Map System - Editor.bmx","17.01.16"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -207,6 +207,7 @@ Type TCanvasTiledArea Extends tcanvasactionbase
 		EndIf
 	o.framespeed = TextFieldText(tiledareadata.animspeed).toint()
 	o.frame = TextFieldText(tiledareadata.frame).toint()
+	o.altblend = SelectedGadgetItem(tiledareadata.altblend)
 	'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
 	kthmap.totalremap
 	work=False
@@ -278,6 +279,7 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	o.frame = TextFieldText(obstacledata.frame).toint()
 	o.scalex = TextFieldText(obstacledata.scalex).toint()
 	o.scaley = TextFieldText(obstacledata.scaley).toint()
+	o.altblend = SelectedGadgetItem(obstacledata.altblend)
 	kthmap.totalremap
 	tex_WPSave ObstacleData
 	End Method
@@ -431,6 +433,7 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText p.scaley,ko.scaley
 		SetGadgetText p.frame,ko.frame
 		SetButtonState p.scalelink,ko.scalex=ko.scaley
+		SelectGadgetItem p.altblend,ko.altblend
 		EndIf		
 	?debug
 	If selectedobject csay "Selected object #"+SelectedObject.idnum Else csay "No object selected"
@@ -520,6 +523,7 @@ Function ModifyMove()
 	ko.scalex = TextFieldText(p.scalex).toint()
 	ko.scaley = TextFieldText(p.scaley).toint()
 	ko.frame = TextFieldText(p.frame).toint()
+	ko.altblend = SelectedGadgetItem(P.AltBlend)
 	If ko.frame < 0
 		ko.frame = 0
 	EndIf
@@ -627,6 +631,7 @@ ADDCALLBACK CALLACTION,MODIFYDATA.SCALEX,MODIFYSCALEX
 ADDCALLBACK CALLACTION,MODIFYDATA.SCALEY,MODIFYSCALEY
 ADDCALLBACK CALLACTION,OBSTACLEDATA.SCALEX,OBSTACLESCALEX
 ADDCALLBACK CALLACTION,OBSTACLEDATA.SCALEY,OBSTACLESCALEY
+addcallback callaction,modifydata.altblend,modifymove
 
 	
 CanvasAction[0] = New TCanvasTiledArea

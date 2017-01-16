@@ -1,12 +1,12 @@
 Rem
         Kthura_Core.bmx
-	(c) 2015, 2016 Jeroen Petrus Broks.
+	(c) 2015, 2016, 2017 Jeroen Petrus Broks.
 	
 	This Source Code Form is subject to the terms of the 
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 16.11.25
+        Version: 17.01.16
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -28,6 +28,7 @@ End Rem
 '          - Reading Blockmap grid is now deprecated for the settings file. I will still leave it in in order not to have to re-save all Star Story maps, but giant remakes of Kthura or ports to other languages will NOT support it.
 ' 16.06.11 - Adapted for compatibility with BlitzMax NG
 ' 16.08.21 - Loading a new texture will automatically rebuild the blockmap. This can be turned off manually, but it's undocumentented and only recommended for those who know what they are doing.
+' 16.12.17 - A texture width and height asking routine.
 
 
 Strict
@@ -40,7 +41,7 @@ Import tricky_units.HotSpot
 Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","16.11.25"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","17.01.16"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -113,8 +114,50 @@ Type TKthuraObject
 	Field Visible = True
 	Field Data:StringMap = New StringMap
 	Field Parent:TKthura	
+	
+	Rem
+	bbdoc: Scale X factor. 1000 = true size
+	End Rem
+
 	Field ScaleX=1000
+	
+	Rem
+	bbdoc: Scale Y factor. 1000 = true size
+	End Rem
 	Field ScaleY=1000
+	
+	Rem
+	bbdoc: When set to 0 this is ignored, when set to any other number it will use that blend. The same values as SetBlend() takes are accepted here.
+	End Rem
+	Field AltBlend = 0
+	
+	Method TexS( IS(I:TImage) )
+	        Local o:TKthuraObject = Self
+		If Not parent Return -3
+		If Not Texturefile Return -2
+		o.parent.textures.Load(O.parent.textureJCR,o.texturefile,o.kind)
+		Local I:TImage = o.parent.textures.img(o.kind+":"+o.texturefile)
+		If Not I Return -1
+		Return IS(I)
+	End Method		
+	
+	Rem
+	bbdoc: Returns the width of a texture tied to the object
+	returns: If the operation is unsuccesful a negative number is returned. -1 means no texturefile attached and -2 means no texture file could be loaded. -3 means the parent map could not be retrieved.
+	End Rem
+	Method TexWidth()
+	   Return TexS(ImageWidth)
+	End Method
+
+	Rem
+	bbdoc: Returns the width of a texture tied to the object
+	returns: If the operation is unsuccesful a negative number is returned. -1 means no texturefile attached and -2 means no texture file could be loaded.  -3 means the parent map could not be retrieved.
+	End Rem
+	Method TexHeight()
+	   Return TexS(ImageHeight)
+	End Method
+	
+	
 	
 	Rem
 	bbdoc: Sets alpha rate of an object in a scale of 0 to 1000.
@@ -125,9 +168,13 @@ Type TKthuraObject
 		alpha = Double(alphavalue) / Double(1000)
 	End Method
 	
+	Rem
+	bbdoc: Gets the alpha rate of an object in a scale of 0 to 1000
+	about: This method has specifically been set up for hooking up Kthura objects to Lua. The communication between BlitzMax and Lua is downright terrible when it comes to non-integer numbers. This method has to end that.
+	End Rem
 	Method GetAlpha()
 	       Return Floor(alpha*1000)
-	End method
+	End Method
 	
 	Rem
 	bbdoc: Moves an object.
@@ -1211,6 +1258,8 @@ For RL=EachIn Listfile(JCR_B(JCR,prefix+"Objects"))
 							O.ScaleX = DL[0].toint()
 							O.ScaleY = DL[1].toint()
 							EndIf
+					Case "BLEND"
+						O.altBlend = SL[1].toint()		
 					Default
 						KthuraWarning " Unknown variable "+SL[0]+"! In line #"+CL+". Request ignored >> "+L												
 					End Select
