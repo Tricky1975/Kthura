@@ -48,7 +48,7 @@ MapInsert extpackneed,"arj","arj32"
 ?
 
 ?win32
-Global allowpacker$ = [AppDir+"/Archivers/"]
+Global allowpacker$[] = [AppDir+"/Archivers/"]
 ?Not win32
 Global allowpacker$[] = ["/bin/","/usr/bin/","/usr/local/bin/",Dirry("$Home$/bin/")]
 ?
@@ -120,14 +120,14 @@ addcallback callaction,exp_to,expokisok
 Function ExportStandalone()
 	Notify "During the export all windows will be closed and you will see no activity until the export has been completed. This is normal, the program did NOT crash!"
 	?win32
-	If Not ( ButtonState(exp_extreal) Or ButtonState(exp_extjcr6)
+	If Not ( ButtonState(exp_extreal) Or ButtonState(exp_extjcr6) )
 		Notify "While creating the actual file you may see a few command windows popping up and disappear all the same.~n~nThis is normal behavior, so no need to be alarmed about that."
 	EndIf
 	?
 	Local TempDir$ = Dirry("$AppSupport$/Kthura/ExportSwap")
 	HideGadget exp_win
 	If ButtonState(exp_extreal) TempDir = GadgetText(exp_to)
-	If Prefixed (tempdir,"~~/") tempdir=Dirry("$Home$")+tempdir[1..]
+	If Prefixed (tempdir,"~~/") Or Prefixed(tempdir,"~~\") tempdir=Dirry("$Home$")+tempdir[1..]
 	' Destroy the old
 	Select FileType(tempDir)
 		Case 1
@@ -190,7 +190,7 @@ Function ExportStandalone()
 	EndIf
 	If ButtonState(exp_extjcr6)
 		Local f$ = GadgetText(exp_to)
-		If Prefixed (f,"~~/") f=Dirry("$Home$")+f[1..]
+		If Prefixed (f,"~~/") Or Prefixed(f,"~~\") f=Dirry("$Home$")+f[1..]
 		If Not(ExtractExt(F)) f:+".jcr"
 		Print "Creating output JCR6: "+f
 		Local fk:TJCRDir = JCR_Dir(tempdir)
@@ -204,7 +204,9 @@ Function ExportStandalone()
 		Local od$=CurrentDir()
 		ChangeDir Tempdir
 		Local outf$=GadgetText(exp_to)
-		If Prefixed (outf,"~~/") outf=Dirry("$Home$")+outf[1..]
+		If Prefixed (outf,"~~/") Or prefixed(outf,"~~\") outf=Dirry("$Home$")+outf[1..]
+		?win32
+		outf=Replace(outf,"/","\")
 		For Local k$=EachIn(MapKeys(extpackerexec))
 			Print "Checking packer: "+k
 			Local g:TGadget = TGadget(MapValueForKey(exp_extpacker,k))
