@@ -70,6 +70,7 @@ End Rem
 ' 17.01.08 - Just recompiled, but now it has "raw import" support in the Lua scripting routine due to a GALE upgrade :P
 ' 17.01.16 - Alternate Blend Support
 ' 17.04.09 - Script Export
+'          - Stand Alone export
 
 
 ' Drivers JCR6
@@ -116,6 +117,7 @@ Import    tricky_units.ListDir
 Import    tricky_units.ranger
 Import    tricky_units.trickycircle
 Import    tricky_units.swapper
+Import    tricky_units.Dirry
 
 
 
@@ -151,7 +153,8 @@ Include   "inc/GetProject.bmx"
 Include   "inc/GUI.bmx"
 Include   "inc/PlaceOther.bmx" ' This must always be placed AFTER the inc/GUI.bmx call!
 Include   "inc/Export.bmx"
-Include   "inc/ExportScript.bmx"ß
+Include   "inc/ExportScript.bmx"
+Include   "inc/ExportStandAlone.bmx"
 Include   "inc/script.bmx"
 Include   "inc/areaeffect.bmx"
 Include   "inc/Editor.bmx"
