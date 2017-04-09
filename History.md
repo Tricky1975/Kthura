@@ -84,3 +84,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 16.12.04: Fixed issue #58
 - 16.12.05: Rotten object detector now also scans for unknown shit
 - 17.01.16: Alternate blend support - Resolves PhantasarProductions/tftrevamp#269
+- 17.04.09: Closed #50 - Feature implemented

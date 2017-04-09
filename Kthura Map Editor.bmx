@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.01.16
+Version: 17.04.09
 End Rem
 Strict
 
@@ -69,6 +69,7 @@ End Rem
 ' 16.09.20 - Frame edit support
 ' 17.01.08 - Just recompiled, but now it has "raw import" support in the Lua scripting routine due to a GALE upgrade :P
 ' 17.01.16 - Alternate Blend Support
+' 17.04.09 - Script Export
 
 
 ' Drivers JCR6
@@ -129,7 +130,7 @@ Import    "Mods/Kthura_Save.bmx"
 GALE_USING = True
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.01.16"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.04.09"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True
@@ -150,6 +151,7 @@ Include   "inc/GetProject.bmx"
 Include   "inc/GUI.bmx"
 Include   "inc/PlaceOther.bmx" ' This must always be placed AFTER the inc/GUI.bmx call!
 Include   "inc/Export.bmx"
+Include   "inc/ExportScript.bmx"ß
 Include   "inc/script.bmx"
 Include   "inc/areaeffect.bmx"
 Include   "inc/Editor.bmx"

@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.01.16
+Version: 17.04.09
 End Rem
 
 ' updates
@@ -28,7 +28,7 @@ End Rem
 ' 16.01.07 - Scaling support added
 ' 16.07.28 - "Pic" style objects now clickable in the "modify" module.
 
-MKL_Version "Kthura Map System - Editor.bmx","17.01.16"
+MKL_Version "Kthura Map System - Editor.bmx","17.04.09"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -102,9 +102,9 @@ Function ScrollRight()	screenx:+(defaultgridh/2) End Function; Addcallback callm
 
 ' Save all this shit
 Function EditorSave()
-Csay "Saving: "+Mapfile
-SaveKthura kthmap,mapfile
-'LoadProject ' Should not be needed any more.
+	Csay "Saving: "+Mapfile
+	SaveKthura kthmap,mapfile
+	'LoadProject ' Should not be needed any more.
 End Function
 addcallback callmenu,Hex(1000),editorsave
 

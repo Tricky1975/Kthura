@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.01.16
+Version: 17.04.09
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","17.01.16"
+MKL_Version "Kthura Map System - GUI.bmx","17.04.09"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 Global CallBackXTRA:Object
@@ -131,7 +131,7 @@ addcallback callaction,tabber,tabupdate
 Global FileMenu:TGadget = CreateMenu("General",0,WindowMenu(Window))
 CreateMenu "Save",1000,FileMenu,KEY_S,Modifier_command
 CreateMenu "Reload",1001,FileMenu
-Global ExportMenu:TGadget = CreateMenu("Export",0,FileMenu)
+Global ExportMenu:TGadget = CreateMenu("Export as picture",0,FileMenu)
 	Global BExport:TGadget = CreateMenu("Project set export",1500,exportmenu,key_p,modifier_command)
 	CreateMenu "",0,exportmenu
 	CreateMenu "Export screen to PNG",1501,exportmenu
@@ -139,6 +139,10 @@ Global ExportMenu:TGadget = CreateMenu("Export",0,FileMenu)
 	'CreateMenu "Export screen to BMP",1503,exportmenu
 	'CreateMenu "Export screen to TGA",1504,exportmenu
 	'Blitz only supports BMP and TGA for input. If you got a driver for either of those, feel free to unrem these, and attach the proper code to it :)
+Global ExportScriptMenu:TGadget = CreateMenu("Export as script",0,filemenu)
+	CreateMenu "Export to Python",1600,exportscriptmenu
+	CreateMenu "Export to Lua",1601,exportscriptmenu
+CreateMenu "Export as standalone",1003		,filemenu
 ?Not MacOS
 CreateMenu "",0,filemenu
 CreateMenu "Exit",1999,fileMenu,KEY_X,Modifier_command
