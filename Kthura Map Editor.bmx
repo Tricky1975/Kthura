@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.04.09
+Version: 17.05.05
 End Rem
 Strict
 
@@ -132,7 +132,7 @@ Import    "Mods/Kthura_Save.bmx"
 GALE_USING = True
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.04.09"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.05.05"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True
@@ -147,6 +147,7 @@ JCR6CheckChange = False
 Include   "inc/Assign.bmx"
 Include   "inc/error.bmx"
 Include   "inc/Globals.bmx"
+Include   "inc/AltArg.bmx"
 Include   "inc/TexSettingsLoadSave.bmx"
 Include   "inc/CamSaveLoad.bmx"
 Include   "inc/GetProject.bmx"

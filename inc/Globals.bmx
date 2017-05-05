@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, 2017, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.11.25
+Version: 17.05.05
 End Rem
-MKL_Version "Kthura Map System - Globals.bmx","16.11.25"
+MKL_Version "Kthura Map System - Globals.bmx","17.05.05"
 MKL_Lic     "Kthura Map System - Globals.bmx","GNU General Public License 3"
 
 ' Project
@@ -88,4 +88,10 @@ Global OldConsoleText$
 ' Texture Settings
 Global TextureSettings:TMap = New TMap
 
-Function GetTextureSettings:Stringmap(Tex$) Return StringMap(MapValueForKey(TextureSettings,Tex)) End Function
+Function GetTextureSettings:StringMap(Tex$) Return StringMap(MapValueForKey(TextureSettings,Tex)) End Function
+
+' Directory redirection
+Global AltMainDir$="./"
+
+'ArgSettings
+Global ArgSettings:StringMap = New StringMap

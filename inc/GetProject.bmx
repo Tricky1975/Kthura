@@ -4,7 +4,7 @@ Rem
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, 2016, All rights reserved
+	(c) Jeroen P. Broks, 2015, 2016, 2017, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,18 +20,27 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 16.11.25
+Version: 17.05.05
 End Rem
-MKL_Version "Kthura Map System - GetProject.bmx","16.11.25"
+MKL_Version "Kthura Map System - GetProject.bmx","17.05.05"
 MKL_Lic     "Kthura Map System - GetProject.bmx","GNU General Public License 3"
 
 Function GetProject()
 ?debug
 CSay "Loaded JCR dir drivers: "+JCR_DirDrivers()
 ?
-Project = FilePicker("Please select your project:","Projects"); If Not project Bye
-LoadIni("Projects/"+Project,PRID)
-Local File$ = FilePicker("Please select your map file:",PRID.C("Maps"),1,True)
+If arg("Project") 
+	project=arg("Project")
+Else	
+	Project = FilePicker("Please select your project:",altmaindir+"Projects"); If Not project Bye
+EndIf	
+LoadIni altmaindir+"Projects/"+Project,PRID
+Local File$ 
+If arg("Map")
+	File = arg("Map")
+Else
+	File = FilePicker("Please select your map file:",PRID.C("Maps"),1,True)
+endif	
 If Not file Bye
 filename = file
 mapfile = PRID.C("Maps")+"/"+File
@@ -123,9 +132,9 @@ If prid.list("CSpots") And GeneralDataLoad
 		CSay "The spot "+CS+" has been ignored for security reasons as a result!"
 	Else
 		CSay "Custom spot: "+CS	
-		If Not FileType("Scripts/Projects/"+Project+".lua")
+		If Not FileType(altmaindir+"Scripts/Projects/"+Project+".lua")
 			skipped:+"- Custom Spot: "+CS+"~n"
-			CSay "? ERROR: Can't add due to missing script: Scripts/Projects/"+Project+".lua"
+			CSay "? ERROR: Can't add due to missing script: "+altmaindir+"Scripts/Projects/"+Project+".lua"
 		Else
 			MapInsert om,CS,New tcustomexit
 			AddGadgetItem OtherObjects,CS
@@ -136,7 +145,7 @@ If prid.list("CSpots") And GeneralDataLoad
 If skipped And havespots
 	Notify "The following items require a script file dedicated to this project which doesn't exist:~n~n"+skipped+"~n~nPlease create a file named "+CurrentDir()+"/Scripts/Projects/"+Project+".lua in order to get them to work!"
 Else
-	JCR_AddPatch scriptjcr,Raw2JCR("Scripts/Projects/"+Project+".lua",project+".lua")	
+	JCR_AddPatch scriptjcr,Raw2JCR(altmaindir+"Scripts/Projects/"+Project+".lua",project+".lua")	
 	EndIf
 Print "Listing Script JCR:"	
 For E$=EachIn EntryList(scriptjcr) Print "JCR contains: "+E Next

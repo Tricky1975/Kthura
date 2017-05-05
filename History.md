@@ -86,3 +86,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 17.01.16: Alternate blend support - Resolves PhantasarProductions/tftrevamp#269
 - 17.04.09: Closed #50 - Feature implemented
 - 17.04.09: Stand alone export
+- 17.05.05: Argument support -- Implemented to allow access from the LAURA II DK -- This also resolves trickygametools/laura2-dk#1 

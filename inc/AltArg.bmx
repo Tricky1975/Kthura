@@ -1,10 +1,10 @@
 Rem
-	Kthura
-	Assign
+	Kthura Map Editor
+	Argument handler
 	
 	
 	
-	(c) Jeroen P. Broks, 2015, 2017, All rights reserved
+	(c) Jeroen P. Broks, 2017, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -22,17 +22,25 @@ Rem
 	to the project the exceptions are needed for.
 Version: 17.05.05
 End Rem
+Notify Len(AppArgs)
+For Local iarg$=EachIn AppArgs
+	Local p=iarg.find("=")
+	'Notify "Processing: "+iarg+" "+p
+	If Left(iarg,1)="_" And P>1 Then
+		MapInsert argsettings,iarg[1..p],iarg[p+1..]
+		'Notify iarg[1..p]+" is now "+iarg[p+1..]
+	EndIf
+Next
 
 
-' Let's assign things properly for our drivers.
-
-
-
-
-
-' This is a test, as the bye engine was used for the first time here.
-Function ByeTest()
-Print "A request was done to end the Kthura map editor, so we'll end it!"
+Function arg$(a$) 
+	Return argsettings.value(a) 
 End Function
 
-AddByeFunction ByeTest
+Function defbyarg(a$,variable$ Var)
+	If MapContains(argsettings,a) variable=arg(a)		
+End Function
+
+defbyarg "AltMainDir",AltMainDir
+altmaindir = Replace(altmaindir,"\","/")
+If Right(altmaindir,1)<>"/" altmaindir:+"/"

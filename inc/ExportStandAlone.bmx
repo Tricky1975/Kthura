@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.04.09
+Version: 17.05.05
 End Rem
-MKL_Version "Kthura Map System - ExportStandAlone.bmx","17.04.09"
+MKL_Version "Kthura Map System - ExportStandAlone.bmx","17.05.05"
 MKL_Lic     "Kthura Map System - ExportStandAlone.bmx","GNU General Public License 3"
 
 Global extpackerexec:StringMap = New StringMap
@@ -204,9 +204,10 @@ Function ExportStandalone()
 		Local od$=CurrentDir()
 		ChangeDir Tempdir
 		Local outf$=GadgetText(exp_to)
-		If Prefixed (outf,"~~/") Or prefixed(outf,"~~\") outf=Dirry("$Home$")+outf[1..]
+		If Prefixed (outf,"~~/") Or Prefixed(outf,"~~\") outf=Dirry("$Home$")+outf[1..]
 		?win32
 		outf=Replace(outf,"/","\")
+		?
 		For Local k$=EachIn(MapKeys(extpackerexec))
 			Print "Checking packer: "+k
 			Local g:TGadget = TGadget(MapValueForKey(exp_extpacker,k))
