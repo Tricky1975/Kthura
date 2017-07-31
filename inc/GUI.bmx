@@ -336,6 +336,11 @@ Type TWorkPanel
 	Field ScaleY:TGadget     = CreateTextField    (300,350, 50,25,parentgadget)
 	Field ScaleLink:TGadget  = CreateButton("Link",375,350, 50,25,parentgadget,button_checkbox)
 	Field AltBlend:TGadget   = CreateComboBox     (250,375,200,25,parentgadget)
+	Field DataField:TGadget  = CreateComboBox     (  0,400,200,25,parentgadget)
+	Field DataValue:TGadget  = CreateTextField    (250,400,200,25,parentgadget)
+	Field dataAdd:TGadget    = CreateButton   ("+",250,425, 50,25,parentgadget)
+	Field dataRem:TGadget    = CreateButton   ("-",325,425, 50,25,parentgadget)
+	
 	'Field frames:TGadget     = CreateTextField  (250,225,200,25,parentgadget)
 	'Field framew:TGadget     = CreateTextField  (250,250,200,25,parentgadget)
 	'Field frameh:TGadget     = CreateTextField  (250,275,200,25,parentgadget)
@@ -404,6 +409,10 @@ ListAddLast toolgadgets[0],tiledareapanel
 tiledareadata.scalex.setenabled False
 tiledareadata.scaley.setenabled False
 tiledareadata.scalelink.setenabled False
+tiledareadata.datafield.setenabled False
+tiledareadata.datavalue.setenabled False
+tiledareadata.dataadd.setenabled False
+tiledareadata.datarem.setenabled False
 
 
 
@@ -423,6 +432,11 @@ SetGadgetText ObstacleData.kind,"Obstacle"
 SetGadgetText ObstacleData.dominance,"20"
 SetGadgetText obstacledata.animspeed,"-1"
 SetButtonState ObstacleData.impassible,1	
+obstacledata.datafield.setenabled False
+obstacledata.datavalue.setenabled False
+obstacledata.dataadd.setenabled False
+obstacledata.datarem.setenabled False
+
 
 Global ZonePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global ZoneData:TWorkPanel = newworkpanel(Zonepanel)
@@ -449,6 +463,11 @@ SetGadgetText Zonedata.dominance,"$ffffff"
 SetButtonState ZoneData.impassible,0	
 ListAddLast toolgadgets[2],ZonePanel
 zonedata.altblend.setenabled False
+zonedata.datafield.setenabled False
+zonedata.datavalue.setenabled False
+zonedata.dataadd.setenabled False
+zonedata.datarem.setenabled False
+
 
 
 
@@ -476,6 +495,11 @@ SetButtonState OtherData.impassible,0
 otherdata.scalex.setenabled False
 otherdata.scaley.setenabled False
 otherdata.scalelink.setenabled False
+otherdata.datafield.setenabled False
+otherdata.datavalue.setenabled False
+otherdata.dataadd.setenabled False
+otherdata.datarem.setenabled False
+
 
 
 'Global AreaEffectPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)

@@ -22,7 +22,7 @@ Rem
 	to the project the exceptions are needed for.
 Version: 17.05.05
 End Rem
-Notify Len(AppArgs)
+'Notify Len(AppArgs)
 For Local iarg$=EachIn AppArgs
 	Local p=iarg.find("=")
 	'Notify "Processing: "+iarg+" "+p

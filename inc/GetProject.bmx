@@ -26,30 +26,30 @@ MKL_Version "Kthura Map System - GetProject.bmx","17.05.05"
 MKL_Lic     "Kthura Map System - GetProject.bmx","GNU General Public License 3"
 
 Function GetProject()
-?debug
-CSay "Loaded JCR dir drivers: "+JCR_DirDrivers()
-?
-If arg("Project") 
-	project=arg("Project")
-Else	
-	Project = FilePicker("Please select your project:",altmaindir+"Projects"); If Not project Bye
-EndIf	
-LoadIni altmaindir+"Projects/"+Project,PRID
-Local File$ 
-If arg("Map")
-	File = arg("Map")
-Else
-	File = FilePicker("Please select your map file:",PRID.C("Maps"),1,True)
-endif	
-If Not file Bye
-filename = file
-mapfile = PRID.C("Maps")+"/"+File
-mapfile = Replace(mapfile,"//","/")
-SetStatusText window,"Project: "+Project+"~tMap: "+file+"~tKthura"
-If prid.c("Grid.Default.W") defaultgridw = prid.c("Grid.Default.W").toint()	
-If prid.c("Grid.Default.W") defaultgridh = prid.c("Grid.Default.H").toint()	
-ShowGadget window
-LoadProject True
+	?debug
+	CSay "Loaded JCR dir drivers: "+JCR_DirDrivers()
+	?
+	If arg("Project") 
+		project=arg("Project")
+	Else	
+		Project = FilePicker("Please select your project:",altmaindir+"Projects"); If Not project Bye
+	EndIf	
+	LoadIni altmaindir+"Projects/"+Project,PRID
+	Local File$ 
+	If arg("Map")
+		File = arg("Map")
+	Else
+		File = FilePicker("Please select your map file:",PRID.C("Maps"),1,True)
+	EndIf	
+	If Not file Bye
+	filename = file
+	mapfile = PRID.C("Maps")+"/"+File
+	mapfile = Replace(mapfile,"//","/")
+	SetStatusText window,"Project: "+Project+"~tMap: "+file+"~tKthura"
+	If prid.c("Grid.Default.W") defaultgridw = prid.c("Grid.Default.W").toint()	
+	If prid.c("Grid.Default.W") defaultgridh = prid.c("Grid.Default.H").toint()	
+	ShowGadget window
+	LoadProject True
 End Function
 
 Function LoadProject(GeneralDataLoad=False)

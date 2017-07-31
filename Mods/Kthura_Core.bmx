@@ -105,7 +105,6 @@ Type TKthuraObject
 	'Field AnimationSpeed = -1 ' This setting automatically sets older objects not supporting animation. The editor will by default set this value to 4.
 	Field InMotion = True
 	Field PlusX,PlusY,MinusX,MinusY
-	Field Rotation
 	Field InsertX,InsertY
 	Field R=255,G=255,B=255
 	Field Alpha:Double = 1
@@ -114,11 +113,15 @@ Type TKthuraObject
 	Field Visible = True
 	Field Data:StringMap = New StringMap
 	Field Parent:TKthura	
+
+	Rem
+	bbdoc: Set rotation in degrees
+	End Rem
+	Field Rotation
 	
 	Rem
 	bbdoc: Scale X factor. 1000 = true size
 	End Rem
-
 	Field ScaleX=1000
 	
 	Rem

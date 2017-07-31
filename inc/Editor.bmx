@@ -434,6 +434,22 @@ Type TCanvasModify Extends tcanvasactionbase
 		SetGadgetText p.frame,ko.frame
 		SetButtonState p.scalelink,ko.scalex=ko.scaley
 		SelectGadgetItem p.altblend,ko.altblend
+		Local allowdata = False
+		ClearGadgetItems p.datafield
+		For Local K$=EachIn MapKeys(ko.data)
+			allowdata=True
+			AddGadgetItem p.datafield,k
+		Next
+		If allowdata
+			SelectGadgetItem p.datafield,0
+			EnableGadget p.datavalue
+			EnableGadget p.datafield
+			modifyChangeField
+		Else
+			DisableGadget p.datavalue
+			DisableGadget p.datafield
+			SetGadgetText p.datafield,""
+		EndIf
 		EndIf		
 	?debug
 	If selectedobject csay "Selected object #"+SelectedObject.idnum Else csay "No object selected"
@@ -583,27 +599,75 @@ KO.alpha = SliderValue(modifydata.alpha)/Double(1000)
 End Function
 
 Function DeleteObject()
-Local P:Tworkpanel = modifydata
-Local KO:TKthuraObject = SelectedObject
-If Proceed("Do you really wish to delete object #"+KO.IdNum+"?")<>1 Return
-ListRemove Kthmap.fullobjectlist,KO
-kthmap.totalremap
-SelectedObject = Null
-allowmodifypanel False
+	Local P:Tworkpanel = modifydata
+	Local KO:TKthuraObject = SelectedObject
+	If Proceed("Do you really wish to delete object #"+KO.IdNum+"?")<>1 Return
+	ListRemove Kthmap.fullobjectlist,KO
+	kthmap.totalremap
+	SelectedObject = Null
+	allowmodifypanel False
 End Function
 
 Function OtherSelect()
-Local s = SelectedGadgetItem(otherobjects)
-If s<0
-	SetGadgetText otherdata.kind,""
-Else
-	SetGadgetText otherdata.kind,GadgetItemText(otherobjects,s)
+	Local s = SelectedGadgetItem(otherobjects)
+	If s<0
+		SetGadgetText otherdata.kind,""
+	Else
+		SetGadgetText otherdata.kind,GadgetItemText(otherobjects,s)
 	EndIf
 End Function
 
+Function ModifyChangeField()
+	Local i = SelectedGadgetItem(modifydata.datafield)
+	If i<0 Return 'Notify("Error! No field selected! This should not be possible!")
+	SetGadgetText modifydata.datavalue,selectedobject.data.value(GadgetItemText(modifydata.datafield,i))
+End Function	
+
+Function ModifyChangeData()
+	Local i = SelectedGadgetItem(modifydata.datafield)
+	If i<0 Return ' Crash prevention
+	MapInsert selectedobject.data,GadgetItemText(modifydata.datafield,i),GadgetText(modifydata.datavalue)
+End Function	
+
+Function ModifyAddData()
+	Local f$ = MaxGUI_Input("Please enter the name of the new datafield")
+	If Not f Return
+	If MapContains(Selectedobject.data,f) Notify "Sorry!~nThat field already exists.~nTry another name please!" Return
+	MapInsert selectedobject.data,f,""
+	AddGadgetItem modifydata.datafield,f
+End Function
+
+Function ModifyRemoveData()
+	Local i = SelectedGadgetItem(modifydata.datafield)
+	If i<0 Return ' Crash prevention
+	Local f$=GadgetItemText(modifydata.datafield,i)
+	If Proceed("Are you sure you want to remove the datafield ~q"+f+"~q?")<1 Return
+	MapRemove selectedobject.data,f
+	Local P:Tworkpanel = modifydata ' I'm lazy, I don't wanna type that all the time :P
+	Local allowdata = False
+	ClearGadgetItems p.datafield
+	For Local K$=EachIn MapKeys(selectedobject.data)
+		allowdata=True
+		AddGadgetItem p.datafield,k
+	Next
+	If allowdata
+		SelectGadgetItem p.datafield,0
+		EnableGadget p.datavalue
+		EnableGadget p.datafield
+		modifyChangeField
+	Else
+		DisableGadget p.datavalue
+		DisableGadget p.datafield
+		SetGadgetText p.datafield,""
+	EndIf
+End Function
+
+	
+
+
 Function Link2PosOrNot()
-tiledareadata.insx.setenabled Not ButtonState(insertposlink)
-tiledareadata.insy.setenabled Not ButtonState(insertposlink)
+	tiledareadata.insx.setenabled Not ButtonState(insertposlink)
+	tiledareadata.insy.setenabled Not ButtonState(insertposlink)
 End Function
 addcallback callaction,insertposlink,link2posornot
 
@@ -632,6 +696,10 @@ ADDCALLBACK CALLACTION,MODIFYDATA.SCALEY,MODIFYSCALEY
 ADDCALLBACK CALLACTION,OBSTACLEDATA.SCALEX,OBSTACLESCALEX
 ADDCALLBACK CALLACTION,OBSTACLEDATA.SCALEY,OBSTACLESCALEY
 addcallback callaction,modifydata.altblend,modifymove
+addcallback callaction,modifydata.datafield,modifychangefield
+addcallback callaction,modifydata.datavalue,modifychangedata
+addcallback callaction,modifydata.dataadd,modifyadddata
+addcallback callaction,modifydata.datarem,modifyremovedata
 
 	
 CanvasAction[0] = New TCanvasTiledArea
