@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.05.05
+Version: 17.07.31
 End Rem
 Strict
 
@@ -72,6 +72,7 @@ End Rem
 ' 17.04.09 - Script Export
 '          - Stand Alone export
 ' 17.05.05 - Argument support
+' 17.07.31 - Data Editor
 
 
 ' Drivers JCR6
@@ -133,7 +134,7 @@ Import    "Mods/Kthura_Save.bmx"
 GALE_USING = True
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.05.05"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.07.31"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.04.09
+Version: 17.07.31
 End Rem
 
 ' updates
@@ -28,7 +28,7 @@ End Rem
 ' 16.01.07 - Scaling support added
 ' 16.07.28 - "Pic" style objects now clickable in the "modify" module.
 
-MKL_Version "Kthura Map System - Editor.bmx","17.04.09"
+MKL_Version "Kthura Map System - Editor.bmx","17.07.31"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
