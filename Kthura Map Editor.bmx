@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.07.31
+Version: 17.08.16
 End Rem
 Strict
 
@@ -73,6 +73,10 @@ End Rem
 '          - Stand Alone export
 ' 17.05.05 - Argument support
 ' 17.07.31 - Data Editor
+' 17.08.16 - Picture support
+'          - Project builder can now detect directories acting as bundles.
+'          - Bundle support from core
+
 
 
 ' Drivers JCR6
@@ -134,7 +138,7 @@ Import    "Mods/Kthura_Save.bmx"
 GALE_USING = True
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.07.31"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.08.16"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

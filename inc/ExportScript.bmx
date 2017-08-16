@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.04.09
+Version: 17.08.16
 End Rem
-MKL_Version "Kthura Map System - ExportScript.bmx","17.04.09"
+MKL_Version "Kthura Map System - ExportScript.bmx","17.08.16"
 MKL_Lic     "Kthura Map System - ExportScript.bmx","GNU General Public License 3"
 
 Function C_SafeString$(A$)
@@ -134,9 +134,15 @@ End Function
 addcallback callmenu,Hex(1600),ExportPython
 
 
-Function ExportLua()
-	editorsave
-	Local luafile$ = RequestFile("Please enter the name of the output Lua script:","Lua Script:lua",True)
+Function ExportLua(auto=False)
+	Local luafile$ 
+	If auto
+		luafile=prID.C("EXPORT.LUA")+"/"+StripDir(mapfile)+".lua"
+	Else	
+		editorsave
+		luafile = RequestFile("Please enter the name of the output Lua script:","Lua Script:lua",True)
+	EndIf
+	csay "Exporting to Lua: "+Luafile	
 	Local BT:TStream = WriteFile(Luafile)
 	If Not BT 
 		Notify "Creating "+luafile+" failed"
@@ -229,7 +235,10 @@ Function ExportLua()
 	Next
 	WriteLine bt,"~n~n~nreturn Kthura"
 	CloseFile bt
-	Notify "File exported to Lua as: ~n"+Luafile
+	If Not auto Notify "File exported to Lua as: ~n"+Luafile
 End Function
-addcallback callmenu,Hex(1601),ExportLua
+Function ExportLua2()
+	exportLua False
+End Function	
+addcallback callmenu,Hex(1601),ExportLua2
 

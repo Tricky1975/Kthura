@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 17.01.16
+        Version: 17.08.16
 End Rem
 
 ' 15.07.12 - First set release
@@ -19,6 +19,7 @@ End Rem
 ' 16.06.05 - Support "Custom" object
 ' 16.06.11 - NG adeptions
 ' 16.08.21 - Made sure that if a tilemap requests a new texture, the autoreblockmap is not performed. It's not needed then, and it only slows stuff down.
+' 17.08.16 - Support for Pic-Repeat, and a special secret load for the editor (and therefore undocumented).
 
  
 
@@ -28,7 +29,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","17.01.16"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","17.08.16"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
@@ -127,6 +128,12 @@ SetAlpha 1
 End Function
 
 
+'Only put in for editor
+Function LT_Kthura(O:TKthuraObject)
+	Local d:ktdrawdriver = ktdrawdriver(MapValueForKey(drawdrivers,o.kind))
+	If Not d Return' DebugLog "No driver for kind: "+o.kind
+	d.ogettex o
+End Function	
 
 
 
@@ -341,6 +348,37 @@ Type ktDrawPic Extends ktDrawObstacle
 		KthuraError "Texture "+o.texturefile+" not properly loaded" 
 		EndIf
 	End Method
+	
+	Method Draw(O:TKthuraObject,x,y)
+		SetRotation O.Rotation
+		If Not (o.w And o.h)
+			?bmxng
+			SetScale O.ScaleX/Float(1000),O.ScaleY/Float(1000)
+			?Not bmxg	
+			SetScale O.ScaleX/Double(1000),O.ScaleY/Double(1000)
+			?
+		EndIf	
+		If o.FrameSpeed>=0 And o.Frames
+			O.FrameSpeedTicker:+1
+			If O.FrameSpeedTicker>O.Framespeed O.Frame:+1 O.FrameSpeedTicker=0
+			If O.Frame>=O.Frames O.Frame=0
+			'Print O.framespeed+":"+o.frames
+		EndIf
+		SetColor o.r,o.g,o.b		
+		If O.textureimage 
+			If o.w And o.h 
+				For Local ax=0 Until o.w For Local ay=0 Until o.h
+					DrawImage O.TextureImage,(O.X-x)+(ax*Floor(ImageWidth(O.TextureImage))),(O.Y-y)+(ay*Floor(ImageHeight(O.TextureImage))),O.Frame 
+				Next Next	
+			Else
+				DrawImage O.TextureImage,O.X-x,O.Y-y,O.Frame 
+			EndIf	
+			'DrawText o.w+"x"+o.h,o.x-x,o.y-y
+		Else 
+			DrawText "<TEXERROR>",O.X,O.Y	
+		EndIf
+	End Method
+	
 
 End Type
 

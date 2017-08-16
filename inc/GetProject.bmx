@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.07.31
+Version: 17.08.16
 End Rem
-MKL_Version "Kthura Map System - GetProject.bmx","17.07.31"
+MKL_Version "Kthura Map System - GetProject.bmx","17.08.16"
 MKL_Lic     "Kthura Map System - GetProject.bmx","GNU General Public License 3"
 
 Function GetProject()
@@ -95,14 +95,21 @@ If prid.list("Lines")
 	
 ' Put it all in the texture box
 ClearGadgetItems texturebox
-Local E$
+Local E$,D$
 For f=EachIn MapKeys(texturedir.entries)
+	D = ExtractDir(f)
 	E = ExtractExt(f)
-	Select E
-		Case "PNG","JPG","JPEG","BMP","TGA"
-			AddGadgetItem texturebox,f
-		End Select	
-	Next
+	'Print D+" P "+Prefixed(D,"BUNDLE.")+" S "+Suffixed(D,".BUNDLE")
+	If Prefixed(D,"BUNDLE.") Or Suffixed(D,".BUNDLE")
+		AddGadgetItem texturebox,d
+	Else
+		Select E
+			Case "PNG","JPG","JPEG","BMP","TGA"
+				AddGadgetItem texturebox,f
+			End Select	
+	EndIf	
+Next
+
 ' Load the map AFTER the textures are loaded
 If FileType(mapfile) 'And False ' And False was used in the early draft of the editor as the saving routine did not yet fully work. ;)
 	csay "Loading: "+Mapfile

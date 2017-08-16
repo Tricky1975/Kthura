@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.07.31
+Version: 17.08.16
 End Rem
 
 ' updates
@@ -28,7 +28,7 @@ End Rem
 ' 16.01.07 - Scaling support added
 ' 16.07.28 - "Pic" style objects now clickable in the "modify" module.
 
-MKL_Version "Kthura Map System - Editor.bmx","17.07.31"
+MKL_Version "Kthura Map System - Editor.bmx","17.08.16"
 MKL_Lic     "Kthura Map System - Editor.bmx","GNU General Public License 3"
 
 
@@ -104,6 +104,7 @@ Function ScrollRight()	screenx:+(defaultgridh/2) End Function; Addcallback callm
 Function EditorSave()
 	Csay "Saving: "+Mapfile
 	SaveKthura kthmap,mapfile
+	If prID.c("EXPORT.LUA") exportlua True
 	'LoadProject ' Should not be needed any more.
 End Function
 addcallback callmenu,Hex(1000),editorsave
@@ -129,7 +130,7 @@ End Function
 AddCallBack CallMenu,Hex(2003),toggleShowgrid
 
 
-Global CanvasAction:TCanvasActionBase[6]
+Global CanvasAction:TCanvasActionBase[7]
 
 
 ' What to do with the canvases?
@@ -284,6 +285,121 @@ Type TCanvasObstacle Extends Tcanvasactionbase
 	tex_WPSave ObstacleData
 	End Method
 
+
+	End Type
+
+Type TCanvasPictures Extends TCanvasActionBase
+
+	Field startx,starty,endx,endy,work
+	
+	Method MouseEnter() 	
+	End Method
+	
+	Method MouseDown()
+	Print "Down"
+	Local s = SelectedGadgetItem(Texturebox)
+	If s<0 Return Notify("I cannot place a picture without a texture")
+	'If work Then mouseup
+	Local tex$
+	If True 'ButtonState(NewObject)
+		If s<0 Return Notify("Please select a texture first")
+		work=True
+		' standard setting
+		startx=ex
+		starty=ey
+		' mod by grid if set that way
+		If gridmode
+			startx = Floor(startx/currentgridw)*currentgridw
+			starty = Floor(starty/currentgridh)*currentgridh
+			EndIf
+		' end is by default the same as the start. The user will move the mouse later.
+		endx=startx
+		endy=starty
+		EndIf
+	If ButtonState(PicRepeat)=0 mouseup	
+	End Method
+	
+	Method MouseLeave() work=False End Method
+	Method MouseMove() 
+		If Not work Return
+		' Basic values
+		endx = mx
+		endy = my
+		Rem
+		' modify by grid
+		If gridmode And (Not autotextsize)
+			endx = Floor(endx/currentgridw)*currentgridw
+			endy = Floor(endy/currentgridh)*currentgridh		
+		' modify by auto tile size (this is dominant over the grid)
+		ElseIf autotextsize
+		EndIf
+		End Rem
+	
+	End Method
+
+	
+	Method MouseUp()
+		Local x,y
+		If endx<startx x=endx Else x=startx
+		If endy<starty y=endy Else y=starty
+		Local iw,ih
+		Local s = SelectedGadgetItem(Texturebox)
+		If s<0 Return
+		Local O:TKthuraObject = kthmap.createobject(False)
+		Local tex$ = GadgetItemText(texturebox,s)
+		DebugLog "Pic-Tex:"+tex
+		o.kind="Pic"
+		o.texturefile = tex
+		lt_kthura o
+		If o.textureimage
+			iw = ImageWidth(o.textureimage)
+			ih = ImageHeight(o.textureimage)
+			DebugLog "Tex-size: "+iw+"x"+ih
+		Else
+			DebugLog "Tex-size unknown"
+		EndIf
+		Local w,h
+		If iw w=Ceil(Abs(endx-startx)/iw)
+		If ih h=Ceil(Abs(endy-starty)/ih)
+		If ButtonState(picrepeat)=0 w=0 h=0
+		If s<0 Return
+		O.X = x + screenX
+		o.y = y + screenY
+		o.w = w
+		o.h = h
+		o.R = TextFieldText(PictureData.R).toInt() If O.R<0 O.R=0 ElseIf O.R>255 O.R=255
+		o.G = TextFieldText(PictureData.G).toInt() If O.G<0 O.G=0 ElseIf O.G>255 O.G=255
+		o.B = TextFieldText(PictureData.B).toInt() If O.B<0 O.B=0 ElseIf O.B>255 O.B=255
+		o.kind = "Pic"
+		o.dominance = TextFieldText(PictureData.Dominance).toInt()
+		o.alpha = SliderValue(PictureData.Alpha) / Double(1000)
+		o.impassible = ButtonState(Picturedata.impassible)
+		o.forcepassible = ButtonState(Picturedata.fcpassible)
+		o.labels = TextFieldText(PictureData.Labels)
+		o.rotation = TextFieldText(PictureData.Rotation).toint(); While O.rotation>=360 o.rotation:-360 Wend; While O.rotation<=-360 o.rotation:+360 Wend	
+		o.framespeed = TextFieldText(Picturedata.animspeed).toint()
+		o.frame = TextFieldText(Picturedata.frame).toint()
+		o.altblend = SelectedGadgetItem(Picturedata.altblend)
+		'CSay "Created "+o.kind; CSay "~tdom = "+O.dominance; CSay "~tAlpha = "+o.alpha	
+		kthmap.totalremap
+		work=False
+		Tex_WPSave tiledareadata	 	
+	End Method
+	
+	Method XDrawCanvas() 
+		If Not work Return
+		Local r = 100 + (Sin(MilliSecs()/100)*100)
+		Local g = 100 + (Cos(MilliSecs()/100)*100)
+		Local b = 100 + (Sin(MilliSecs()/500)*100)
+		SetColor r,g,b	
+		SetAlpha .25
+		Local x,y,w,h
+		x = startx
+		y = starty
+		w = endx - startx
+		h = endy - starty
+		DrawRect x,y,w,h
+	End Method
 
 	End Type
 
@@ -704,7 +820,8 @@ addcallback callaction,modifydata.datarem,modifyremovedata
 	
 CanvasAction[0] = New TCanvasTiledArea
 canvasaction[1] = New TcanvasObstacle
-canvasaction[2] = New TCanvasZones
-canvasaction[3] = New TCanvasOther
-canvasaction[4] = New TCanvasAreaEffect
-canvasaction[5] = New TCanvasModify
+CanvasAction[2] = New TCanvasPictures
+canvasaction[3] = New TCanvasZones
+canvasaction[4] = New TCanvasOther
+canvasaction[5] = New TCanvasAreaEffect
+canvasaction[6] = New TCanvasModify

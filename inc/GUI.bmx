@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.07.31
+Version: 17.08.16
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","17.07.31"
+MKL_Version "Kthura Map System - GUI.bmx","17.08.16"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 Global CallBackXTRA:Object
@@ -280,17 +280,19 @@ Global paintedbefore
 Print "Tool tabber: "+ttw+"x"+tth
 AddGadgetItem tooltabber,"Tiled Areas"	' 0
 AddGadgetItem tooltabber,"Obstacles"	' 1
-AddGadgetItem tooltabber,"Zones"		' 2
-AddGadgetItem tooltabber,"Other"		' 3
-AddGadgetItem tooltabber,"Area Effects"   ' 4
-AddGadgetItem tooltabber,"Modify"		' 5
+AddGadgetItem tooltabber,"Pictures"      ' 2
+AddGadgetItem tooltabber,"Zones"		' 3
+AddGadgetItem tooltabber,"Other"		' 4
+AddGadgetItem tooltabber,"Area Effects"  ' 5
+AddGadgetItem tooltabber,"Modify"		' 6
 If Not CanvasGraphics(Canvas) AddTextAreaText GALE_ConsoleGadget,"WARNING! Something went wrong in the canvas definitions!~n"
-Global ToolGadgets:TList[] = [New TList,New TList,New TList,New TList,New TList,New TList]
+Global ToolGadgets:TList[] = [New TList,New TList,New TList,New TList,New TList,New TList,New TList]
 
 Global TextureQuick:TGadget = CreateComboBox(0,0,ttw,25,tooltabber)
 Global TextureBox:TGadget = CreateListBox(0,25,ttw,275,tooltabber)
 ListAddLast toolgadgets[0],texturebox 
 ListAddLast toolgadgets[1],texturebox
+ListAddLast toolgadgets[2],texturebox
 
 Addcallback CallAction,TextureQuick,Tex_WPLoad
 Addcallback CallSelect,TextureQuick,Tex_WPLoad
@@ -437,6 +439,31 @@ obstacledata.datavalue.setenabled False
 obstacledata.dataadd.setenabled False
 obstacledata.datarem.setenabled False
 
+Global PicturePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
+Global PictureData:Tworkpanel = newworkpanel(PicturePanel)
+ListAddLast toolgadgets[2],PicturePanel
+
+PictureData.x.setenabled False
+PictureData.y.setenabled False
+Picturedata.insx.setenabled False
+Picturedata.insy.setenabled False
+PictureData.w.setenabled False
+PictureData.h.setenabled False
+PictureData.kind.setenabled False
+PictureData.edittag.setenabled False
+PictureData.FcPassible.SetEnabled False
+SetGadgetText PictureData.kind,"Picture"
+SetGadgetText PictureData.dominance,"20"
+SetGadgetText PictureData.animspeed,"-1"
+SetButtonState PictureData.impassible,0
+PictureData.datafield.setenabled False
+PictureData.datavalue.setenabled False
+PictureData.dataadd.setenabled False
+PictureData.datarem.setenabled False
+Global PicRepeat:TGadget = CreateButton("Allow Repeat",350, 50, 80,25,PicturePanel,button_checkbox)
+
+
+
 
 Global ZonePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global ZoneData:TWorkPanel = newworkpanel(Zonepanel)
@@ -461,7 +488,7 @@ zonedata.scalelink.setenabled False
 SetGadgetText ZoneData.kind,"Zone"
 SetGadgetText Zonedata.dominance,"$ffffff"
 SetButtonState ZoneData.impassible,0	
-ListAddLast toolgadgets[2],ZonePanel
+ListAddLast toolgadgets[3],ZonePanel
 zonedata.altblend.setenabled False
 zonedata.datafield.setenabled False
 zonedata.datavalue.setenabled False
@@ -474,8 +501,8 @@ zonedata.datarem.setenabled False
 Global OtherObjects:TGadget = CreateListBox(0,0,ttw,300,tooltabber)
 Global OtherPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global OtherData:Tworkpanel = newworkpanel(OtherPanel)
-ListAddLast toolgadgets[3],OtherObjects
-ListAddLast toolgadgets[3],OtherPanel
+ListAddLast toolgadgets[4],OtherObjects
+ListAddLast toolgadgets[4],OtherPanel
 'SetButtonState OtherObjects.impassible,0
 OtherData.x.setenabled False
 OtherData.y.setenabled False
@@ -504,14 +531,14 @@ otherdata.datarem.setenabled False
 
 'Global AreaEffectPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global AreaEffectList:TGadget= CreateListBox(0,00,ttw,tth,tooltabber)
-ListAddLast toolgadgets[4],AreaEffectList
+ListAddLast toolgadgets[5],AreaEffectList
 
 
 
 Global ModifyPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global ModifyData:TWorkPanel = Newworkpanel(Modifypanel)
 Global ModifyRemove:TGadget = CreateButton("Delete",0,ClientHeight(ModifyPanel)-25,ClientWidth(ModifyPanel),25,ModifyPanel)
-ListAddLast toolgadgets[5],ModifyPanel
+ListAddLast toolgadgets[6],ModifyPanel
 
 AllowModifyPanel False
 
