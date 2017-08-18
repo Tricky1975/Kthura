@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.08.16
+Version: 17.08.18
 End Rem
-MKL_Version "Kthura Map System - GUI.bmx","17.08.16"
+MKL_Version "Kthura Map System - GUI.bmx","17.08.18"
 MKL_Lic     "Kthura Map System - GUI.bmx","GNU General Public License 3"
 
 Global CallBackXTRA:Object
@@ -394,7 +394,18 @@ ListAddLast Workpanellist,ret
 Return ret
 End Function
 
+Function KidColor(gadget:tgadget,R,G,B,Back=True)
+	SetGadgetColor gadget,r,g,b,back
+	For Local Gd:TGadget = EachIn gadget.kids
+		If GadgetClass(gd)=gadget_label Or GadgetClass(gd)=gadget_panel
+			kidcolor gd,r,g,b,back
+		EndIf
+	Next
+End Function
+
+' 0
 Global TiledAreaPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
+Kidcolor TiledAreaPanel,255,180,0
 Global TiledAreaData:TWorkPanel = newworkpanel(Tiledareapanel)
 tiledareadata.x.setenabled False
 tiledareadata.y.setenabled False
@@ -417,8 +428,9 @@ tiledareadata.dataadd.setenabled False
 tiledareadata.datarem.setenabled False
 
 
-
+' 1
 Global ObstaclePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
+KidColor ObstaclePanel,0,180,255
 Global ObstacleData:TWorkPanel = newworkpanel(ObstaclePanel)
 ListAddLast toolgadgets[1],ObstaclePanel
 ObstacleData.x.setenabled False
@@ -439,10 +451,12 @@ obstacledata.datavalue.setenabled False
 obstacledata.dataadd.setenabled False
 obstacledata.datarem.setenabled False
 
+' 2
 Global PicturePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global PictureData:Tworkpanel = newworkpanel(PicturePanel)
+KidColor picturepanel,255,0,0
+KidColor PicturePanel,255,200,200,false
 ListAddLast toolgadgets[2],PicturePanel
-
 PictureData.x.setenabled False
 PictureData.y.setenabled False
 Picturedata.insx.setenabled False
@@ -464,9 +478,11 @@ Global PicRepeat:TGadget = CreateButton("Allow Repeat",350, 50, 80,25,PicturePan
 
 
 
-
+' 3
 Global ZonePanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global ZoneData:TWorkPanel = newworkpanel(Zonepanel)
+KidColor zonepanel,0,50,0
+KidColor zonepanel,180,255,0,False
 Zonedata.x.setenabled False
 Zonedata.y.setenabled False
 Zonedata.w.setenabled False
@@ -497,12 +513,14 @@ zonedata.datarem.setenabled False
 
 
 
-
+'4
 Global OtherObjects:TGadget = CreateListBox(0,0,ttw,300,tooltabber)
 Global OtherPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global OtherData:Tworkpanel = newworkpanel(OtherPanel)
 ListAddLast toolgadgets[4],OtherObjects
 ListAddLast toolgadgets[4],OtherPanel
+KidColor otherpanel,255,100,100
+KidColor otherpanel,255,180,180
 'SetButtonState OtherObjects.impassible,0
 OtherData.x.setenabled False
 OtherData.y.setenabled False
@@ -528,15 +546,18 @@ otherdata.dataadd.setenabled False
 otherdata.datarem.setenabled False
 
 
-
+'5
 'Global AreaEffectPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global AreaEffectList:TGadget= CreateListBox(0,00,ttw,tth,tooltabber)
 ListAddLast toolgadgets[5],AreaEffectList
+SetGadgetColor areaeffectlist,200,100,40
 
 
-
+'6
 Global ModifyPanel:TGadget = CreatePanel(0,300,ttw,tth-300,tooltabber)
 Global ModifyData:TWorkPanel = Newworkpanel(Modifypanel)
+KidColor modifypanel,0,  0,100
+KidColor modifypanel,0,180,255,False
 Global ModifyRemove:TGadget = CreateButton("Delete",0,ClientHeight(ModifyPanel)-25,ClientWidth(ModifyPanel),25,ModifyPanel)
 ListAddLast toolgadgets[6],ModifyPanel
 
@@ -549,7 +570,7 @@ End Function
 
 Function UpdateTooltabber()
 DebugLog "Tool tab: "+SelectedGadgetItem(tooltabber)
-For Local K=0 Until 6
+For Local K=0 Until Len toolgadgets
 	For Local G:TGadget = EachIn toolgadgets[k]
 		G.setshow False
 		Next
