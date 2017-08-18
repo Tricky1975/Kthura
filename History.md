@@ -93,3 +93,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 17.08.16: Todo -> #62
 - 17.08.16: Automated Lua Export
 - 16.08.18: UI bug fixed
+- 17.08.18: Fixed a Data Bug in the Python and Lua exporter routines

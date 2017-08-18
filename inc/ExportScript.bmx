@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.08.16
+Version: 17.08.18
 End Rem
-MKL_Version "Kthura Map System - ExportScript.bmx","17.08.16"
+MKL_Version "Kthura Map System - ExportScript.bmx","17.08.18"
 MKL_Lic     "Kthura Map System - ExportScript.bmx","GNU General Public License 3"
 
 Function C_SafeString$(A$)
@@ -92,6 +92,7 @@ Function ExportPython()
 				If p>-1
 					Local vr$=Trim(Upper(line[..p]))
 					Local vl$=Trim(line[p+1..])
+					Local vd=False
 					Select vr
 						Case "KIND","TEXTURE","LABELS","TAG"
 							WriteLine bt,"KNO[~q"+vr+"~q] = ~q"+C_SafeString(vl)+"~q"
@@ -121,7 +122,15 @@ Function ExportPython()
 							Local vvl$[]=vl.split(",")
 							WriteLine bt,"KNO[~q"+vr+"~q] = { 'r' : "+(vvl[0].toint())+", 'g' : "+(vvl[1].toint())+", 'b' : "+(vvl[2].toint())+" } "
 						Default
-							WriteLine bt,"KNO[~q"+vr+"~q] = "+(vl.toint())
+						      If Prefixed(vr,"DATA.") 
+								If Not vd
+									WriteLine bt,"KNO.DATA = {}"
+									vd=True
+								EndIf
+								WriteLine bt,"KNO.DATA[~q"+Right(vr,Len(vr)-5)+"~q] = ~q"+vl+"~q"
+							Else
+								WriteLine bt,"KNO[~q"+vr+"~q] = "+(vl.toint())
+							EndIf						
 					End Select			
 									
 				EndIf	
@@ -197,6 +206,7 @@ Function ExportLua(auto=False)
 				If p>-1
 					Local vr$=Trim(Upper(line[..p]))
 					Local vl$=Trim(line[p+1..])
+					Local vd = False
 					Select vr
 						Case "KIND","TEXTURE","LABELS","TAG"
 							WriteLine bt,"~t~tKNO[~q"+vr+"~q] = ~q"+C_SafeString(vl)+"~q"
@@ -226,7 +236,15 @@ Function ExportLua(auto=False)
 							Local vvl$[]=vl.split(",")
 							WriteLine bt,"~t~tKNO[~q"+vr+"~q] = { r = "+(vvl[0].toint())+", g = "+(vvl[1].toint())+", b = "+(vvl[2].toint())+" } "
 						Default
-							WriteLine bt,"~t~tKNO[~q"+vr+"~q] = "+(vl.toint())
+						      If Prefixed(vr,"DATA.") 
+								If Not vd
+									WriteLine bt,"~t~tKNO.DATA = {}"
+									vd=True
+								EndIf
+								WriteLine bt,"~t~t~tKNO.DATA[~q"+Right(vr,Len(vr)-5)+"~q] = ~q"+vl+"~q"
+							Else
+								WriteLine bt,"~t~tKNO[~q"+vr+"~q] = "+(vl.toint())
+							EndIf
 					End Select			
 									
 				EndIf	

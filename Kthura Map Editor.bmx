@@ -77,6 +77,7 @@ End Rem
 '          - Project builder can now detect directories acting as bundles.
 '          - Bundle support from core
 ' 17.08.18 - Fixed a panel cockroach
+'          - Fixed a bug with the DATA fields in the Lua and Python exporters
 
 
 
