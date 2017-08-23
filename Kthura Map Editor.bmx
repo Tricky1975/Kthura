@@ -20,7 +20,7 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.08.18
+Version: 17.08.23
 End Rem
 Strict
 
@@ -78,6 +78,7 @@ End Rem
 '          - Bundle support from core
 ' 17.08.18 - Fixed a panel cockroach
 '          - Fixed a bug with the DATA fields in the Lua and Python exporters
+' 17.08.19 - .Bundle appears a MacOS reserved extention and that can make proper working from Mac impossible, so I also supported "PicBundle" now.
 
 
 
@@ -140,7 +141,7 @@ Import    "Mods/Kthura_Save.bmx"
 GALE_USING = True
 
 ' Version information
-MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.08.18"
+MKL_Version "Kthura Map System - Kthura Map Editor.bmx","17.08.23"
 MKL_Lic     "Kthura Map System - Kthura Map Editor.bmx","GNU General Public License 3"
 
 Kthura_DrawZones = True

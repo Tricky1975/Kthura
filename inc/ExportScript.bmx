@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.08.18
+Version: 17.08.23
 End Rem
-MKL_Version "Kthura Map System - ExportScript.bmx","17.08.18"
+MKL_Version "Kthura Map System - ExportScript.bmx","17.08.23"
 MKL_Lic     "Kthura Map System - ExportScript.bmx","GNU General Public License 3"
 
 Function C_SafeString$(A$)
@@ -171,7 +171,7 @@ Function ExportLua(auto=False)
 	WriteLine bt,"local TagMap = {}"
 	WriteLine bt,"local LabelMap = {}"
 	WriteLine bt,"local KNO"
-	WriteLine bt,"Kthura = { MapObjects=MapObjects, Grid=BM_Grid, TagMap = TagMap, LabelMap=LabelMap }"
+	WriteLine bt,"Kthura = { MapObjects=MapObjects, Grid=BM_Grid, TagMap = TagMap, LabelMap=LabelMap, Meta=Meta }"
 	Local KNO = False
 	Local multimap = False
 	Local defmultimap = False

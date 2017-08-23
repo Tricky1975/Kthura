@@ -20,9 +20,9 @@ Rem
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.08.16
+Version: 17.08.23
 End Rem
-MKL_Version "Kthura Map System - GetProject.bmx","17.08.16"
+MKL_Version "Kthura Map System - GetProject.bmx","17.08.23"
 MKL_Lic     "Kthura Map System - GetProject.bmx","GNU General Public License 3"
 
 Function GetProject()
@@ -100,7 +100,7 @@ For f=EachIn MapKeys(texturedir.entries)
 	D = ExtractDir(f)
 	E = ExtractExt(f)
 	'Print D+" P "+Prefixed(D,"BUNDLE.")+" S "+Suffixed(D,".BUNDLE")
-	If Prefixed(D,"BUNDLE.") Or Suffixed(D,".BUNDLE")
+	If Prefixed(D,"BUNDLE.") Or Suffixed(D,".BUNDLE") Or Prefixed(D,"PICBUNDLE.") Or Suffixed(D,".PICBUNDLE")
 		AddGadgetItem texturebox,d
 	Else
 		Select E
