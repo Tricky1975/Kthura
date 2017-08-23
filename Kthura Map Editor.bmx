@@ -79,6 +79,7 @@ End Rem
 ' 17.08.18 - Fixed a panel cockroach
 '          - Fixed a bug with the DATA fields in the Lua and Python exporters
 ' 17.08.19 - .Bundle appears a MacOS reserved extention and that can make proper working from Mac impossible, so I also supported "PicBundle" now.
+' 17.08.24 - Bugs in bundle support fixed
 
 
 

@@ -95,13 +95,17 @@ If prid.list("Lines")
 	
 ' Put it all in the texture box
 ClearGadgetItems texturebox
-Local E$,D$
+Local E$,D$,bunhad:TList=New TList
 For f=EachIn MapKeys(texturedir.entries)
 	D = ExtractDir(f)
 	E = ExtractExt(f)
 	'Print D+" P "+Prefixed(D,"BUNDLE.")+" S "+Suffixed(D,".BUNDLE")
-	If Prefixed(D,"BUNDLE.") Or Suffixed(D,".BUNDLE") Or Prefixed(D,"PICBUNDLE.") Or Suffixed(D,".PICBUNDLE")
-		AddGadgetItem texturebox,d
+	If (Prefixed(D,"BUNDLE.") Or Suffixed(D,".BUNDLE") Or Prefixed(D,"PICBUNDLE.") Or Suffixed(D,".PICBUNDLE")) 
+		If (Not ListContains(bunhad,D))
+			AddGadgetItem texturebox,d
+			ListAddLast bunhad,D
+		endif	
+		
 	Else
 		Select E
 			Case "PNG","JPG","JPEG","BMP","TGA"

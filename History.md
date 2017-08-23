@@ -94,3 +94,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 17.08.16: Automated Lua Export
 - 16.08.18: UI bug fixed
 - 17.08.18: Fixed a Data Bug in the Python and Lua exporter routines
+- 17.08.24: Bundle support bugs fixes
