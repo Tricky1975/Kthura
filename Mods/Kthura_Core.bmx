@@ -6,7 +6,7 @@ Rem
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 17.08.16
+        Version: 17.08.24
 End Rem
 
 ' 15.08.15 - First version considered in 'Alpha' (though earlier releases exist, this is where the project has been declared safe enough to use, though keep in mind that stuff may still be subject to change)
@@ -43,7 +43,7 @@ Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 Import tricky_units.picbundle
 
-MKL_Version "Kthura Map System - Kthura_Core.bmx","17.08.16"
+MKL_Version "Kthura Map System - Kthura_Core.bmx","17.08.24"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
 
@@ -422,7 +422,7 @@ Type TKthuraImageMap Extends TMap
 	If MapContains(Self,Upper(Prefix+":"+File)) Return TImage(MapValueForKey(Self,Upper(Prefix+":"+File)))
 	If Prefixed(file.toupper(),"BUNDLE.") Or Suffixed(file.toupper(),".BUNDLE") Or Prefixed(file.toupper(),"PICBUNDLE.") Or Suffixed(file.toupper(),".PICBUNDLE")
 		I = GetBundle(jcr,file)
-		If Not I KthuraWarning "Kthura.Image.Load: Image loader failed to load picture bundle: "+File Return
+		If Not I KthuraWarning "Kthura.Image.Load: Image loader failed to load picture bundle: "+File+"~n = "+BundleError Return
 		MapInsert Self,Upper(Prefix+":"+file),I
 		Select StandardHot
 			Case "BOTTOMCENTER"
