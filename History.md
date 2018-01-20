@@ -95,3 +95,5 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 16.08.18: UI bug fixed
 - 17.08.18: Fixed a Data Bug in the Python and Lua exporter routines
 - 17.08.24: Bundle support bugs fixes
+- 18.01.20: Deprecated .frames support
+- 18.01.20: Not sure what was up-to-date in this repo, so I made sure it's up-to-date now

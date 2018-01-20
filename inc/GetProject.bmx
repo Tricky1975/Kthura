@@ -104,10 +104,13 @@ For f=EachIn MapKeys(texturedir.entries)
 		If (Not ListContains(bunhad,D))
 			AddGadgetItem texturebox,d
 			ListAddLast bunhad,D
-		endif	
+		EndIf	
 		
 	Else
 		Select E
+			Case "JPBF"
+				AddGadgetItem texturebox,f
+				JCR_AddPatch texturedir,JCR_Entry(texturedir,f).mainfile,"",f
 			Case "PNG","JPG","JPEG","BMP","TGA"
 				AddGadgetItem texturebox,f
 			End Select	
@@ -192,7 +195,7 @@ If HaveGenData And GeneralDataload
 			gdg = CreateTextField(gdx+150,gdy,145,25,cpanel)
 			SetGadgetText gdg,kthmap.data.value(fld)
 			MapInsert gdfields,fld,gdg			
-			addcallback callaction,gdg,GeneralDataUpdate
+			AddCallBack callaction,gdg,GeneralDataUpdate
 			EndIf
 		Next
 ElseIf GeneralDataLoad

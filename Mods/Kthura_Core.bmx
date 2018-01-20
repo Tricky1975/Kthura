@@ -420,7 +420,7 @@ Type TKthuraImageMap Extends TMap
 	Method Load:TImage(JCR:TJCRDir,File$,Prefix$,StandardHot$="")
 	Local I:TImage
 	If MapContains(Self,Upper(Prefix+":"+File)) Return TImage(MapValueForKey(Self,Upper(Prefix+":"+File)))
-	If Prefixed(file.toupper(),"BUNDLE.") Or Suffixed(file.toupper(),".BUNDLE") Or Prefixed(file.toupper(),"PICBUNDLE.") Or Suffixed(file.toupper(),".PICBUNDLE")
+	If Prefixed(file.toupper(),"BUNDLE.") Or Suffixed(file.toupper(),".BUNDLE") Or Prefixed(file.toupper(),"PICBUNDLE.") Or Suffixed(file.toupper(),".PICBUNDLE") Or Suffixed(file.toupper(),".JPBF")
 		I = GetBundle(jcr,file)
 		If Not I KthuraWarning "Kthura.Image.Load: Image loader failed to load picture bundle: "+File+"~n = "+BundleError Return
 		MapInsert Self,Upper(Prefix+":"+file),I
