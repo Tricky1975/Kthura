@@ -43,6 +43,7 @@ Import tricky_units.Pathfinder
 Import tricky_units.serialtrim
 Import tricky_units.picbundle
 
+
 MKL_Version "Kthura Map System - Kthura_Core.bmx","17.08.24"
 MKL_Lic     "Kthura Map System - Kthura_Core.bmx","Mozilla Public License 2.0"
 
@@ -419,15 +420,20 @@ Type TKthuraImageMap Extends TMap
 	
 	Method Load:TImage(JCR:TJCRDir,File$,Prefix$,StandardHot$="")
 	Local I:TImage
+	BundleChat=True
 	If MapContains(Self,Upper(Prefix+":"+File)) Return TImage(MapValueForKey(Self,Upper(Prefix+":"+File)))
 	If Prefixed(file.toupper(),"BUNDLE.") Or Suffixed(file.toupper(),".BUNDLE") Or Prefixed(file.toupper(),"PICBUNDLE.") Or Suffixed(file.toupper(),".PICBUNDLE") Or Suffixed(file.toupper(),".JPBF")
+	      Print "Loading bundle: "+file
 		I = GetBundle(jcr,file)
+		Print "GetBundle reported: "+BundleError
 		If Not I KthuraWarning "Kthura.Image.Load: Image loader failed to load picture bundle: "+File+"~n = "+BundleError Return
 		MapInsert Self,Upper(Prefix+":"+file),I
-		Select StandardHot
-			Case "BOTTOMCENTER"
-				HotSpot I,2,1
+		If Not JCR_Exists(jcr,file+"/HOTSPOTS.GINI")
+			Select StandardHot
+				Case "BOTTOMCENTER"
+					HotSpot I,2,1
 			End Select
+		EndIf
 		If parent And autoreblockmap parent.buildblockmap
 		Return I
 	EndIf

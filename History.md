@@ -97,3 +97,6 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 17.08.24: Bundle support bugs fixes
 - 18.01.20: Deprecated .frames support
 - 18.01.20: Not sure what was up-to-date in this repo, so I made sure it's up-to-date now
+- 18.05.04: Fixed Hotspot ignoring in JCR6 picbundles
+- 18.05.04: Closed phantasarproductions/63fires#107
+- 18.05.04: Removed deprecated initfile2 and replaced it with GINI

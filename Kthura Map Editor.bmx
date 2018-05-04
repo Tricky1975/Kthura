@@ -80,6 +80,10 @@ End Rem
 '          - Fixed a bug with the DATA fields in the Lua and Python exporters
 ' 17.08.19 - .Bundle appears a MacOS reserved extention and that can make proper working from Mac impossible, so I also supported "PicBundle" now.
 ' 17.08.24 - Bugs in bundle support fixed
+' 18.01.20 - Fake support for lzma, flate and xz
+'          - Depricated .frames support
+' 18.05.04 - Fixed phantasarproductions/63fires#107 (trouble with hotspots.gini)
+'          - Removed deprecated initfile2, and replaced it with GIni!
 
 
 
@@ -87,6 +91,8 @@ End Rem
 Framework jcr6.zlibdriver
 Import    jcr6.realdir
 Import    jcr6.fileasjcr
+
+Import trickyfake.fakepack ' To "fake" lzma, flate, xz support.
 
 ' Drivers for images
 Import    brl.pngloader
@@ -122,7 +128,7 @@ Import    tricky_units.FilePicker
 Import    tricky_units.MKL_Version
 Import    tricky_units.Bye
 Import    tricky_units.advdatetime
-Import    tricky_units.Initfile2
+Import    tricky_units.Gini
 Import    tricky_units.ListDir
 Import    tricky_units.ranger
 Import    tricky_units.trickycircle
