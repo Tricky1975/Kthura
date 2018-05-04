@@ -20,6 +20,7 @@ End Rem
 ' 16.06.11 - NG adeptions
 ' 16.08.21 - Made sure that if a tilemap requests a new texture, the autoreblockmap is not performed. It's not needed then, and it only slows stuff down.
 ' 17.08.16 - Support for Pic-Repeat, and a special secret load for the editor (and therefore undocumented).
+' 18.05.04 - Cosmetic code change. No visible effect, and not even in the produced machine language.
 
  
 
@@ -279,20 +280,20 @@ Type ktDrawObstacle Extends ktdrawdriver
 	Field Hot$="BOTTOMCENTER"
 
 	Method OGetTex(O:TKthuraObject)		
-	' I now this is kinda double, however, BlitzMax does not accept it in the "clean" way, so this "dirty" way will have to suffice.
-	If Not O.texturefile
-		If Not O.loadtried KthuraWarning O.kind+" #"+O.IDNum+" has no valid texture file tied to it!"
-		O.loadtried = True
-		Return
+		' I now this is kinda double, however, BlitzMax does not accept it in the "clean" way, so this "dirty" way will have to suffice.
+		If Not O.texturefile
+			If Not O.loadtried KthuraWarning O.kind+" #"+O.IDNum+" has no valid texture file tied to it!"
+			O.loadtried = True
+			Return
 		EndIf	
-	o.parent.textures.Load(O.parent.textureJCR,o.texturefile,o.kind,"BOTTOMCENTER")
-	o.textureimage = o.parent.textures.img(o.kind+":"+o.texturefile)	
-	If o.textureimage
-		o.Frames = Len(o.textureimage.pixmaps)
-		o.FrameWidth = ImageWidth(o.textureimage)
-		o.Frameheight = ImageHeight(o.textureimage)
+		o.parent.textures.Load(O.parent.textureJCR,o.texturefile,o.kind,"BOTTOMCENTER")
+		o.textureimage = o.parent.textures.img(o.kind+":"+o.texturefile)	
+		If o.textureimage
+			o.Frames = Len(o.textureimage.pixmaps)
+			o.FrameWidth = ImageWidth(o.textureimage)
+			o.Frameheight = ImageHeight(o.textureimage)
 		Else 
-		KthuraError "Texture "+o.texturefile+" not properly loaded" 
+			KthuraError "Texture "+o.texturefile+" not properly loaded" 
 		EndIf
 	End Method
 
