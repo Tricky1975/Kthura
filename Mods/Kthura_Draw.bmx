@@ -1,12 +1,12 @@
 Rem
         Kthura_Draw.bmx
-	(c) 2015, 2016, 2017 Jeroen Petrus Broks.
+	(c) 2015, 2016, 2017, 2018 Jeroen Petrus Broks.
 	
 	This Source Code Form is subject to the terms of the 
 	Mozilla Public License, v. 2.0. If a copy of the MPL was not 
 	distributed with this file, You can obtain one at 
 	http://mozilla.org/MPL/2.0/.
-        Version: 17.08.16
+        Version: 18.05.04
 End Rem
 
 ' 15.07.12 - First set release
@@ -30,7 +30,7 @@ Import brl.map
 Import brl.max2d
 Import tricky_units.MKL_Version
 
-MKL_Version "Kthura Map System - Kthura_Draw.bmx","17.08.16"
+MKL_Version "Kthura Map System - Kthura_Draw.bmx","18.05.04"
 MKL_Lic     "Kthura Map System - Kthura_Draw.bmx","Mozilla Public License 2.0"
 
 Rem
