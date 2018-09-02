@@ -62,6 +62,7 @@ namespace QuickKthuraProjectSetupWizard
             ibox.SetSizeRequest(250, 25);
             itxt.SetSizeRequest(250, 25);
             ibrw.SetSizeRequest(60, 25);
+            ibox.BorderWidth = 1;
             ilab.Justify=Justification.Left;
             sbox.ResizeChildren();
             sbox.Add(ilab);
@@ -82,6 +83,7 @@ namespace QuickKthuraProjectSetupWizard
         static void InitMainBox(){
             MainBox = new VBox();
             MainBox.Add(new Label("This is only a very quick wizard which can help you to quickly set up a Kthura project.\nPlease note, Kthura cannot tell from the Kthura Maps where the textures\nand other stuff it needs are located\n(this to make sure you can make your game fully portable),\nso when you use Kthura in your game,\nyou'll need to configure it properly."));
+            AddField("*KTHURA", "Kthura Folder", true);
             AddField("*Project", "Project Name:");
             AddField("*Copyright", "Copyright and License notice:");
             AddField("*Meta", "MetaFields for Kthura levels");
