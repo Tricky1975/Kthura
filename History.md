@@ -102,3 +102,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 18.05.04: Removed deprecated initfile2 and replaced it with GINI
 - 18.09.02: Source added for the Wizard
 - 18.09.02: Start up source done: Wizard
+- 18.09.02: Quick Wizard now included in builds (or they should be).
