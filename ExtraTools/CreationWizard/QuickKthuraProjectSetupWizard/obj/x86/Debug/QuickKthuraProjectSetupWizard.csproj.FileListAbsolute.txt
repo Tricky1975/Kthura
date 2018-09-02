@@ -1,0 +1,6 @@
+/Users/Rachel/Projects/VisualStudioa/QuickKthuraSetupWizard/QuickKthuraProjectSetupWizard/bin/Debug/QuickKthuraProjectSetupWizard.exe
+/Users/Rachel/Projects/VisualStudioa/QuickKthuraSetupWizard/QuickKthuraProjectSetupWizard/bin/Debug/QuickKthuraProjectSetupWizard.pdb
+/Users/Rachel/Projects/VisualStudioa/QuickKthuraSetupWizard/QuickKthuraProjectSetupWizard/obj/x86/Debug/QuickKthuraProjectSetupWizard.csprojAssemblyReference.cache
+/Users/Rachel/Projects/VisualStudioa/QuickKthuraSetupWizard/QuickKthuraProjectSetupWizard/obj/x86/Debug/QuickKthuraProjectSetupWizard.csproj.CoreCompileInputs.cache
+/Users/Rachel/Projects/VisualStudioa/QuickKthuraSetupWizard/QuickKthuraProjectSetupWizard/obj/x86/Debug/QuickKthuraProjectSetupWizard.exe
+/Users/Rachel/Projects/VisualStudioa/QuickKthuraSetupWizard/QuickKthuraProjectSetupWizard/obj/x86/Debug/QuickKthuraProjectSetupWizard.pdb

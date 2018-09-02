@@ -100,3 +100,4 @@ NEVER and I repeat NEVER use MaxIDE to modify Shell Scripts. Unix appears to be 
 - 18.05.04: Fixed Hotspot ignoring in JCR6 picbundles
 - 18.05.04: Closed phantasarproductions/63fires#107
 - 18.05.04: Removed deprecated initfile2 and replaced it with GINI
+- 18.09.02: Source added for the Wizard
