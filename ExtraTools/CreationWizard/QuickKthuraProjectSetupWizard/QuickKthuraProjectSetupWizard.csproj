@@ -75,5 +75,8 @@
   <ItemGroup>
     <Folder Include="units\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Kthura.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
