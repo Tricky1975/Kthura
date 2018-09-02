@@ -19,6 +19,7 @@
 // EndLic
 ﻿using System.Collections.Generic;
 using TrickyUnits;
+using System;
 using Gtk;
 
 namespace QuickKthuraProjectSetupWizard
@@ -29,8 +30,26 @@ namespace QuickKthuraProjectSetupWizard
         static VBox MainBox;
         static Dictionary<string, TextView> Fields = new Dictionary<string, TextView>();
         static Dictionary<string, Button> Browse = new Dictionary<string, Button>();
+        static Dictionary<Button, string> Browse2Source = new Dictionary<Button, string>();
         static Button Action;
 
+        static void DirBrowser(object sender, EventArgs args){
+            string filename;
+            var frombutton = (Button)sender;
+            var from = Browse2Source[frombutton];
+            var fcd = new FileChooserDialog("Choose Directory", win, FileChooserAction.SelectFolder, "Select", ResponseType.Accept, "Cancel", ResponseType.Close);
+            fcd.SelectMultiple = false;
+            var r = fcd.Run(); // This opens the window and waits for the response
+            //bool alright = false;
+            if (r == (int)ResponseType.Accept)
+            {
+                filename = fcd.Filename;
+                Fields[from].Buffer.Text = filename;
+                //alright = true;
+            }
+            fcd.Destroy(); // The dialog does not automatically close when clicking the buttons, so you have to manually close it with this
+
+        }
 
         static void AddField(string codename, string showname, bool dirbrowser=false){
             var sbox = new HBox();
@@ -48,11 +67,13 @@ namespace QuickKthuraProjectSetupWizard
             sbox.Add(ilab);
             sbox.Add(ibox);
             ibox.Add(itxt);
-            //Fields[codename] = itxt;
+            Fields[codename] = itxt;
             if (dirbrowser) {
                 itxt.SetSizeRequest(190, 25);
                 ibox.Add(ibrw);
                 Browse[codename] = ibrw;
+                Browse2Source[ibrw] = codename;
+                ibrw.Clicked += DirBrowser;
             }
             MainBox.Add(sbox);
 
