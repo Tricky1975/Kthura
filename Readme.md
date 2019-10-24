@@ -1,3 +1,16 @@
+# BlitzMax version discontinued
+
+A few reasons:
+- In Windows BlitzMax doesn't seem to compile its own stuff anymore
+- On Mac 32bit apps are blocked, and that is what BlitzMax compiles to
+- And on Brucey's BlitzMax NG the linker refuses to work
+
+I've done what I can to address all this, but it has grown out of my hands and I do not wanna frustrate myself on that anymore.
+The Kthura project now lives on in C# [see this repository for that](https://github.com/TrickyGameTools/Kthura). If you still see a future for Kthura in BlitzMax, feel free to fork this project, as long as you follow the terms as stated in the license.
+
+
+
+
 # Kthura map editor (BlitzMax)
 
 This is the source code of the Kthura map editor. This is a simple object based map system written in BlitzMax.
